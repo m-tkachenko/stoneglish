@@ -1,14 +1,117 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".presentation.auth.sign_in.SignInFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="56dp"
+        android:layout_marginTop="8dp"
+        android:orientation="horizontal">
 
-</FrameLayout>
+        <ImageButton
+            android:id="@+id/signInBackArrow"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_gravity="center"
+            android:layout_marginStart="15dp"
+            android:background="@android:color/transparent"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_arrow_back"
+            android:contentDescription="@string/cd" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginEnd="67dp"
+            android:gravity="center"
+            android:text="@string/sign_in"
+            android:textSize="21sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/signInEmail"
+            android:layout_width="@dimen/view_width"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:inputType="textEmailAddress"
+            android:backgroundTint="@color/main_green"
+            android:hint="@string/email"
+            android:importantForAutofill="no" />
+
+        <EditText
+            android:id="@+id/signInPassword"
+            android:layout_width="@dimen/view_width"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:inputType="textPassword"
+            android:backgroundTint="@color/main_green"
+            android:hint="@string/password"
+            android:importantForAutofill="no" />
+
+        <Button
+            android:id="@+id/signInBtn"
+            android:layout_width="@dimen/view_width"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="12dp"
+            android:text="@string/sign_in"
+            android:textAllCaps="false" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/signInWithGoogle"
+            style="@style/Widget.MaterialComponents.Button.Icon"
+            android:layout_width="@dimen/view_width"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="12dp"
+            android:backgroundTint="@color/google_button"
+            android:text="@string/continue_with_google"
+            android:textAllCaps="false"
+            android:textColor="@color/black"
+            app:icon="@drawable/ic_logo_google"
+            app:iconGravity="textStart"
+            app:iconTint="@color/blue" />
+
+        <Button
+            android:id="@+id/signInWithFacebook"
+            style="@style/Widget.MaterialComponents.Button.Icon"
+            android:layout_width="@dimen/view_width"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="12dp"
+            android:backgroundTint="@color/facebook_button"
+            android:text="@string/continue_with_facebook"
+            android:textAllCaps="false"
+            app:icon="@drawable/ic_logo_facebook"
+            app:iconGravity="textStart" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/forgot_your_password"
+            android:textColor="@color/forgot_password" />
+    </LinearLayout>
+
+</LinearLayout>
