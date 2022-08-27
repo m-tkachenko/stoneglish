@@ -1,5 +1,9 @@
 <resources>
-    <string name="app_name">stoneglish</string>
-    <!-- TODO: Remove or change this placeholder text -->
+    <!-- Facebook Strings -->
+    <string name="facebook_app_id">760807138468000</string>
+    <string name="fb_login_protocol_scheme">fb1234</string>
+    <string name="facebook_client_token">d44055f16f8cdb8a8484aab18dcaa887</string>
+
+    <string name="app_name">Stoneglish</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
