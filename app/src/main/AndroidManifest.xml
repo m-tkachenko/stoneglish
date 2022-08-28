@@ -17,10 +17,12 @@
         android:theme="@style/Theme.Stoneglish"
         tools:targetApi="31">
         <activity
-            android:name=".AuthActivity"
-            android:exported="false" />
+            android:name="pl.salo.stoneglish.presentation.auth.AuthActivity"
+            android:screenOrientation="portrait"
+            android:exported="false"
+            tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".CoreActivity"
+            android:name="pl.salo.stoneglish.presentation.core.CoreActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
@@ -50,6 +52,7 @@
 
         <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_app_id"/>
         <meta-data android:name="com.facebook.sdk.ClientToken" android:value="@string/facebook_client_token"/>
+
 
     </application>
 

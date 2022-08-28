@@ -12,6 +12,7 @@ import pl.salo.stoneglish.common.Resource
 import pl.salo.stoneglish.domain.use_cases.AuthUseCases
 import javax.inject.Inject
 
+const val TAG = "AuthViewModel"
 @HiltViewModel
 class AuthViewModel @Inject constructor(
     private val auth: AuthUseCases

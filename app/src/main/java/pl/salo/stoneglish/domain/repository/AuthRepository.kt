@@ -3,6 +3,7 @@ package pl.salo.stoneglish.domain.repository
 import com.facebook.AccessToken
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import pl.salo.stoneglish.common.Resource
+import javax.inject.Singleton
 
 interface AuthRepository {
     fun isUserAlreadyAuthenticated(): Boolean

@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.activityViewModels
 import com.facebook.CallbackManager
@@ -17,12 +18,17 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import dagger.hilt.android.AndroidEntryPoint
+import pl.salo.stoneglish.databinding.FragmentSignUpStepOneBinding
+import pl.salo.stoneglish.presentation.auth.AuthViewModel
+import pl.salo.stoneglish.util.ProgressDialogState
+import pl.salo.stoneglish.util.navigator
 import pl.salo.stoneglish.R
 import pl.salo.stoneglish.common.Resource
-import pl.salo.stoneglish.presentation.auth.AuthViewModel
 
 @AndroidEntryPoint
 class SignUpStepOneFragment : Fragment() {
+    lateinit var binding:FragmentSignUpStepOneBinding
+
     private val RC_SIGN_IN: Int = 3
     private val TAG = "SignUpStepOneFragment"
 
@@ -57,8 +63,9 @@ class SignUpStepOneFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_sign_up_step_one, container, false)
+    ): View {
+        binding = FragmentSignUpStepOneBinding.inflate(layoutInflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -66,10 +73,20 @@ class SignUpStepOneFragment : Fragment() {
         authStateObserver()
 
         createGoogleSignInRequest()
+        with(binding) {
+            signUpBackArrow.setOnClickListener {
+                navigator().goBack()
+            }
 
-        // here onButton click listener {
+            signUpBtn.setOnClickListener {
+                val email = signUpEmail.text.toString()
+                val password = signUpPassword.text.toString()
+                navigator().setProgressDialog(ProgressDialogState.SHOW, "Signing up")
+            }
+
+            // here onButton click listener {
             googleSignInIntent()
-        // }
+            // }
 
 //        buttonFacebookLogin.setReadPermissions("email", "public_profile")
 //        buttonFacebookLogin.registerCallback(facebookCallbackManager, object :
@@ -87,6 +104,8 @@ class SignUpStepOneFragment : Fragment() {
 //                Log.e(TAG, "FacebookSignIn : Failure : Error = $error")
 //            }
 //        })
+        }
+
     }
 
     private fun createGoogleSignInRequest() {

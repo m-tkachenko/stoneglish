@@ -6,4 +6,21 @@
 
     <string name="app_name">Stoneglish</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="create_an_account">Create an account</string>
+    <string name="i_already_have_an_account">I already have an account</string>
+
+<!--  Texts for welcome viewPager  -->
+    <string name="text_0">Stoneglish will make your English learning easy and interesting</string>
+    <string name="text_1">Stoneglish will make your English learning easy and interesting</string>
+    <string name="text_2">Stoneglish will make your English learning easy and interesting</string>
+
+    <string name="cd">CD</string>
+    <string name="forgot_your_password">Forgot your password?</string>
+    <string name="continue_with_facebook">Continue with Facebook</string>
+    <string name="continue_with_google">Continue with Google</string>
+    <string name="sign_in">Sign In</string>
+    <string name="password">Password</string>
+    <string name="email">Email</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="sign_up_with_email">Sign up with email</string>
 </resources>
