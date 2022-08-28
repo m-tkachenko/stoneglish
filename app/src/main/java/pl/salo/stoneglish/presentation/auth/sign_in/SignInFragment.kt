@@ -5,8 +5,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import dagger.hilt.android.AndroidEntryPoint
+import pl.salo.stoneglish.common.Resource
 import pl.salo.stoneglish.databinding.FragmentSignInBinding
 import pl.salo.stoneglish.presentation.auth.AuthViewModel
 import pl.salo.stoneglish.util.ProgressDialogState
@@ -29,6 +31,7 @@ class SignInFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         authStateObserver()
+
         with(binding) {
             signInBackArrow.setOnClickListener {
                 navigator().goBack()
@@ -37,15 +40,27 @@ class SignInFragment : Fragment() {
             signInBtn.setOnClickListener {
                 val email = signInEmail.text.toString()
                 val password = signInPassword.text.toString()
-                navigator().setProgressDialog(ProgressDialogState.SHOW, "Signing in")
+
+                viewModel.signInUsingEmailAndPassword(email, password)
             }
         }
 
     }
 
     private fun authStateObserver() {
-        viewModel.authState.observe(viewLifecycleOwner) {
-            navigator().setProgressDialog(ProgressDialogState.HIDE)
+        viewModel.authState.observe(viewLifecycleOwner) { authResult ->
+            when(authResult) {
+                is Resource.Success -> {
+                    navigator().setProgressDialog(ProgressDialogState.HIDE)
+                    Toast.makeText(requireContext(), "Upipi piramambi", Toast.LENGTH_LONG).show()
+                }
+                is Resource.Error -> {
+                    navigator().setProgressDialog(ProgressDialogState.HIDE)
+                    Toast.makeText(requireContext(), "${authResult.message}", Toast.LENGTH_LONG).show()
+                }
+                is Resource.Loading ->
+                    navigator().setProgressDialog(ProgressDialogState.SHOW, "Signing up")
+            }
         }
     }
 
