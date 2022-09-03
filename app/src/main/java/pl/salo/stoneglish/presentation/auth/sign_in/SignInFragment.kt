@@ -1,12 +1,15 @@
 package pl.salo.stoneglish.presentation.auth.sign_in
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
+import com.facebook.FacebookCallback
+import com.facebook.FacebookException
+import com.facebook.login.LoginResult
 import dagger.hilt.android.AndroidEntryPoint
 import pl.salo.stoneglish.common.Resource
 import pl.salo.stoneglish.databinding.FragmentSignInBinding
@@ -14,11 +17,12 @@ import pl.salo.stoneglish.presentation.auth.AuthViewModel
 import pl.salo.stoneglish.util.ProgressDialogState
 import pl.salo.stoneglish.util.navigator
 
+private const val TAG = "SignInFragment"
+
 @AndroidEntryPoint
 class SignInFragment : Fragment() {
-
-    private val viewModel: AuthViewModel by activityViewModels()
-    lateinit var binding: FragmentSignInBinding
+    private val viewModel: AuthViewModel by viewModels()
+    private lateinit var binding: FragmentSignInBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -43,6 +47,29 @@ class SignInFragment : Fragment() {
 
                 viewModel.signInUsingEmailAndPassword(email, password)
             }
+
+            signInWithGoogle.setOnClickListener {
+                navigator().beginGoogleSignIn()
+            }
+
+            signInWithFacebook.setPermissions("email", "public_profile")
+            signInWithFacebook.setFragment(this@SignInFragment)
+            signInWithFacebook.registerCallback(
+                navigator().getFacebookCallbackManager(),
+                object : FacebookCallback<LoginResult> {
+                    override fun onSuccess(result: LoginResult) {
+                        Log.d(TAG, "FacebookSignIn : Success")
+                        viewModel.signInUsingFacebook(result.accessToken)
+                    }
+
+                    override fun onCancel() {
+                        Log.d(TAG, "FacebookSignIn : Cancel")
+                    }
+
+                    override fun onError(error: FacebookException) {
+                        Log.e(TAG, "FacebookSignIn : Failure : Error = $error")
+                    }
+                })
         }
 
     }
@@ -52,11 +79,11 @@ class SignInFragment : Fragment() {
             when(authResult) {
                 is Resource.Success -> {
                     navigator().setProgressDialog(ProgressDialogState.HIDE)
-                    Toast.makeText(requireContext(), "Upipi piramambi", Toast.LENGTH_LONG).show()
+                    navigator().makeSnack("Yes!")
                 }
                 is Resource.Error -> {
                     navigator().setProgressDialog(ProgressDialogState.HIDE)
-                    Toast.makeText(requireContext(), "${authResult.message}", Toast.LENGTH_LONG).show()
+                    navigator().makeSnack("${authResult.message}")
                 }
                 is Resource.Loading ->
                     navigator().setProgressDialog(ProgressDialogState.SHOW, "Signing up")

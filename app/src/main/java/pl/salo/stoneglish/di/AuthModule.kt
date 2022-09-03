@@ -1,4 +1,4 @@
-package pl.salo.stoneglish.presentation.auth
+package pl.salo.stoneglish.di
 
 import android.content.Context
 import androidx.appcompat.app.AlertDialog

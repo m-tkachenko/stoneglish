@@ -5,14 +5,17 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.facebook.AccessToken
+import com.google.android.gms.auth.api.identity.BeginSignInRequest
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.*
+import pl.salo.stoneglish.R
 import pl.salo.stoneglish.common.Resource
 import pl.salo.stoneglish.domain.use_cases.AuthUseCases
 import javax.inject.Inject
 
-const val TAG = "AuthViewModel"
+private const val TAG = "AuthViewModel"
+
 @HiltViewModel
 class AuthViewModel @Inject constructor(
     private val auth: AuthUseCases
@@ -21,35 +24,43 @@ class AuthViewModel @Inject constructor(
     val authState: LiveData<Resource<Boolean>>
         get() = _authState
 
+    // signIn and signUp functions
     fun signUpUsingEmailAndPassword(email: String, password: String) {
-        viewModelScope.launch {
-            auth.emailSignUp(email, password).collect { result ->
-                _authState.postValue(result)
-            }
-        }
+        auth.emailSignUp(email, password).onEach { result ->
+            _authState.postValue(result)
+        }.launchIn(viewModelScope)
     }
 
     fun signInUsingEmailAndPassword(email: String, password: String) {
-        viewModelScope.launch {
-            auth.emailSignIn(email, password).collect { result ->
-                _authState.postValue(result)
-            }
-        }
+        auth.emailSignIn(email, password).onEach { result ->
+            _authState.postValue(result)
+        }.launchIn(viewModelScope)
     }
 
     fun signInUsingGoogle(account: GoogleSignInAccount) {
-        viewModelScope.launch {
-            auth.googleSignIn(account).collect { result ->
-                _authState.postValue(result)
-            }
-        }
+        auth.googleSignIn(account).onEach { result ->
+            _authState.postValue(result)
+        }.launchIn(viewModelScope)
     }
 
     fun signInUsingFacebook(token: AccessToken) {
-        viewModelScope.launch {
-            auth.facebookSignIn(token).collect { result ->
-                _authState.postValue(result)
-            }
-        }
+        auth.facebookSignIn(token).onEach { result ->
+            _authState.postValue(result)
+        }.launchIn(viewModelScope)
+    }
+
+    // Some functions for signIn with Google
+    fun createGoogleSignInRequest(): BeginSignInRequest {
+        return BeginSignInRequest.builder()
+            .setGoogleIdTokenRequestOptions(
+                BeginSignInRequest.GoogleIdTokenRequestOptions.builder()
+                    .setSupported(true)
+                    .setServerClientId(R.string.default_web_client_id.toString())
+                    .setFilterByAuthorizedAccounts(true)
+                    .setFilterByAuthorizedAccounts(false)
+                    .build()
+            )
+            .setAutoSelectEnabled(true)
+            .build()
     }
 }
