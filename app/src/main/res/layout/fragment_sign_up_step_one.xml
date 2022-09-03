@@ -78,33 +78,19 @@
         android:layout_marginBottom="20dp"
         android:orientation="vertical">
 
-        <Button
+        <com.google.android.gms.common.SignInButton
             android:id="@+id/signUpWithGoogle"
-            style="@style/Widget.MaterialComponents.Button.Icon"
             android:layout_width="@dimen/view_width"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="12dp"
-            android:backgroundTint="@color/google_button"
-            android:text="@string/continue_with_google"
-            android:textAllCaps="false"
-            android:textColor="@color/black"
-            app:icon="@drawable/ic_logo_google"
-            app:iconGravity="textStart"
-            app:iconTint="@color/blue" />
+            android:layout_marginBottom="12dp" />
 
-        <Button
+        <com.facebook.login.widget.LoginButton
             android:id="@+id/signUpWithFacebook"
-            style="@style/Widget.MaterialComponents.Button.Icon"
             android:layout_width="@dimen/view_width"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="12dp"
-            android:backgroundTint="@color/facebook_button"
-            android:text="@string/continue_with_facebook"
-            android:textAllCaps="false"
-            app:icon="@drawable/ic_logo_facebook"
-            app:iconGravity="textStart" />
+            android:layout_marginBottom="12dp" />
     </LinearLayout>
 
 </LinearLayout>
