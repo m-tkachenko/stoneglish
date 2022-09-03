@@ -22,5 +22,8 @@ class AuthRepositoryImpl @Inject constructor(
         authService.facebookSignIn(token)
 
     override suspend fun signOut() = authService.signOut()
+
+    override suspend fun isEmailExist(email: String) = authService.isEmailExist(email)
+
     override fun isUserAlreadyAuthenticated() = authService.isUserAlreadyAuthenticated()
 }

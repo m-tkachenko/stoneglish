@@ -9,10 +9,12 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import pl.salo.stoneglish.data.firebase.AuthServiceImpl
 import pl.salo.stoneglish.data.repository.AuthRepositoryImpl
+import pl.salo.stoneglish.data.repository.SignUpDataRepository
 import pl.salo.stoneglish.domain.repository.AuthRepository
 import pl.salo.stoneglish.domain.services.AuthService
 import pl.salo.stoneglish.domain.use_cases.AuthUseCases
 import pl.salo.stoneglish.domain.use_cases.auth.*
+import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -35,12 +37,26 @@ object AppModule {
 
     // Use-Cases shmuper-super functions
     @Provides
-    fun providesAuthUseCases(authRepository: AuthRepository) = AuthUseCases(
+    fun providesAuthUseCases(
+        authRepository: AuthRepository,
+        signUpDataRepository: SignUpDataRepository
+    ) = AuthUseCases(
         emailSignIn = UserEmailSignInUseCase(authRepository),
         emailSignUp = UserEmailSignUpUseCase(authRepository),
         googleSignIn = UserGoogleSignInUseCase(authRepository),
         facebookSignIn = UserFacebookSignInUseCase(authRepository),
         signOut = UserSignOutUseCase(authRepository),
-        isUserAuthenticated = UserAlreadyAuthenticatedUseCase(authRepository)
+        isUserAuthenticated = UserAlreadyAuthenticatedUseCase(authRepository),
+        signUpDataSetAgeAndNameUseCase = SignUpDataSetAgeAndNameUseCase(signUpDataRepository),
+        signUpDataSetTopicsUseCase = SignUpDataSetTopicsUseCase(signUpDataRepository),
+        signUpDataSetEnglishLevelUseCase = SignUpDataSetEnglishLevelUseCase(signUpDataRepository),
+        signUpDataSetEmailAndPasswordUseCase = SignUpDataSetEmailAndPasswordUseCase(
+            signUpDataRepository,
+            authRepository
+        )
     )
+
+    @Singleton
+    @Provides
+    fun provideSignUpDataRepository() = SignUpDataRepository()
 }

@@ -7,6 +7,9 @@ import com.facebook.CallbackManager
 
 interface AuthNavigator {
     fun goToSignUp()
+    fun goToSignUpStepTwo()
+    fun goToSignUpStepThree()
+    fun goToSignUpStepFour()
     fun goToSignIn()
     fun goBack()
     fun goToCoreActivity()

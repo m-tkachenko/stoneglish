@@ -1,6 +1,7 @@
 package pl.salo.stoneglish.presentation.auth
 
 import android.app.Activity
+import android.content.Intent
 import android.content.IntentSender
 import android.os.Bundle
 import android.util.Log
@@ -23,8 +24,12 @@ import dagger.hilt.android.AndroidEntryPoint
 import pl.salo.stoneglish.R
 import pl.salo.stoneglish.databinding.ActivityAuthBinding
 import pl.salo.stoneglish.presentation.auth.sign_in.SignInFragment
+import pl.salo.stoneglish.presentation.auth.sign_up.SignUpStepFourFragment
 import pl.salo.stoneglish.presentation.auth.sign_up.SignUpStepOneFragment
+import pl.salo.stoneglish.presentation.auth.sign_up.SignUpStepThreeFragment
+import pl.salo.stoneglish.presentation.auth.sign_up.SignUpStepTwoFragment
 import pl.salo.stoneglish.presentation.auth.welcome.WelcomeFragment
+import pl.salo.stoneglish.presentation.core.CoreActivity
 import pl.salo.stoneglish.util.AuthNavigator
 import pl.salo.stoneglish.util.ProgressDialogState
 import javax.inject.Inject
@@ -37,7 +42,7 @@ class AuthActivity : AppCompatActivity(), AuthNavigator {
     private val authViewModel: AuthViewModel by viewModels()
 
     @Inject
-    lateinit var progressDialog:AlertDialog
+    lateinit var progressDialog: AlertDialog
 
     private lateinit var googleSignInClient: SignInClient
     private val facebookCallbackManager = CallbackManager.Factory.create()
@@ -62,8 +67,8 @@ class AuthActivity : AppCompatActivity(), AuthNavigator {
                 } catch (e: ApiException) {
                     Log.e(TAG, "GoogleSignIn : Failure : Error = $e")
                 }
+            }
         }
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -77,25 +82,27 @@ class AuthActivity : AppCompatActivity(), AuthNavigator {
             .commit()
     }
 
-    override fun goToSignUp() {
-        addFragmentToStack(SignUpStepOneFragment())
-    }
+    override fun goToSignUp() = addFragmentToStack(SignUpStepOneFragment())
 
-    override fun goToSignIn() {
-        addFragmentToStack(SignInFragment())
-    }
+    override fun goToSignUpStepTwo() = addFragmentToStack(SignUpStepTwoFragment())
 
-    override fun goBack() {
-        supportFragmentManager.popBackStack()
-    }
+    override fun goToSignUpStepThree() = addFragmentToStack(SignUpStepThreeFragment())
+
+    override fun goToSignUpStepFour() = addFragmentToStack(SignUpStepFourFragment())
+
+    override fun goToSignIn() = addFragmentToStack(SignInFragment())
+
+    override fun goBack() = supportFragmentManager.popBackStack()
+
 
     override fun goToCoreActivity() {
-        TODO("Not yet implemented")
+        startActivity(Intent(this@AuthActivity, CoreActivity::class.java))
+        finish()
     }
 
     override fun setProgressDialog(state: ProgressDialogState, text: String?) {
-        when(state){
-            ProgressDialogState.HIDE->{
+        when (state) {
+            ProgressDialogState.HIDE -> {
                 progressDialog.dismiss()
             }
             else -> {
@@ -163,10 +170,13 @@ class AuthActivity : AppCompatActivity(), AuthNavigator {
     override fun getFacebookCallbackManager() =
         facebookCallbackManager
 
-    private fun addFragmentToStack(fragment: Fragment){
+    private fun addFragmentToStack(fragment: Fragment) {
         supportFragmentManager.beginTransaction()
             .replace(R.id.authFragmentContainer, fragment)
             .addToBackStack(null)
             .commit()
     }
+
+    override fun onBackPressed() = goBack()
+
 }
