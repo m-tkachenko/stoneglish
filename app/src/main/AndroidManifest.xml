@@ -23,7 +23,9 @@
             tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="pl.salo.stoneglish.presentation.core.CoreActivity"
-            android:exported="false" />
+            android:screenOrientation="portrait"
+            android:exported="false"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".MainActivity"
             android:exported="true">
