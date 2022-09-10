@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/home"
+        android:enabled="true"
+        android:icon="@drawable/ic_home"
+        android:title="@string/home"/>
+    <item
+        android:id="@+id/dictionary"
+        android:enabled="true"
+        android:icon="@drawable/ic_search"
+        android:title="@string/dictionary"/>
+    <item
+        android:id="@+id/cards"
+        android:enabled="true"
+        android:icon="@drawable/ic_cards"
+        android:title="@string/cards"/>
+
+    <!--  Profile icon must be changed   -->
+    <item
+        android:id="@+id/profile"
+        android:enabled="true"
+        android:icon="@drawable/ic_settings"
+        android:title="@string/profile"/>
+</menu>

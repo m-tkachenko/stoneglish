@@ -23,4 +23,17 @@
     <string name="email">Email</string>
     <string name="sign_up">Sign Up</string>
     <string name="sign_up_with_email">Sign up with email</string>
+    <string name="btn_text_continue">Continue</string>
+    <string name="name">Name</string>
+    <string name="age">Age</string>
+    <string name="choose_your_level">Choose your level</string>
+    <string name="beginner_a1_a2">Beginner A1-A2</string>
+    <string name="intermediate_b1_b2">Intermediate B1–B2</string>
+    <string name="advanced_c1_c2">Advanced C1–C2</string>
+    <string name="take_an_english_test">Take an English test</string>
+    <string name="why_do_you_learn_english">Why do you learn English?</string>
+    <string name="home">Home</string>
+    <string name="dictionary">Dictionary</string>
+    <string name="cards">Cards</string>
+    <string name="profile">Profile</string>
 </resources>
