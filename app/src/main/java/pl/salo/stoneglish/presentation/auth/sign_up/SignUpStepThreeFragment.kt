@@ -1,20 +1,31 @@
 package pl.salo.stoneglish.presentation.auth.sign_up
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import dagger.hilt.android.AndroidEntryPoint
-import pl.salo.stoneglish.R
+import pl.salo.stoneglish.databinding.FragmentSignUpStepThreeBinding
+import pl.salo.stoneglish.presentation.auth.BaseAuthFragment
+import pl.salo.stoneglish.util.Constants
+import pl.salo.stoneglish.util.navigator
 
 @AndroidEntryPoint
-class SignUpStepThreeFragment : Fragment() {
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_sign_up_step_three, container, false)
+class SignUpStepThreeFragment : BaseAuthFragment<FragmentSignUpStepThreeBinding>(
+    FragmentSignUpStepThreeBinding::inflate
+) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        onSwitchFragmentListener { navigator().goToSignUpStepFour() }
+
+        with(binding) {
+            signUpBackArrow.setOnClickListener { navigator().goBack() }
+            signUpBeginnerBtn.setOnClickListener { writeUserLanguageLevel(Constants.ENGLISH_LEVEL_BEGINNER) }
+            signUpIntermediateBtn.setOnClickListener { writeUserLanguageLevel(Constants.ENGLISH_LEVEL_INTERMEDIATE) }
+            signUpAdvancedBtn.setOnClickListener { writeUserLanguageLevel(Constants.ENGLISH_LEVEL_ADVANCED) }
+            signUpTakeTestBtn.setOnClickListener { /*go take test*/ }
+        }
+    }
+
+    private fun writeUserLanguageLevel(level: String) {
+        viewModel.saveUserEnglishLevelToCache(level)
     }
 }

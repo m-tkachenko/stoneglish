@@ -8,5 +8,9 @@ data class AuthUseCases(
     val googleSignIn: UserGoogleSignInUseCase,
     val facebookSignIn: UserFacebookSignInUseCase,
     val signOut: UserSignOutUseCase,
-    val isUserAuthenticated: UserAlreadyAuthenticatedUseCase
+    val isUserAuthenticated: UserAlreadyAuthenticatedUseCase,
+    val signUpDataSetAgeAndNameUseCase: SignUpDataSetAgeAndNameUseCase,
+    val signUpDataSetEmailAndPasswordUseCase: SignUpDataSetEmailAndPasswordUseCase,
+    val signUpDataSetEnglishLevelUseCase: SignUpDataSetEnglishLevelUseCase,
+    val signUpDataSetTopicsUseCase: SignUpDataSetTopicsUseCase,
 )

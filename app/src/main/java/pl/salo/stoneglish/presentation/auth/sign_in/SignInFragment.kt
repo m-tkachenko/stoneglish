@@ -74,19 +74,23 @@ class SignInFragment : Fragment() {
 
     }
 
+
     private fun authStateObserver() {
         viewModel.authState.observe(viewLifecycleOwner) { authResult ->
-            when(authResult) {
-                is Resource.Success -> {
-                    navigator().setProgressDialog(ProgressDialogState.HIDE)
-                    navigator().makeSnack("Yes!")
+            authResult.getContentIfNotHandled()?.let {
+                when(it) {
+                    is Resource.Success -> {
+                        navigator().setProgressDialog(ProgressDialogState.HIDE)
+                        navigator().makeSnack("Yes!")
+                    }
+                    is Resource.Error -> {
+                        navigator().setProgressDialog(ProgressDialogState.HIDE)
+                        navigator().makeSnack("${it.message}")
+                    }
+                    is Resource.Loading ->
+                        navigator().setProgressDialog(ProgressDialogState.SHOW, "Signing up")
                 }
-                is Resource.Error -> {
-                    navigator().setProgressDialog(ProgressDialogState.HIDE)
-                    navigator().makeSnack("${authResult.message}")
-                }
-                is Resource.Loading ->
-                    navigator().setProgressDialog(ProgressDialogState.SHOW, "Signing up")
+
             }
         }
     }

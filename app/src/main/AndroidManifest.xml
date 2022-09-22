@@ -20,6 +20,7 @@
             android:name="pl.salo.stoneglish.presentation.auth.AuthActivity"
             android:screenOrientation="portrait"
             android:exported="false"
+            android:windowSoftInputMode="adjustResize"
             tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="pl.salo.stoneglish.presentation.core.CoreActivity"
@@ -28,6 +29,7 @@
             tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".MainActivity"
+            android:screenOrientation="portrait"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

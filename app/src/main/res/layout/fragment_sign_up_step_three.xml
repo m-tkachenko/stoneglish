@@ -1,13 +1,97 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".presentation.auth.sign_up.SignUpStepThreeFragment">
+    android:orientation="vertical"
+    tools:context=".presentation.auth.sign_in.SignInFragment">
 
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Hello" />
+        android:layout_height="56dp"
+        android:layout_marginTop="8dp"
+        android:orientation="horizontal">
 
-</FrameLayout>
+        <ImageButton
+            android:id="@+id/signUpBackArrow"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_gravity="center"
+            android:layout_marginStart="15dp"
+            android:background="@android:color/transparent"
+            android:contentDescription="@string/cd"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_arrow_back" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginEnd="67dp"
+            android:gravity="center"
+            android:text="@string/sign_up"
+            android:textSize="21sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center|top"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="@dimen/view_width"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="40dp"
+            android:gravity="center"
+            android:text="@string/choose_your_level"
+            android:textSize="21sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/signUpBeginnerBtn"
+            android:layout_width="@dimen/view_width"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="12dp"
+            android:text="@string/beginner_a1_a2"
+            android:textAllCaps="false" />
+
+        <Button
+            android:id="@+id/signUpIntermediateBtn"
+            android:layout_width="@dimen/view_width"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="12dp"
+            android:text="@string/intermediate_b1_b2"
+            android:textAllCaps="false" />
+
+        <Button
+            android:id="@+id/signUpAdvancedBtn"
+            android:layout_width="@dimen/view_width"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="12dp"
+            android:text="@string/advanced_c1_c2"
+            android:textAllCaps="false" />
+
+        <com.google.android.material.divider.MaterialDivider
+            android:layout_width="@dimen/view_width"
+            android:layout_height="wrap_content"
+            app:dividerColor="@color/main_green" />
+
+        <Button
+            android:id="@+id/signUpTakeTestBtn"
+            android:layout_width="@dimen/view_width"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="12dp"
+            android:text="@string/take_an_english_test"
+            android:textAllCaps="false" />
+    </LinearLayout>
+
+
+</LinearLayout>

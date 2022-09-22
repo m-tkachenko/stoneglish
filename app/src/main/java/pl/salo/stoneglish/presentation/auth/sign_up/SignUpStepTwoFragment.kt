@@ -1,20 +1,28 @@
 package pl.salo.stoneglish.presentation.auth.sign_up
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import dagger.hilt.android.AndroidEntryPoint
-import pl.salo.stoneglish.R
+import pl.salo.stoneglish.databinding.FragmentSignUpStepTwoBinding
+import pl.salo.stoneglish.presentation.auth.BaseAuthFragment
+import pl.salo.stoneglish.util.navigator
 
 @AndroidEntryPoint
-class SignUpStepTwoFragment : Fragment() {
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_sign_up_step_two, container, false)
+class SignUpStepTwoFragment :
+    BaseAuthFragment<FragmentSignUpStepTwoBinding>(FragmentSignUpStepTwoBinding::inflate) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        onSwitchFragmentListener { navigator().goToSignUpStepThree() }
+
+        with(binding) {
+            signUpBackArrow.setOnClickListener {
+                navigator().goBack()
+            }
+            signUpContinueBtn.setOnClickListener {
+                val age = binding.signUpAge.text.toString()
+                val name = binding.signUpName.text.toString()
+                viewModel.saveNameAndAgeToCache(name, age)
+            }
+        }
     }
 }
