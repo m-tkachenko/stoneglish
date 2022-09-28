@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.facebook.AccessToken
 import com.google.android.gms.auth.api.identity.BeginSignInRequest
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -43,12 +42,12 @@ class AuthViewModel @Inject constructor(
             _authState.postValue(Event(result))
         }.launchIn(viewModelScope)
     }
-
-    fun signInUsingFacebook(token: AccessToken) {
-        auth.facebookSignIn(token).onEach { result ->
-            _authState.postValue(Event(result))
-        }.launchIn(viewModelScope)
-    }
+//
+//    fun signInUsingFacebook(token: AccessToken) {
+//        auth.facebookSignIn(token).onEach { result ->
+//            _authState.postValue(Event(result))
+//        }.launchIn(viewModelScope)
+//    }
 
     // Some functions for signIn with Google
     fun createGoogleSignInRequest(): BeginSignInRequest {

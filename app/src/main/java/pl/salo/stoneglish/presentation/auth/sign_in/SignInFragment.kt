@@ -1,15 +1,11 @@
 package pl.salo.stoneglish.presentation.auth.sign_in
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import com.facebook.FacebookCallback
-import com.facebook.FacebookException
-import com.facebook.login.LoginResult
 import dagger.hilt.android.AndroidEntryPoint
 import pl.salo.stoneglish.common.Resource
 import pl.salo.stoneglish.databinding.FragmentSignInBinding
@@ -52,24 +48,24 @@ class SignInFragment : Fragment() {
                 navigator().beginGoogleSignIn()
             }
 
-            signInWithFacebook.setPermissions("email", "public_profile")
-            signInWithFacebook.setFragment(this@SignInFragment)
-            signInWithFacebook.registerCallback(
-                navigator().getFacebookCallbackManager(),
-                object : FacebookCallback<LoginResult> {
-                    override fun onSuccess(result: LoginResult) {
-                        Log.d(TAG, "FacebookSignIn : Success")
-                        viewModel.signInUsingFacebook(result.accessToken)
-                    }
-
-                    override fun onCancel() {
-                        Log.d(TAG, "FacebookSignIn : Cancel")
-                    }
-
-                    override fun onError(error: FacebookException) {
-                        Log.e(TAG, "FacebookSignIn : Failure : Error = $error")
-                    }
-                })
+//            signInWithFacebook.setPermissions("email", "public_profile")
+//            signInWithFacebook.setFragment(this@SignInFragment)
+//            signInWithFacebook.registerCallback(
+//                navigator().getFacebookCallbackManager(),
+//                object : FacebookCallback<LoginResult> {
+//                    override fun onSuccess(result: LoginResult) {
+//                        Log.d(TAG, "FacebookSignIn : Success")
+//                        viewModel.signInUsingFacebook(result.accessToken)
+//                    }
+//
+//                    override fun onCancel() {
+//                        Log.d(TAG, "FacebookSignIn : Cancel")
+//                    }
+//
+//                    override fun onError(error: FacebookException) {
+//                        Log.e(TAG, "FacebookSignIn : Failure : Error = $error")
+//                    }
+//                })
         }
 
     }

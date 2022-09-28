@@ -3,7 +3,6 @@ package pl.salo.stoneglish.util
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.IntentSenderRequest
 import androidx.fragment.app.Fragment
-import com.facebook.CallbackManager
 
 interface AuthNavigator {
     fun goToSignUp()
@@ -21,7 +20,7 @@ interface AuthNavigator {
 
     fun activityLauncherResult(): ActivityResultLauncher<IntentSenderRequest>
     fun beginGoogleSignIn()
-    fun getFacebookCallbackManager(): CallbackManager
+//    fun getFacebookCallbackManager(): CallbackManager
 }
 
 enum class ProgressDialogState {

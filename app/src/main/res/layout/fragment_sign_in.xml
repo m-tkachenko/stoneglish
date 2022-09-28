@@ -85,12 +85,12 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="12dp" />
 
-        <com.facebook.login.widget.LoginButton
-            android:id="@+id/signInWithFacebook"
-            android:layout_width="321dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="12dp" />
+<!--        <com.facebook.login.widget.LoginButton-->
+<!--            android:id="@+id/signInWithFacebook"-->
+<!--            android:layout_width="321dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_gravity="center_horizontal"-->
+<!--            android:layout_marginBottom="12dp" />-->
 
         <TextView
             android:layout_width="wrap_content"
