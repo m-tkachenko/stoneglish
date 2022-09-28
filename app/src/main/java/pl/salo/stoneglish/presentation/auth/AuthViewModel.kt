@@ -11,6 +11,7 @@ import kotlinx.coroutines.flow.*
 import pl.salo.stoneglish.R
 import pl.salo.stoneglish.common.Resource
 import pl.salo.stoneglish.domain.use_cases.AuthUseCases
+import pl.salo.stoneglish.domain.use_cases.database.WriteUserDataUseCase
 import pl.salo.stoneglish.util.Event
 import javax.inject.Inject
 
@@ -18,16 +19,31 @@ private const val TAG = "AuthViewModel"
 
 @HiltViewModel
 class AuthViewModel @Inject constructor(
-    private val auth: AuthUseCases
+    private val auth: AuthUseCases,
+    private val writeUserDataUseCase: WriteUserDataUseCase
 ) : ViewModel() {
     private val _authState = MutableLiveData<Event<Resource<Boolean>>>()
     val authState: LiveData<Event<Resource<Boolean>>>
         get() = _authState
 
     // signIn and signUp functions
-    fun signUpUsingEmailAndPassword(email: String, password: String) {
-        auth.emailSignUp(email, password).onEach { result ->
-            _authState.postValue(Event(result))
+    private suspend fun signUpUsingEmailAndPassword() {
+        _authState.value = Event(Resource.Loading())
+
+        auth.signUpGetData().onEach { signUpData ->
+            if (signUpData is Resource.Success) {
+                auth.emailSignUp(signUpData.data!!).onEach { result ->
+                    if (result is Resource.Success) {
+                        writeUserDataUseCase(null, result.data).onEach { res ->
+                            _authState.postValue(Event(res as Resource<Boolean>))
+                        }.launchIn(viewModelScope)
+                    } else {
+                        _authState.postValue(Event(result as Resource<Boolean>))
+                    }
+                }.launchIn(viewModelScope)
+            } else {
+                _authState.postValue(Event(signUpData as Resource<Boolean>))
+            }
         }.launchIn(viewModelScope)
     }
 
@@ -80,7 +96,14 @@ class AuthViewModel @Inject constructor(
 
     fun saveUserInterestedTopics(topics: List<String>) =
         auth.signUpDataSetTopicsUseCase(topics).onEach { result ->
-            _authState.postValue(Event(result as Resource<Boolean>))
+            when (result) {
+                is Resource.Success -> {
+                    signUpUsingEmailAndPassword()
+                }
+                is Resource.Error -> {
+                }
+                else -> {}
+            }
         }.launchIn(viewModelScope)
 
 }

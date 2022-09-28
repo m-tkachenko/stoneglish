@@ -11,4 +11,5 @@ interface AuthService {
     suspend fun googleSignIn(account: GoogleSignInAccount): FirebaseUser?
     suspend fun signOut()
     suspend fun isEmailExist(email: String):Boolean
+    suspend fun getUserId(): String?
 }
