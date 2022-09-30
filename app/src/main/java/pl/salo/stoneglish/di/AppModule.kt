@@ -44,7 +44,6 @@ object AppModule {
         emailSignIn = UserEmailSignInUseCase(authRepository),
         emailSignUp = UserEmailSignUpUseCase(authRepository),
         googleSignIn = UserGoogleSignInUseCase(authRepository),
-        facebookSignIn = UserFacebookSignInUseCase(authRepository),
         signOut = UserSignOutUseCase(authRepository),
         isUserAuthenticated = UserAlreadyAuthenticatedUseCase(authRepository),
         signUpDataSetAgeAndNameUseCase = SignUpDataSetAgeAndNameUseCase(signUpDataRepository),

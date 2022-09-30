@@ -56,20 +56,6 @@ class AuthServiceImpl @Inject constructor(
             .await()
             .user
 
-//    override suspend fun facebookSignIn(
-//        token: AccessToken
-//    ): FirebaseUser? =
-//        auth
-//            .signInWithCredential(FacebookAuthProvider.getCredential(token.token))
-//            .addOnCompleteListener { facebookSignInResult ->
-//                if (facebookSignInResult.isSuccessful)
-//                    Log.d(TAG, "FacebookSignIn : Success")
-//                else
-//                    Log.e(TAG, "FacebookSignIn : Failure : Error = ${facebookSignInResult.exception?.message}")
-//            }
-//            .await()
-//            .user
-
     override suspend fun signOut() = auth.signOut()
 
     override suspend fun isEmailExist(email: String):Boolean {

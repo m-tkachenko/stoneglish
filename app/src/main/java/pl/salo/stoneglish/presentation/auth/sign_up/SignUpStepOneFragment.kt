@@ -32,25 +32,6 @@ class SignUpStepOneFragment : BaseAuthFragment<FragmentSignUpStepOneBinding>(
             signUpWithGoogle.setOnClickListener {
                 navigator().beginGoogleSignIn()
             }
-
-//            signUpWithFacebook.setPermissions("email", "public_profile")
-//            signUpWithFacebook.setFragment(this@SignUpStepOneFragment)
-//            signUpWithFacebook.registerCallback(
-//                navigator().getFacebookCallbackManager(),
-//                object : FacebookCallback<LoginResult> {
-//                    override fun onSuccess(result: LoginResult) {
-//                        Log.d(TAG, "FacebookSignIn : Success")
-//                        viewModel.signInUsingFacebook(result.accessToken)
-//                    }
-//
-//                    override fun onCancel() {
-//                        Log.d(TAG, "FacebookSignIn : Cancel")
-//                    }
-//
-//                    override fun onError(error: FacebookException) {
-//                        Log.e(TAG, "FacebookSignIn : Failure : Error = $error")
-//                    }
-//                })
         }
     }
 }

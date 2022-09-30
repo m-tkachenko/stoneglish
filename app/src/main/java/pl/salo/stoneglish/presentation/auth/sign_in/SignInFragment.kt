@@ -47,29 +47,8 @@ class SignInFragment : Fragment() {
             signInWithGoogle.setOnClickListener {
                 navigator().beginGoogleSignIn()
             }
-
-//            signInWithFacebook.setPermissions("email", "public_profile")
-//            signInWithFacebook.setFragment(this@SignInFragment)
-//            signInWithFacebook.registerCallback(
-//                navigator().getFacebookCallbackManager(),
-//                object : FacebookCallback<LoginResult> {
-//                    override fun onSuccess(result: LoginResult) {
-//                        Log.d(TAG, "FacebookSignIn : Success")
-//                        viewModel.signInUsingFacebook(result.accessToken)
-//                    }
-//
-//                    override fun onCancel() {
-//                        Log.d(TAG, "FacebookSignIn : Cancel")
-//                    }
-//
-//                    override fun onError(error: FacebookException) {
-//                        Log.e(TAG, "FacebookSignIn : Failure : Error = $error")
-//                    }
-//                })
         }
-
     }
-
 
     private fun authStateObserver() {
         viewModel.authState.observe(viewLifecycleOwner) { authResult ->
@@ -90,5 +69,4 @@ class SignInFragment : Fragment() {
             }
         }
     }
-
 }

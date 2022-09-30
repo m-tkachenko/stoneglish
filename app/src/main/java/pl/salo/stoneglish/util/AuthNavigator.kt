@@ -20,7 +20,6 @@ interface AuthNavigator {
 
     fun activityLauncherResult(): ActivityResultLauncher<IntentSenderRequest>
     fun beginGoogleSignIn()
-//    fun getFacebookCallbackManager(): CallbackManager
 }
 
 enum class ProgressDialogState {

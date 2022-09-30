@@ -42,12 +42,6 @@ class AuthViewModel @Inject constructor(
             _authState.postValue(Event(result))
         }.launchIn(viewModelScope)
     }
-//
-//    fun signInUsingFacebook(token: AccessToken) {
-//        auth.facebookSignIn(token).onEach { result ->
-//            _authState.postValue(Event(result))
-//        }.launchIn(viewModelScope)
-//    }
 
     // Some functions for signIn with Google
     fun createGoogleSignInRequest(): BeginSignInRequest {
