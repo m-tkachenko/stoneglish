@@ -1,6 +1,5 @@
 package pl.salo.stoneglish.data.repository
 
-import com.facebook.AccessToken
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import pl.salo.stoneglish.domain.repository.AuthRepository
 import pl.salo.stoneglish.domain.services.AuthService
@@ -17,9 +16,6 @@ class AuthRepositoryImpl @Inject constructor(
 
     override suspend fun googleSignIn(account: GoogleSignInAccount) =
         authService.googleSignIn(account)
-
-    override suspend fun facebookSignIn(token: AccessToken) =
-        authService.facebookSignIn(token)
 
     override suspend fun signOut() = authService.signOut()
 

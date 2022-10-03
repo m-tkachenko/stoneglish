@@ -84,13 +84,6 @@
             android:layout_height="40dp"
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="12dp" />
-
-        <com.facebook.login.widget.LoginButton
-            android:id="@+id/signUpWithFacebook"
-            android:layout_width="@dimen/view_width"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="12dp" />
     </LinearLayout>
 
 </LinearLayout>

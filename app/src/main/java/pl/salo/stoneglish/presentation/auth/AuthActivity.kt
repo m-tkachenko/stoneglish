@@ -14,7 +14,6 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import com.facebook.CallbackManager
 import com.google.android.gms.auth.api.identity.Identity
 import com.google.android.gms.auth.api.identity.SignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -45,19 +44,12 @@ class AuthActivity : AppCompatActivity(), AuthNavigator {
     lateinit var progressDialog: AlertDialog
 
     private lateinit var googleSignInClient: SignInClient
-    private val facebookCallbackManager = CallbackManager.Factory.create()
 
     private var activityResultLauncher =
         registerForActivityResult(
             ActivityResultContracts.StartIntentSenderForResult()
         ) { activityResult ->
             if (activityResult.resultCode == Activity.RESULT_OK) {
-                facebookCallbackManager.onActivityResult(
-                    requestCode = activityResult.resultCode,
-                    resultCode = activityResult.resultCode,
-                    data = activityResult.data
-                )
-
                 try {
                     val account = GoogleSignIn
                         .getSignedInAccountFromIntent(activityResult.data)
@@ -129,12 +121,6 @@ class AuthActivity : AppCompatActivity(), AuthNavigator {
             ActivityResultContracts.StartIntentSenderForResult()
         ) { activityResult ->
             if (activityResult.resultCode == Activity.RESULT_OK) {
-                facebookCallbackManager.onActivityResult(
-                    requestCode = activityResult.resultCode,
-                    resultCode = activityResult.resultCode,
-                    data = activityResult.data
-                )
-
                 try {
                     val account = GoogleSignIn
                         .getSignedInAccountFromIntent(activityResult.data)
@@ -167,9 +153,6 @@ class AuthActivity : AppCompatActivity(), AuthNavigator {
             }
     }
 
-    override fun getFacebookCallbackManager() =
-        facebookCallbackManager
-
     private fun addFragmentToStack(fragment: Fragment) {
         supportFragmentManager.beginTransaction()
             .replace(R.id.authFragmentContainer, fragment)
@@ -178,5 +161,4 @@ class AuthActivity : AppCompatActivity(), AuthNavigator {
     }
 
     override fun onBackPressed() = goBack()
-
 }
