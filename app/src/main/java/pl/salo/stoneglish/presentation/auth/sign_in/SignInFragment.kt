@@ -1,36 +1,23 @@
 package pl.salo.stoneglish.presentation.auth.sign_in
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
-import pl.salo.stoneglish.common.Resource
 import pl.salo.stoneglish.databinding.FragmentSignInBinding
-import pl.salo.stoneglish.presentation.auth.AuthViewModel
-import pl.salo.stoneglish.util.ProgressDialogState
+import pl.salo.stoneglish.presentation.auth.BaseAuthFragment
 import pl.salo.stoneglish.util.navigator
 
 private const val TAG = "SignInFragment"
 
 @AndroidEntryPoint
-class SignInFragment : Fragment() {
-    private val viewModel: AuthViewModel by viewModels()
-    private lateinit var binding: FragmentSignInBinding
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        binding = FragmentSignInBinding.inflate(layoutInflater, container, false)
-        return binding.root
-    }
+class SignInFragment : BaseAuthFragment<FragmentSignInBinding>(
+    FragmentSignInBinding::inflate
+) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        authStateObserver()
+
+        onSwitchFragmentListener { navigator().goToCoreActivity() }
 
         with(binding) {
             signInBackArrow.setOnClickListener {
@@ -46,26 +33,6 @@ class SignInFragment : Fragment() {
 
             signInWithGoogle.setOnClickListener {
                 navigator().beginGoogleSignIn()
-            }
-        }
-    }
-
-    private fun authStateObserver() {
-        viewModel.authState.observe(viewLifecycleOwner) { authResult ->
-            authResult.getContentIfNotHandled()?.let {
-                when(it) {
-                    is Resource.Success -> {
-                        navigator().setProgressDialog(ProgressDialogState.HIDE)
-                        navigator().makeSnack("Yes!")
-                    }
-                    is Resource.Error -> {
-                        navigator().setProgressDialog(ProgressDialogState.HIDE)
-                        navigator().makeSnack("${it.message}")
-                    }
-                    is Resource.Loading ->
-                        navigator().setProgressDialog(ProgressDialogState.SHOW, "Signing up")
-                }
-
             }
         }
     }
