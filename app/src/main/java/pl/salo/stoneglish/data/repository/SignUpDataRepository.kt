@@ -1,7 +1,7 @@
 package pl.salo.stoneglish.data.repository
 
 import android.util.Log
-import pl.salo.stoneglish.data.model.SignUpData
+import pl.salo.stoneglish.domain.model.SignUpData
 
 /**
  * Repository holds sign up data in the app memory

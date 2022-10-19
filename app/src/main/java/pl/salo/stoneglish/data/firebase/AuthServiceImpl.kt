@@ -10,6 +10,7 @@ import javax.inject.Inject
 class AuthServiceImpl @Inject constructor(
     private val auth: FirebaseAuth
 ): AuthService {
+
     override suspend fun signUp(
         email: String,
         password: String
@@ -62,6 +63,9 @@ class AuthServiceImpl @Inject constructor(
         val result = auth.fetchSignInMethodsForEmail(email).await()
         return result.signInMethods?.isEmpty() != true
     }
+
+    override suspend fun getUserId() = auth.currentUser?.uid
+
 
     override fun isUserAlreadyAuthenticated(): Boolean = auth.currentUser != null
 

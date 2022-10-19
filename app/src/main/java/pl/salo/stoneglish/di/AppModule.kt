@@ -2,18 +2,25 @@ package pl.salo.stoneglish.di
 
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.ktx.Firebase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import pl.salo.stoneglish.data.firebase.AuthServiceImpl
+import pl.salo.stoneglish.data.firebase.DatabaseServiceImpl
 import pl.salo.stoneglish.data.repository.AuthRepositoryImpl
+import pl.salo.stoneglish.data.repository.DatabaseRepositoryImpl
 import pl.salo.stoneglish.data.repository.SignUpDataRepository
 import pl.salo.stoneglish.domain.repository.AuthRepository
+import pl.salo.stoneglish.domain.repository.DatabaseRepository
 import pl.salo.stoneglish.domain.services.AuthService
+import pl.salo.stoneglish.domain.services.DatabaseService
 import pl.salo.stoneglish.domain.use_cases.AuthUseCases
 import pl.salo.stoneglish.domain.use_cases.auth.*
+import pl.salo.stoneglish.domain.use_cases.database.WriteUserDataUseCase
+import pl.salo.stoneglish.util.DataMapper
 import javax.inject.Singleton
 
 @Module
@@ -46,6 +53,7 @@ object AppModule {
         googleSignIn = UserGoogleSignInUseCase(authRepository),
         signOut = UserSignOutUseCase(authRepository),
         isUserAuthenticated = UserAlreadyAuthenticatedUseCase(authRepository),
+        signUpGetData = SignUpGetDataUseCase(signUpDataRepository),
         signUpDataSetAgeAndNameUseCase = SignUpDataSetAgeAndNameUseCase(signUpDataRepository),
         signUpDataSetTopicsUseCase = SignUpDataSetTopicsUseCase(signUpDataRepository),
         signUpDataSetEnglishLevelUseCase = SignUpDataSetEnglishLevelUseCase(signUpDataRepository),
@@ -58,4 +66,32 @@ object AppModule {
     @Singleton
     @Provides
     fun provideSignUpDataRepository() = SignUpDataRepository()
+
+    @Provides
+    fun provideDataMapper() = DataMapper()
+
+    /**
+     * FirebaseDatabase provides
+     */
+
+    @Singleton
+    @Provides
+    fun provideFirebaseDatabase() = FirebaseDatabase.getInstance()
+
+    @Singleton
+    @Provides
+    fun provideDatabaseService(firebaseDatabase: FirebaseDatabase): DatabaseService{
+        return DatabaseServiceImpl(firebaseDatabase.reference)
+    }
+
+    @Provides
+    fun provideWriteUserUseCase(databaseRepository: DatabaseRepository, mapper: DataMapper): WriteUserDataUseCase{
+        return WriteUserDataUseCase(databaseRepository, mapper)
+    }
+
+    @Provides
+    fun provideFirebaseDatabaseRepository(databaseService: DatabaseService): DatabaseRepository{
+        return DatabaseRepositoryImpl(databaseService)
+    }
+
 }
