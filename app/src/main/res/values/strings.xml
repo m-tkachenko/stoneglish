@@ -37,4 +37,6 @@
     <string name="dictionary">Dictionary</string>
     <string name="cards">Cards</string>
     <string name="profile">Profile</string>
+    <string name="sport">Sport</string>
+    <string name="continue_string">Continue</string>
 </resources>

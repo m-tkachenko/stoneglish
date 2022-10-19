@@ -10,6 +10,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import pl.salo.stoneglish.R
 import pl.salo.stoneglish.common.Resource
+import pl.salo.stoneglish.domain.model.SignUpCategoryItem
 import pl.salo.stoneglish.domain.use_cases.AuthUseCases
 import pl.salo.stoneglish.domain.use_cases.database.WriteUserDataUseCase
 import pl.salo.stoneglish.util.Event
@@ -26,8 +27,12 @@ class AuthViewModel @Inject constructor(
     val authState: LiveData<Event<Resource<Boolean>>>
         get() = _authState
 
+    private val _categories = MutableLiveData<Event<Resource<List<SignUpCategoryItem>>>>()
+    val categories: LiveData<Event<Resource<List<SignUpCategoryItem>>>>
+        get() = _categories
+
     // signIn and signUp functions
-    private suspend fun signUpUsingEmailAndPassword() {
+    fun signUpUsingEmailAndPassword() {
         _authState.value = Event(Resource.Loading())
 
         auth.signUpGetData().onEach { signUpData ->
@@ -94,16 +99,20 @@ class AuthViewModel @Inject constructor(
             _authState.postValue(Event(result as Resource<Boolean>))
         }.launchIn(viewModelScope)
 
-    fun saveUserInterestedTopics(topics: List<String>) =
-        auth.signUpDataSetTopicsUseCase(topics).onEach { result ->
-            when (result) {
-                is Resource.Success -> {
-                    signUpUsingEmailAndPassword()
-                }
-                is Resource.Error -> {
-                }
-                else -> {}
+    fun getCategories(){
+        auth.signUpDataGetCategoriesUseCase().onEach { categories ->
+            _categories.value = Event(categories)
+        }.launchIn(viewModelScope)
+    }
+
+    fun setCategoryState(category: SignUpCategoryItem){
+        auth.signUpDataSetCategoryState(category).onEach { result ->
+            if(result is Resource.Success){
+                getCategories()
+            }else{
+                _authState.postValue(Event(result as Resource<Boolean>))
             }
         }.launchIn(viewModelScope)
+    }
 
 }

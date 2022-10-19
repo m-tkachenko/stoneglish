@@ -56,12 +56,13 @@ object AppModule {
         isUserAuthenticated = UserAlreadyAuthenticatedUseCase(authRepository),
         signUpGetData = SignUpGetDataUseCase(signUpDataRepository),
         signUpDataSetAgeAndNameUseCase = SignUpDataSetAgeAndNameUseCase(signUpDataRepository),
-        signUpDataSetTopicsUseCase = SignUpDataSetTopicsUseCase(signUpDataRepository),
         signUpDataSetEnglishLevelUseCase = SignUpDataSetEnglishLevelUseCase(signUpDataRepository),
         signUpDataSetEmailAndPasswordUseCase = SignUpDataSetEmailAndPasswordUseCase(
             signUpDataRepository,
             authRepository
-        )
+        ),
+        signUpDataGetCategoriesUseCase = SignUpDataGetCategoriesUseCase(signUpDataRepository),
+        signUpDataSetCategoryState = SignUpDataSetCategoryState(signUpDataRepository)
     )
 
     @Singleton

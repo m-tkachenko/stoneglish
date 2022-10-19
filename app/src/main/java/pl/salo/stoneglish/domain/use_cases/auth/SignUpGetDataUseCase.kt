@@ -8,7 +8,7 @@ import pl.salo.stoneglish.domain.model.SignUpData
 import javax.inject.Inject
 
 class SignUpGetDataUseCase @Inject constructor(val signUpDataRepository: SignUpDataRepository) {
-    suspend operator fun invoke(): Flow<Resource<SignUpData>> = flow {
+    operator fun invoke(): Flow<Resource<SignUpData>> = flow {
         try {
             val data = signUpDataRepository.getSignUpData()
             if (!data.isNotEmpty()) throw Exception("Something went wrong")
