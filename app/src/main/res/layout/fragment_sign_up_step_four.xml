@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/background_main"
     android:orientation="vertical"
     tools:context=".presentation.auth.sign_in.SignInFragment">
 
@@ -10,6 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="56dp"
         android:layout_marginTop="8dp"
+        android:background="@color/white"
         android:orientation="horizontal">
 
         <ImageButton
@@ -44,21 +46,28 @@
         <TextView
             android:layout_width="@dimen/view_width"
             android:layout_height="wrap_content"
-            android:layout_marginVertical="40dp"
+            android:layout_marginVertical="10dp"
             android:gravity="center"
             android:text="@string/why_do_you_learn_english"
             android:textSize="21sp"
             android:textStyle="bold" />
 
-        <Button
-            android:id="@+id/signUpSkipBtn"
-            android:layout_width="@dimen/view_width"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="12dp"
-            android:text="Skip"
-            android:textAllCaps="false" />
 
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_weight="1"
+                android:id="@+id/sign_up_categories"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                tools:ignore="NestedWeights" />
+
+            <Button
+                android:id="@+id/signUpSkipBtn"
+                android:layout_width="@dimen/view_width"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal|bottom"
+                android:layout_marginBottom="12dp"
+                android:text="@string/continue_string"
+                android:textAllCaps="false" />
 
     </LinearLayout>
 

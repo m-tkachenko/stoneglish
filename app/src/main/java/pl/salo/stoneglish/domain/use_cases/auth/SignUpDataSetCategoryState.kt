@@ -4,12 +4,14 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import pl.salo.stoneglish.common.Resource
 import pl.salo.stoneglish.data.repository.SignUpDataRepository
+import pl.salo.stoneglish.domain.model.SignUpCategoryItem
 import javax.inject.Inject
 
-class SignUpDataSetTopicsUseCase @Inject constructor(val signUpDataRepository: SignUpDataRepository) {
-    operator fun invoke(topics: List<String>): Flow<Resource<Unit>> = flow {
+class SignUpDataSetCategoryState @Inject constructor(val signUpDataRepository: SignUpDataRepository) {
+
+    operator fun invoke(category: SignUpCategoryItem): Flow<Resource<Unit>> = flow {
         try {
-            signUpDataRepository.setInterestedTopics(topics)
+            signUpDataRepository.setCategoryState(category)
             emit(Resource.Success(null))
         } catch (e: Exception) {
             emit(Resource.Error(null, e.message))

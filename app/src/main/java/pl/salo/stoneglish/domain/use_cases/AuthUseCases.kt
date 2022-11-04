@@ -12,5 +12,6 @@ data class AuthUseCases(
     val signUpDataSetAgeAndNameUseCase: SignUpDataSetAgeAndNameUseCase,
     val signUpDataSetEmailAndPasswordUseCase: SignUpDataSetEmailAndPasswordUseCase,
     val signUpDataSetEnglishLevelUseCase: SignUpDataSetEnglishLevelUseCase,
-    val signUpDataSetTopicsUseCase: SignUpDataSetTopicsUseCase,
+    val signUpDataGetCategoriesUseCase: SignUpDataGetCategoriesUseCase,
+    val signUpDataSetCategoryState: SignUpDataSetCategoryState
 )

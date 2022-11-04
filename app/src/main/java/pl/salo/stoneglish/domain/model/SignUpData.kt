@@ -6,10 +6,10 @@ data class SignUpData(
     var password: String? = null,
     var username: String? = null,
     var age: Int? = null,
-    var interestedTopics: List<String>? = null,
+    var interestedTopics: MutableList<SignUpCategoryItem> = mutableListOf(),
     var englishLevel: String? = null
 ) {
     fun isNotEmpty(): Boolean {
-        return email != null || password != null || username != null || age != null || interestedTopics != null || englishLevel != null
+        return email != null || password != null || username != null || age != null || englishLevel != null
     }
 }
