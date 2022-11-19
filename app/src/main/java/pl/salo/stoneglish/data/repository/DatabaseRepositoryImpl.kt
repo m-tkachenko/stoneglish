@@ -9,4 +9,5 @@ class DatabaseRepositoryImpl @Inject constructor(
     private val databaseService: DatabaseService
 ) : DatabaseRepository {
     override suspend fun writeUserData(user: User) = databaseService.writeUserData(user)
+    override suspend fun getUserFlowable(id: String) = databaseService.getUser(id)
 }
