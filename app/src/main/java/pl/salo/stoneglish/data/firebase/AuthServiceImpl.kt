@@ -57,7 +57,10 @@ class AuthServiceImpl @Inject constructor(
             .await()
             .user
 
-    override suspend fun signOut() = auth.signOut()
+    override suspend fun signOut(): Boolean {
+        auth.signOut()
+        return auth.currentUser == null
+    }
 
     override suspend fun isEmailExist(email: String):Boolean {
         val result = auth.fetchSignInMethodsForEmail(email).await()

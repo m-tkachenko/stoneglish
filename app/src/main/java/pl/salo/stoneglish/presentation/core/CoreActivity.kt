@@ -1,12 +1,17 @@
 package pl.salo.stoneglish.presentation.core
 
-import androidx.appcompat.app.AppCompatActivity
+import android.app.AlertDialog
+import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import dagger.hilt.android.AndroidEntryPoint
 import pl.salo.stoneglish.R
+import pl.salo.stoneglish.common.Resource
 import pl.salo.stoneglish.databinding.ActivityCoreBinding
+import pl.salo.stoneglish.presentation.auth.AuthActivity
 import pl.salo.stoneglish.presentation.auth.AuthViewModel
 import pl.salo.stoneglish.presentation.core.cards.CardsFragment
 import pl.salo.stoneglish.presentation.core.dictionary.DictionaryFragment
@@ -25,6 +30,7 @@ class CoreActivity : AppCompatActivity(), CoreNavigator {
         binding = ActivityCoreBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        observeSignOut()
         binding.bottomNavigation.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.home -> {
@@ -57,7 +63,51 @@ class CoreActivity : AppCompatActivity(), CoreNavigator {
             .commit()
     }
 
+    private fun observeSignOut(){
+        viewModel.onSignOut.observe(this){
+            when(it){
+                is Resource.Success -> {
+                    goToAuthActivity()
+                }
+                is Resource.Error -> {
+                    makeToast(it.message.toString())
+                }
+                is Resource.Loading -> {
+                    //TODO
+                }
+            }
+        }
+    }
+
+    private fun showSignOutDialog() {
+        var dialog: AlertDialog? = null
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Sign Out")
+        builder.setMessage("Do you want to sign out?")
+        builder.setPositiveButton("Yes") { _, _ ->
+            viewModel.signOut()
+        }
+        builder.setNegativeButton("No") { _, _ ->
+            dialog?.dismiss()
+        }
+        dialog = builder.create()
+        dialog.show()
+    }
+
+    override fun signOut() {
+        showSignOutDialog()
+    }
+
+    override fun makeToast(text: String) {
+        Toast.makeText(this, text, Toast.LENGTH_SHORT).show()
+    }
+
     override fun onBackPressed() = goBack()
+    override fun goToAuthActivity() {
+        val intent = Intent(this@CoreActivity, AuthActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
 
 
     override fun goBack() {

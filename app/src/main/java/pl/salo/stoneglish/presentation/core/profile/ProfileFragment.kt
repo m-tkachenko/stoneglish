@@ -11,6 +11,7 @@ import com.bumptech.glide.Glide
 import dagger.hilt.android.AndroidEntryPoint
 import pl.salo.stoneglish.common.Resource
 import pl.salo.stoneglish.databinding.FragmentProfileBinding
+import pl.salo.stoneglish.util.coreNavigator
 
 @AndroidEntryPoint
 class ProfileFragment : Fragment() {
@@ -29,6 +30,10 @@ class ProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         observeCurrentUser()
+
+        binding.profileSignOut.setOnClickListener {
+            coreNavigator().signOut()
+        }
     }
 
     private fun observeCurrentUser() {
