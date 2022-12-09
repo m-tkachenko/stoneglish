@@ -8,7 +8,8 @@ import dagger.hilt.android.AndroidEntryPoint
 import pl.salo.stoneglish.R
 import pl.salo.stoneglish.databinding.ActivityCoreBinding
 import pl.salo.stoneglish.presentation.auth.AuthViewModel
-import pl.salo.stoneglish.presentation.core.cards.CardsFragment
+import pl.salo.stoneglish.presentation.core.cards.fragments.CardsFragment
+import pl.salo.stoneglish.presentation.core.cards.fragments.ModulesFragment
 import pl.salo.stoneglish.presentation.core.dictionary.DictionaryFragment
 import pl.salo.stoneglish.presentation.core.home.HomeFragment
 import pl.salo.stoneglish.presentation.core.profile.ProfileFragment

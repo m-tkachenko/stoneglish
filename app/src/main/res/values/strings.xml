@@ -9,7 +9,7 @@
     <string name="create_an_account">Create an account</string>
     <string name="i_already_have_an_account">I already have an account</string>
 
-<!--  Texts for welcome viewPager  -->
+    <!--  Texts for welcome viewPager  -->
     <string name="text_0">Stoneglish will make your English learning easy and interesting</string>
     <string name="text_1">Stoneglish is the best application for study English</string>
     <string name="text_2">Stoneglish will make your English learning easy and interesting :)))</string>
@@ -39,4 +39,8 @@
     <string name="profile">Profile</string>
     <string name="sport">Sport</string>
     <string name="continue_string">Continue</string>
+
+    <!--  Texts for Cards functionality  -->
+    <string name="modules_top_navigation_bar">Modules</string>
+    <string name="cards_top_navigation_bar">Cards</string>
 </resources>

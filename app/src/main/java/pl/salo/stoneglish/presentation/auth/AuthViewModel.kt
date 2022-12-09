@@ -10,7 +10,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import pl.salo.stoneglish.R
 import pl.salo.stoneglish.common.Resource
-import pl.salo.stoneglish.domain.model.SignUpCategoryItem
+import pl.salo.stoneglish.domain.model.auth.SignUpCategoryItem
 import pl.salo.stoneglish.domain.use_cases.AuthUseCases
 import pl.salo.stoneglish.domain.use_cases.database.WriteUserDataUseCase
 import pl.salo.stoneglish.util.Event

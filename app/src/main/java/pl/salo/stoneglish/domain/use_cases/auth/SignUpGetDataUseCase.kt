@@ -4,7 +4,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import pl.salo.stoneglish.common.Resource
 import pl.salo.stoneglish.data.repository.SignUpDataRepository
-import pl.salo.stoneglish.domain.model.SignUpData
+import pl.salo.stoneglish.domain.model.auth.SignUpData
 import javax.inject.Inject
 
 class SignUpGetDataUseCase @Inject constructor(val signUpDataRepository: SignUpDataRepository) {

@@ -1,9 +1,8 @@
 package pl.salo.stoneglish.domain.use_cases.auth
 
-import android.util.Log
 import kotlinx.coroutines.flow.*
 import pl.salo.stoneglish.common.Resource
-import pl.salo.stoneglish.domain.model.SignUpData
+import pl.salo.stoneglish.domain.model.auth.SignUpData
 import pl.salo.stoneglish.domain.repository.AuthRepository
 import retrofit2.HttpException
 import javax.inject.Inject
