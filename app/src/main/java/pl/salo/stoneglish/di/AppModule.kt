@@ -12,15 +12,24 @@ import pl.salo.stoneglish.data.firebase.AuthServiceImpl
 import pl.salo.stoneglish.data.firebase.DatabaseServiceImpl
 import pl.salo.stoneglish.data.repository.AuthRepositoryImpl
 import pl.salo.stoneglish.data.repository.DatabaseRepositoryImpl
+import pl.salo.stoneglish.data.repository.DictionaryRepositoryImpl
 import pl.salo.stoneglish.data.repository.SignUpDataRepository
+import pl.salo.stoneglish.data.retrofit.DictionaryApiService
 import pl.salo.stoneglish.domain.repository.AuthRepository
 import pl.salo.stoneglish.domain.repository.DatabaseRepository
+import pl.salo.stoneglish.domain.repository.DictionaryRepository
 import pl.salo.stoneglish.domain.services.AuthService
 import pl.salo.stoneglish.domain.services.DatabaseService
 import pl.salo.stoneglish.domain.use_cases.AuthUseCases
+import pl.salo.stoneglish.domain.use_cases.DictionaryUseCases
 import pl.salo.stoneglish.domain.use_cases.auth.*
 import pl.salo.stoneglish.domain.use_cases.database.WriteUserDataUseCase
+import pl.salo.stoneglish.domain.use_cases.dictionary.DictionaryGetWordDataUseCase
+import pl.salo.stoneglish.domain.use_cases.dictionary.PlayAudioByUrl
+import pl.salo.stoneglish.util.Constants
 import pl.salo.stoneglish.util.DataMapper
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
 @Module
@@ -96,4 +105,26 @@ object AppModule {
         return DatabaseRepositoryImpl(databaseService)
     }
 
+    //Dictionary
+    @Provides
+    @Singleton
+    fun provideDictionaryApi(): DictionaryApiService = Retrofit.Builder()
+            .baseUrl(Constants.DICTIONARY_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+            .create(DictionaryApiService::class.java)
+
+    @Provides
+    @Singleton
+    fun provideDictionaryRepository(dictionaryApiService: DictionaryApiService): DictionaryRepository {
+        return DictionaryRepositoryImpl(dictionaryApiService)
+    }
+
+    @Provides
+    fun providesDictionaryUseCases(
+        dictionaryRepository: DictionaryRepository
+    ) = DictionaryUseCases(
+        dictionaryGetWordDataUseCase = DictionaryGetWordDataUseCase(dictionaryRepository),
+        playAudioByUrl = PlayAudioByUrl()
+    )
 }
