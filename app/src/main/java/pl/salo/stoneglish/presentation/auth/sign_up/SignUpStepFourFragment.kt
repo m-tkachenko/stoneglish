@@ -9,7 +9,7 @@ import pl.salo.stoneglish.common.Resource
 import pl.salo.stoneglish.databinding.FragmentSignUpStepFourBinding
 import pl.salo.stoneglish.presentation.auth.BaseAuthFragment
 import pl.salo.stoneglish.presentation.auth.sign_up.adapter.SignUpCategoryAdapter
-import pl.salo.stoneglish.util.navigator
+import pl.salo.stoneglish.util.authNavigator
 
 @AndroidEntryPoint
 class SignUpStepFourFragment : BaseAuthFragment<FragmentSignUpStepFourBinding>(
@@ -21,10 +21,10 @@ class SignUpStepFourFragment : BaseAuthFragment<FragmentSignUpStepFourBinding>(
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initRecyclerView()
-        onSwitchFragmentListener { navigator().goToCoreActivity() }
+        onSwitchFragmentListener { authNavigator().goToCoreActivity() }
 
         with(binding) {
-            signUpBackArrow.setOnClickListener { navigator().goBack() }
+            signUpBackArrow.setOnClickListener { authNavigator().goBack() }
             signUpSkipBtn.setOnClickListener { viewModel.signUpUsingEmailAndPassword() }
         }
     }

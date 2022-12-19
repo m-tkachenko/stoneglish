@@ -10,22 +10,27 @@ import javax.inject.Inject
 class UserSignOutUseCase @Inject constructor(
     private val authRepository: AuthRepository
 ) {
-    suspend operator fun invoke(): Flow<Resource<Boolean>> =
+    operator fun invoke(): Flow<Resource<Unit>> =
         flow {
             try {
                 emit(Resource.Loading())
-                authRepository.signOut()
-                emit(Resource.Success(data = true))
+                val isSuccess = authRepository.signOut()
+                if (!isSuccess) throw Exception(/**constants**/)
+                emit(Resource.Success(Unit))
             } catch (e: HttpException) {
-                emit(Resource.Error(
-                    data = false,
-                    message = e.localizedMessage
-                ))
+                emit(
+                    Resource.Error(
+                        data = null,
+                        message = e.localizedMessage
+                    )
+                )
             } catch (e: Exception) {
-                emit(Resource.Error(
-                    data = false,
-                    message = e.localizedMessage
-                ))
+                emit(
+                    Resource.Error(
+                        data = null,
+                        message = e.localizedMessage
+                    )
+                )
             }
         }
 }

@@ -27,6 +27,6 @@ enum class ProgressDialogState {
     HIDE
 }
 
-fun Fragment.navigator(): AuthNavigator {
+fun Fragment.authNavigator(): AuthNavigator {
     return requireActivity() as AuthNavigator
 }

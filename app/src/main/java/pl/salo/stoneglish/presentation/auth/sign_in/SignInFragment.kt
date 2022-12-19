@@ -5,7 +5,7 @@ import android.view.View
 import dagger.hilt.android.AndroidEntryPoint
 import pl.salo.stoneglish.databinding.FragmentSignInBinding
 import pl.salo.stoneglish.presentation.auth.BaseAuthFragment
-import pl.salo.stoneglish.util.navigator
+import pl.salo.stoneglish.util.authNavigator
 
 private const val TAG = "SignInFragment"
 
@@ -17,11 +17,11 @@ class SignInFragment : BaseAuthFragment<FragmentSignInBinding>(
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        onSwitchFragmentListener { navigator().goToCoreActivity() }
+        onSwitchFragmentListener { authNavigator().goToCoreActivity() }
 
         with(binding) {
             signInBackArrow.setOnClickListener {
-                navigator().goBack()
+                authNavigator().goBack()
             }
 
             signInBtn.setOnClickListener {
@@ -32,7 +32,7 @@ class SignInFragment : BaseAuthFragment<FragmentSignInBinding>(
             }
 
             signInWithGoogle.setOnClickListener {
-                navigator().beginGoogleSignIn()
+                authNavigator().beginGoogleSignIn()
             }
         }
     }

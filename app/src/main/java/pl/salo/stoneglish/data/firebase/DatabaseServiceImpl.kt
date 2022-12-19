@@ -9,11 +9,19 @@ import javax.inject.Inject
 
 const val TAG = "DatabaseServiceImpl"
 
-class DatabaseServiceImpl @Inject constructor(private val firebaseDatabase: DatabaseReference) :
+class DatabaseServiceImpl @Inject constructor(
+    private val firebaseDatabase: DatabaseReference
+) :
     DatabaseService {
     override suspend fun writeUserData(user: User) {
         firebaseDatabase.child("users").child(user.id).setValue(user).await()
         Log.d(TAG, "writeUserData")
+    }
+
+    override suspend fun getUser(id: String): User {
+        val result =
+            firebaseDatabase.child("users").child(id).get().addOnCompleteListener {}.await()
+        return result.getValue(User::class.java) ?: throw Exception("No such user")
     }
 
 }

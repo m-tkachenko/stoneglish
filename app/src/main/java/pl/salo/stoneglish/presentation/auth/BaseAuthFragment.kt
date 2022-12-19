@@ -9,7 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.viewbinding.ViewBinding
 import pl.salo.stoneglish.common.Resource
 import pl.salo.stoneglish.util.ProgressDialogState
-import pl.salo.stoneglish.util.navigator
+import pl.salo.stoneglish.util.authNavigator
 
 abstract class BaseAuthFragment<VB : ViewBinding>(
     private val bindingInflater: (inflater: LayoutInflater) -> VB
@@ -37,16 +37,16 @@ abstract class BaseAuthFragment<VB : ViewBinding>(
             authResult.getContentIfNotHandled()?.let {
                 when (it) {
                     is Resource.Success -> {
-                        navigator().setProgressDialog(ProgressDialogState.HIDE)
+                        authNavigator().setProgressDialog(ProgressDialogState.HIDE)
                         viewModel.authState.removeObservers(viewLifecycleOwner)
                         fragment()
                     }
                     is Resource.Error -> {
-                        navigator().setProgressDialog(ProgressDialogState.HIDE)
-                        navigator().makeSnack("${it.message}")
+                        authNavigator().setProgressDialog(ProgressDialogState.HIDE)
+                        authNavigator().makeSnack("${it.message}")
                     }
                     is Resource.Loading ->
-                        navigator().setProgressDialog(ProgressDialogState.SHOW, "Signing up")
+                        authNavigator().setProgressDialog(ProgressDialogState.SHOW, "Signing up")
                 }
             }
 

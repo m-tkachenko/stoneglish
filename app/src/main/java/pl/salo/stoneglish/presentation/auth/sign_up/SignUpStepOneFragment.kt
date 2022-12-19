@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.view.View
 import dagger.hilt.android.AndroidEntryPoint
 import pl.salo.stoneglish.databinding.FragmentSignUpStepOneBinding
-import pl.salo.stoneglish.util.navigator
+import pl.salo.stoneglish.util.authNavigator
 import pl.salo.stoneglish.presentation.auth.BaseAuthFragment
 
 private const val TAG = "SignUpStepOneFragment"
@@ -15,11 +15,11 @@ class SignUpStepOneFragment : BaseAuthFragment<FragmentSignUpStepOneBinding>(
 ) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        onSwitchFragmentListener { navigator().goToSignUpStepTwo() }
+        onSwitchFragmentListener { authNavigator().goToSignUpStepTwo() }
 
         with(binding) {
             signUpBackArrow.setOnClickListener {
-                navigator().goBack()
+                authNavigator().goBack()
             }
 
             signUpBtn.setOnClickListener {
@@ -30,7 +30,7 @@ class SignUpStepOneFragment : BaseAuthFragment<FragmentSignUpStepOneBinding>(
             }
 
             signUpWithGoogle.setOnClickListener {
-                navigator().beginGoogleSignIn()
+                authNavigator().beginGoogleSignIn()
             }
         }
     }

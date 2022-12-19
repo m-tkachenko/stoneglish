@@ -21,8 +21,10 @@ import pl.salo.stoneglish.domain.repository.DictionaryRepository
 import pl.salo.stoneglish.domain.services.AuthService
 import pl.salo.stoneglish.domain.services.DatabaseService
 import pl.salo.stoneglish.domain.use_cases.AuthUseCases
+import pl.salo.stoneglish.domain.use_cases.DatabaseUseCases
 import pl.salo.stoneglish.domain.use_cases.DictionaryUseCases
 import pl.salo.stoneglish.domain.use_cases.auth.*
+import pl.salo.stoneglish.domain.use_cases.database.GetCurrentUserUseCase
 import pl.salo.stoneglish.domain.use_cases.database.WriteUserDataUseCase
 import pl.salo.stoneglish.domain.use_cases.dictionary.DictionaryGetWordDataUseCase
 import pl.salo.stoneglish.domain.use_cases.dictionary.PlayAudioByUrl
@@ -91,19 +93,32 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun provideDatabaseService(firebaseDatabase: FirebaseDatabase): DatabaseService{
+    fun provideDatabaseService(
+        firebaseDatabase: FirebaseDatabase,
+    ): DatabaseService {
         return DatabaseServiceImpl(firebaseDatabase.reference)
     }
 
     @Provides
-    fun provideWriteUserUseCase(databaseRepository: DatabaseRepository, mapper: DataMapper): WriteUserDataUseCase{
+    fun provideWriteUserUseCase(
+        databaseRepository: DatabaseRepository,
+        mapper: DataMapper
+    ): WriteUserDataUseCase {
         return WriteUserDataUseCase(databaseRepository, mapper)
     }
 
     @Provides
-    fun provideFirebaseDatabaseRepository(databaseService: DatabaseService): DatabaseRepository{
+    fun provideFirebaseDatabaseRepository(databaseService: DatabaseService): DatabaseRepository {
         return DatabaseRepositoryImpl(databaseService)
     }
+
+    @Provides
+    fun provideDatabaseUseCases(
+        databaseRepository: DatabaseRepository, mapper: DataMapper, authRepository: AuthRepository
+    ) = DatabaseUseCases(
+        getCurrentUserUseCase = GetCurrentUserUseCase(databaseRepository, authRepository),
+        writeUserDataUseCase = WriteUserDataUseCase(databaseRepository, mapper)
+    )
 
     //Dictionary
     @Provides
