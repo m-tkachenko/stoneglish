@@ -6,7 +6,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import pl.salo.stoneglish.databinding.FragmentSignUpStepThreeBinding
 import pl.salo.stoneglish.presentation.auth.BaseAuthFragment
 import pl.salo.stoneglish.util.Constants
-import pl.salo.stoneglish.util.navigator
+import pl.salo.stoneglish.util.authNavigator
 
 @AndroidEntryPoint
 class SignUpStepThreeFragment : BaseAuthFragment<FragmentSignUpStepThreeBinding>(
@@ -14,10 +14,10 @@ class SignUpStepThreeFragment : BaseAuthFragment<FragmentSignUpStepThreeBinding>
 ) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        onSwitchFragmentListener { navigator().goToSignUpStepFour() }
+        onSwitchFragmentListener { authNavigator().goToSignUpStepFour() }
 
         with(binding) {
-            signUpBackArrow.setOnClickListener { navigator().goBack() }
+            signUpBackArrow.setOnClickListener { authNavigator().goBack() }
             signUpBeginnerBtn.setOnClickListener { writeUserLanguageLevel(Constants.ENGLISH_LEVEL_BEGINNER) }
             signUpIntermediateBtn.setOnClickListener { writeUserLanguageLevel(Constants.ENGLISH_LEVEL_INTERMEDIATE) }
             signUpAdvancedBtn.setOnClickListener { writeUserLanguageLevel(Constants.ENGLISH_LEVEL_ADVANCED) }

@@ -31,6 +31,10 @@ class AuthViewModel @Inject constructor(
     val categories: LiveData<Event<Resource<List<SignUpCategoryItem>>>>
         get() = _categories
 
+    private val _onSignOut = MutableLiveData<Resource<Unit>>()
+    val onSignOut: LiveData<Resource<Unit>>
+        get() = _onSignOut
+
     // signIn and signUp functions
     fun signUpUsingEmailAndPassword() {
         _authState.value = Event(Resource.Loading())
@@ -114,5 +118,12 @@ class AuthViewModel @Inject constructor(
             }
         }.launchIn(viewModelScope)
     }
+
+    fun signOut() {
+        auth.signOut().onEach {
+            _onSignOut.postValue(it)
+        }.launchIn(viewModelScope)
+    }
+
 
 }

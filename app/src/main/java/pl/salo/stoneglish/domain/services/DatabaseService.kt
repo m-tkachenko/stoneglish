@@ -6,6 +6,8 @@ import pl.salo.stoneglish.domain.model.card.Test
 
 interface DatabaseService {
     suspend fun writeUserData(user: User)
+    suspend fun getUser(id:String): User
+
     suspend fun writeUserCard(card: Card, module: String)
 
     suspend fun listOfCards(moduleName: String): List<Card>

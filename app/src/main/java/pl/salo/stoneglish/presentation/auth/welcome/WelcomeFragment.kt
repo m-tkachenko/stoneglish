@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import dagger.hilt.android.AndroidEntryPoint
 import pl.salo.stoneglish.databinding.FragmentWelcomeBinding
-import pl.salo.stoneglish.util.navigator
+import pl.salo.stoneglish.util.authNavigator
 
 @AndroidEntryPoint
 class WelcomeFragment : Fragment() {
@@ -37,11 +37,11 @@ class WelcomeFragment : Fragment() {
     private fun initNavButtons() {
 
         binding.createAccountButton.setOnClickListener {
-            navigator().goToSignUp()
+            authNavigator().goToSignUp()
         }
 
         binding.existAccountButton.setOnClickListener {
-            navigator().goToSignIn()
+            authNavigator().goToSignIn()
         }
     }
 }

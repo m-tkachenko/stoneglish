@@ -19,6 +19,12 @@ class DatabaseServiceImpl @Inject constructor(
         Log.d(TAG, "writeUserData")
     }
 
+    override suspend fun getUser(id: String): User {
+        val result =
+            firebaseDatabase.child("users").child(id).get().addOnCompleteListener {}.await()
+        return result.getValue(User::class.java) ?: throw Exception("No such user")
+    }
+
     override suspend fun writeUserCard(card: Card, module: String) {
         firebaseDatabase
             .child("users")

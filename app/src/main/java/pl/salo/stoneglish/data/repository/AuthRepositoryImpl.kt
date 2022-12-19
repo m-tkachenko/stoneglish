@@ -16,7 +16,7 @@ class AuthRepositoryImpl @Inject constructor(
     override suspend fun googleSignIn(account: GoogleSignInAccount) =
         authService.googleSignIn(account)
 
-    override suspend fun signOut() = authService.signOut()
+    override suspend fun signOut(): Boolean = authService.signOut()
 
     override suspend fun isEmailExist(email: String) = authService.isEmailExist(email)
     override suspend fun getUserId() = authService.getUserId()

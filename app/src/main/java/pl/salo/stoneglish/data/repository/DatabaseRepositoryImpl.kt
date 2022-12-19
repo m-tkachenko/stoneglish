@@ -10,6 +10,10 @@ import javax.inject.Inject
 class DatabaseRepositoryImpl @Inject constructor(
     private val databaseService: DatabaseService
 ): DatabaseRepository {
+    override suspend fun getUserFlowable(id: String) = databaseService.getUser(id)
+    override suspend fun writeUserData(user: User) =
+        databaseService.writeUserData(user)
+
     override suspend fun readCardsList(moduleName: String) =
         databaseService.listOfCards(moduleName)
     override suspend fun readModulesList(): List<String> =
@@ -17,8 +21,7 @@ class DatabaseRepositoryImpl @Inject constructor(
     override suspend fun readTestsList(moduleName: String): List<Test> =
         databaseService.listOfTests(moduleName)
 
-    override suspend fun writeUserData(user: User) =
-        databaseService.writeUserData(user)
     override suspend fun writeUserCard(card: Card, module: String) =
         databaseService.writeUserCard(card, module)
+
 }
