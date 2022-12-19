@@ -14,14 +14,34 @@ import pl.salo.stoneglish.presentation.core.cards.CardsViewModel
 import pl.salo.stoneglish.presentation.core.cards.adapters.CardsTranslationsAdapter
 import pl.salo.stoneglish.presentation.core.cards.adapters.CardTestsAdapter
 import pl.salo.stoneglish.presentation.core.cards.viewpager.CardsViewPagerAdapter
+import pl.salo.stoneglish.util.Utils.isAbsoluteTrue
+import pl.salo.stoneglish.util.Utils.visible
 import pl.salo.stoneglish.util.coreNavigator
 
 const val TAG = "CardsFragment"
 @AndroidEntryPoint
 class CardsFragment : Fragment() {
     private lateinit var binding: FragmentCardsBinding
-
     private val cardsViewModel: CardsViewModel by viewModels()
+
+    private var downloaded = Pair(false, false)
+
+    private var testsDownloaded = false
+        set(value) {
+            field = value
+            downloaded = Pair(cardsDownloaded, testsDownloaded)
+
+            if (value)
+                loadingUiUpdate()
+        }
+    private var cardsDownloaded = false
+        set(value) {
+            field = value
+            downloaded = Pair(cardsDownloaded, testsDownloaded)
+
+            if (value)
+                loadingUiUpdate()
+        }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -60,11 +80,14 @@ class CardsFragment : Fragment() {
                         binding.testsRecyclerviewInCards.adapter = CardTestsAdapter(
                             tests = tests.data!!
                         )
+                        testsDownloaded = true
                     }
                     is Resource.Error -> {
+                        testsDownloaded = false
                         Log.d(TAG, "TestsDownload : Failure : Error = ${tests.message}")
                     }
                     is Resource.Loading -> {
+                        testsDownloaded = false
                         Log.d(TAG, "TestsDownload : Loading")
                     }
                 }
@@ -93,15 +116,26 @@ class CardsFragment : Fragment() {
                                 )
                             cardsWormDotsIndicator.attachTo(cardsViewPager)
                         }
+
+                        cardsDownloaded = true
                     }
                     is Resource.Error -> {
+                        cardsDownloaded = false
                         Log.d(TAG, "CardsDownload : Failure : Error = ${cards.message}")
                     }
                     is Resource.Loading -> {
+                        cardsDownloaded = false
                         Log.d(TAG, "CardsDownload : Loading")
                     }
                 }
             }
+        }
+    }
+
+    private fun loadingUiUpdate() {
+        with(binding) {
+            cardsLoadingLayout.visible(!downloaded.isAbsoluteTrue())
+            cardsDownloadedLayout.visible(downloaded.isAbsoluteTrue())
         }
     }
 }

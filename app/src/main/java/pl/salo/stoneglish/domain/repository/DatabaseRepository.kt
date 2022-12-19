@@ -8,9 +8,9 @@ interface DatabaseRepository {
     suspend fun getUserFlowable(id: String): User
     suspend fun writeUserData(user: User)
 
-    suspend fun writeUserCard(card: Card, module: String)
+    suspend fun writeUserCard(card: Card, module: String, userId: String)
 
-    suspend fun readCardsList(moduleName: String): List<Card>
-    suspend fun readModulesList(): List<String>
-    suspend fun readTestsList(moduleName: String): List<Test>
+    suspend fun readCardsList(moduleName: String, userId: String): List<Card>
+    suspend fun readModulesList(userId: String): List<String>
+    suspend fun readTestsList(moduleName: String, userId: String): List<Test>
 }

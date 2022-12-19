@@ -12,12 +12,28 @@ import pl.salo.stoneglish.common.Resource
 import pl.salo.stoneglish.databinding.FragmentModulesBinding
 import pl.salo.stoneglish.presentation.core.cards.CardsViewModel
 import pl.salo.stoneglish.presentation.core.cards.adapters.CardModulesAdapter
+import pl.salo.stoneglish.util.Utils.visible
 import pl.salo.stoneglish.util.coreNavigator
 
 @AndroidEntryPoint
 class ModulesFragment : Fragment() {
     private lateinit var binding: FragmentModulesBinding
     private val cardsViewModel: CardsViewModel by viewModels()
+
+    private var modulesDownloaded = false
+        set(value) {
+            field = value
+
+            if (value)
+                updateModulesUi()
+        }
+    private var noModulesThere = false
+        set(value) {
+            field = value
+
+            if (value)
+                updateModulesUi()
+        }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -46,16 +62,34 @@ class ModulesFragment : Fragment() {
                             ) { module ->
                                 this.coreNavigator().goToCard(module)
                             }
+
+                        modulesDownloaded = true
+                        noModulesThere = modules.data.isNullOrEmpty()
                     }
                     is Resource.Error -> {
+                        modulesDownloaded = false
                         Log.d(TAG, "ModulesDownload : Failure : Error = ${modules.message}")
                     }
                     is Resource.Loading -> {
+                        modulesDownloaded = false
                         Log.d(TAG, "ModulesDownload : Loading")
                     }
                 }
 
             }
+        }
+    }
+
+    private fun updateModulesUi() {
+        with(binding) {
+            modulesNoModulesLayout.visible(visibility = noModulesThere)
+
+            modulesLoadingLayout.visible(
+                visibility = !modulesDownloaded && !noModulesThere
+            )
+            modulesDownloadedLayout.visible(
+                visibility = modulesDownloaded && !noModulesThere
+            )
         }
     }
 

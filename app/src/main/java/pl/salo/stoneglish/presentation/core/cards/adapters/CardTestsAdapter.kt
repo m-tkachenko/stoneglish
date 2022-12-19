@@ -5,7 +5,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import pl.salo.stoneglish.databinding.CardsTestItemBinding
 import pl.salo.stoneglish.domain.model.card.Test
-import pl.salo.stoneglish.util.Topic
 import pl.salo.stoneglish.util.Utils.getTopicIcon
 
 class CardTestsAdapter(private val tests: List<Test>)

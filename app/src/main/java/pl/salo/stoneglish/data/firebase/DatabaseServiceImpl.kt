@@ -25,10 +25,10 @@ class DatabaseServiceImpl @Inject constructor(
         return result.getValue(User::class.java) ?: throw Exception("No such user")
     }
 
-    override suspend fun writeUserCard(card: Card, module: String) {
+    override suspend fun writeUserCard(card: Card, module: String, userId: String) {
         firebaseDatabase
             .child("users")
-            .child("Y1CQmGnx8IdMIjTEwKdbVhXRiPl2")
+            .child(userId)
             .child("cards")
             .child(module)
             .child(card.word)
@@ -39,10 +39,10 @@ class DatabaseServiceImpl @Inject constructor(
         Log.d(TAG, "writeUserCard")
     }
 
-    override suspend fun listOfCards(moduleName: String): List<Card> {
+    override suspend fun listOfCards(moduleName: String, userId: String): List<Card> {
         val resultCardsSnapshot = firebaseDatabase
             .child("users")
-            .child("Y1CQmGnx8IdMIjTEwKdbVhXRiPl2")
+            .child(userId)
             .child("cards")
             .child(moduleName)
             .get()
@@ -58,12 +58,12 @@ class DatabaseServiceImpl @Inject constructor(
         return cardList
     }
 
-    override suspend fun listOfModules(): List<String> {
+    override suspend fun listOfModules(userId: String): List<String> {
         val moduleList: MutableList<String> = mutableListOf()
 
         firebaseDatabase
             .child("users")
-            .child("Y1CQmGnx8IdMIjTEwKdbVhXRiPl2")
+            .child(userId)
             .child("cards")
             .get()
             .await()
@@ -75,10 +75,10 @@ class DatabaseServiceImpl @Inject constructor(
         return moduleList
     }
 
-    override suspend fun listOfTests(moduleName: String): List<Test> {
+    override suspend fun listOfTests(moduleName: String, userId: String): List<Test> {
         val resultTestsSnapshot = firebaseDatabase
             .child("users")
-            .child("Y1CQmGnx8IdMIjTEwKdbVhXRiPl2")
+            .child(userId)
             .child("cards")
             .child(moduleName)
             .child("tests")

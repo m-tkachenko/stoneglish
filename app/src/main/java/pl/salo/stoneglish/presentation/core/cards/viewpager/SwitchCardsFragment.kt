@@ -5,10 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import pl.salo.stoneglish.R
 import pl.salo.stoneglish.databinding.FragmentSwitchCardsBinding
-import pl.salo.stoneglish.databinding.FragmentSwitchItemBinding
-import pl.salo.stoneglish.presentation.auth.welcome.SwitchItemFragment
 
 class SwitchCardsFragment : Fragment() {
     lateinit var binding: FragmentSwitchCardsBinding

@@ -8,9 +8,9 @@ interface DatabaseService {
     suspend fun writeUserData(user: User)
     suspend fun getUser(id:String): User
 
-    suspend fun writeUserCard(card: Card, module: String)
+    suspend fun writeUserCard(card: Card, module: String, userId: String)
 
-    suspend fun listOfCards(moduleName: String): List<Card>
-    suspend fun listOfModules(): List<String>
-    suspend fun listOfTests(moduleName: String): List<Test>
+    suspend fun listOfCards(moduleName: String, userId: String): List<Card>
+    suspend fun listOfModules(userId: String): List<String>
+    suspend fun listOfTests(moduleName: String, userId: String): List<Test>
 }

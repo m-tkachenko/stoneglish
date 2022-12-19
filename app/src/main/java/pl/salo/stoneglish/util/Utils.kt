@@ -1,10 +1,22 @@
 package pl.salo.stoneglish.util
 
+import android.view.View
 import androidx.annotation.DrawableRes
 
 object Utils {
     fun Any?.isNull() = this == null
     fun Any?.isNotNull() = this != null
+
+    fun Boolean.isTrue() = this
+    fun Pair<Boolean, Boolean>.isAbsoluteTrue() = first.isTrue() && second.isTrue()
+
+    fun View.visible(visibility: Boolean) {
+        if (visibility)
+            this.visibility = View.VISIBLE
+        else
+            this.visibility = View.GONE
+    }
+
     @DrawableRes
     fun String.getTopicIcon(): Int =
         when(this) {

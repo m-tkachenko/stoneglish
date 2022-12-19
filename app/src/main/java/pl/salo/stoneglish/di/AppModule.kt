@@ -53,23 +53,11 @@ object AppModule {
         return AuthServiceImpl(auth)
     }
 
-//    @Singleton
-//    @Provides
-//    fun providesDatabaseService(): DatabaseService {
-//        return DatabaseServiceImpl()
-//    }
-
     // Repositories duper-super functions
     @Provides
     fun providesAuthRepository(authService: AuthService): AuthRepository {
         return AuthRepositoryImpl(authService)
     }
-
-//    @Singleton
-//    @Provides
-//    fun providesDatabaseRepository(databaseService: DatabaseService): DatabaseRepository {
-//        return DatabaseRepositoryImpl(databaseService)
-//    }
 
     // Use-Cases shmuper-super functions
     @Provides
@@ -95,12 +83,13 @@ object AppModule {
 
     @Provides
     fun providesCardsUseCases(
-        databaseRepository: DatabaseRepository
+        databaseRepository: DatabaseRepository,
+        authRepository: AuthRepository
     ) = CardsUseCases(
-        cardsList = ReadListOfCardsUseCase(databaseRepository),
-        modulesList = ReadListOfModulesUseCase(databaseRepository),
-        testsList = ReadListOfTestsUseCase(databaseRepository),
-        addNewCard = WriteUserCardUseCase(databaseRepository)
+        cardsList = ReadListOfCardsUseCase(databaseRepository, authRepository),
+        modulesList = ReadListOfModulesUseCase(databaseRepository, authRepository),
+        testsList = ReadListOfTestsUseCase(databaseRepository, authRepository),
+        addNewCard = WriteUserCardUseCase(databaseRepository, authRepository)
     )
 
     @Singleton

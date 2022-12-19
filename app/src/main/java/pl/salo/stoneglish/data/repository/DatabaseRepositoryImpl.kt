@@ -14,14 +14,14 @@ class DatabaseRepositoryImpl @Inject constructor(
     override suspend fun writeUserData(user: User) =
         databaseService.writeUserData(user)
 
-    override suspend fun readCardsList(moduleName: String) =
-        databaseService.listOfCards(moduleName)
-    override suspend fun readModulesList(): List<String> =
-        databaseService.listOfModules()
-    override suspend fun readTestsList(moduleName: String): List<Test> =
-        databaseService.listOfTests(moduleName)
+    override suspend fun readCardsList(moduleName: String, userId: String) =
+        databaseService.listOfCards(moduleName, userId)
+    override suspend fun readModulesList(userId: String): List<String> =
+        databaseService.listOfModules(userId)
+    override suspend fun readTestsList(moduleName: String, userId: String): List<Test> =
+        databaseService.listOfTests(moduleName, userId)
 
-    override suspend fun writeUserCard(card: Card, module: String) =
-        databaseService.writeUserCard(card, module)
+    override suspend fun writeUserCard(card: Card, module: String, userId: String) =
+        databaseService.writeUserCard(card, module, userId)
 
 }

@@ -8,8 +8,68 @@
     tools:context=".presentation.core.cards.fragments.ModulesFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/modulesLoadingLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:visibility="visible">
+
+        <ProgressBar
+            android:id="@+id/modulesProgressBar"
+
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginBottom="48dp"
+
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+
+            android:maxWidth="200dp"
+
+            android:text="@string/modules_loading_text"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textAlignment="center"
+
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/modulesProgressBar" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/modulesNoModulesLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:maxWidth="250dp"
+
+            android:text="@string/modules_list_is_empty"
+            android:textColor="@color/black"
+            android:textSize="24sp"
+            android:textAlignment="center"
+
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/modulesDownloadedLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
 
         <LinearLayout
             android:id="@+id/topBarLinearLayout"

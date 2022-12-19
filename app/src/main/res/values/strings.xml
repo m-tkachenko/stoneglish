@@ -50,4 +50,7 @@
     <!--  Texts for Cards functionality  -->
     <string name="modules_top_navigation_bar">Modules</string>
     <string name="cards_top_navigation_bar">Cards</string>
+    <string name="cards_loading_text">Downloading chosen cards…</string>
+    <string name="modules_loading_text">Downloading modules for chosen cards…</string>
+    <string name="modules_list_is_empty">Add new words to cards and you will see miracles on this screen :)</string>
 </resources>
