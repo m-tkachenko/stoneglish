@@ -20,4 +20,7 @@
     <color name="facebook_button">#0A1890</color>
     <color name="forgot_password">#374BFF</color>
 
+    <color name="screen_background">#f0f0f0</color>
+    <color name="item_background">#fcfcfc</color>
+
 </resources>
