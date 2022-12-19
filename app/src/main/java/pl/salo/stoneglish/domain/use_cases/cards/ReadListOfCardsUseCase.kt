@@ -15,7 +15,12 @@ class ReadListOfCardsUseCase @Inject constructor(
         try {
             emit(Resource.Loading())
             val listOfCards = databaseRepository.readCardsList(moduleName)
-            emit(Resource.Success(data = listOfCards))
+
+            if (listOfCards.isEmpty())
+                emit(Resource.Error(message = "We don't see any cards :("))
+            else
+                emit(Resource.Success(data = listOfCards))
+
         } catch (e: HttpException) {
             emit(Resource.Error(
                 message = e.localizedMessage

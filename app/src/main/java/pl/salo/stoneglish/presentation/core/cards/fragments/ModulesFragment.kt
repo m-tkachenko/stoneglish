@@ -12,14 +12,12 @@ import pl.salo.stoneglish.common.Resource
 import pl.salo.stoneglish.databinding.FragmentModulesBinding
 import pl.salo.stoneglish.presentation.core.cards.CardsViewModel
 import pl.salo.stoneglish.presentation.core.cards.adapters.CardModulesAdapter
+import pl.salo.stoneglish.util.coreNavigator
 
 @AndroidEntryPoint
 class ModulesFragment : Fragment() {
     private lateinit var binding: FragmentModulesBinding
-
     private val cardsViewModel: CardsViewModel by viewModels()
-    private lateinit var modulesAdapter: CardModulesAdapter
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,6 +29,7 @@ class ModulesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         cardsViewModel.downloadModules()
         modulesStateObserver()
     }
@@ -41,9 +40,12 @@ class ModulesFragment : Fragment() {
                 when(modules) {
                     is Resource.Success -> {
                         Log.d(TAG, "ModulesDownload : Success")
-                        binding.modulesRecyclerView.adapter = CardModulesAdapter(
-                            modules = modules.data ?: listOf()
-                        )
+                        binding.modulesRecyclerView.adapter =
+                            CardModulesAdapter(
+                                modules = modules.data ?: listOf()
+                            ) { module ->
+                                this.coreNavigator().goToCard(module)
+                            }
                     }
                     is Resource.Error -> {
                         Log.d(TAG, "ModulesDownload : Failure : Error = ${modules.message}")

@@ -3,7 +3,8 @@ package pl.salo.stoneglish.util
 import androidx.annotation.DrawableRes
 
 object Utils {
-
+    fun Any?.isNull() = this == null
+    fun Any?.isNotNull() = this != null
     @DrawableRes
     fun String.getTopicIcon(): Int =
         when(this) {

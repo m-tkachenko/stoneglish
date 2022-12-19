@@ -11,11 +11,15 @@ import javax.inject.Inject
 class ReadListOfTestsUseCase @Inject constructor(
     private val databaseRepository: DatabaseRepository
 ) {
-    operator fun invoke(): Flow<Resource<List<Test>>> = flow {
+    operator fun invoke(moduleName: String): Flow<Resource<List<Test>>> = flow {
         try {
             emit(Resource.Loading())
-            val listOfTests = databaseRepository.readTestsList()
-            emit(Resource.Success(data = listOfTests))
+            val listOfTests = databaseRepository.readTestsList(moduleName)
+
+            if (listOfTests.contains(Test()))
+                emit(Resource.Error(message = "We don't have any tests for you :("))
+            else
+                emit(Resource.Success(data = listOfTests))
         } catch (e: HttpException) {
             emit(
                 Resource.Error(

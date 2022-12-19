@@ -28,6 +28,7 @@
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:text="@string/modules_top_navigation_bar"
+                android:textColor="@color/grey"
                 android:textSize="21sp"
                 android:textStyle="bold" />
 

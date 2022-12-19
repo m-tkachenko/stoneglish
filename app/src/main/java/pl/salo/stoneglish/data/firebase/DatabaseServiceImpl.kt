@@ -9,7 +9,7 @@ import pl.salo.stoneglish.domain.model.card.Test
 import pl.salo.stoneglish.domain.services.DatabaseService
 import javax.inject.Inject
 
-const val TAG = "DatabaseServiceImpl"
+const val TAG = "FirebaseDatabaseService"
 
 class DatabaseServiceImpl @Inject constructor(
     private val firebaseDatabase: DatabaseReference
@@ -34,53 +34,56 @@ class DatabaseServiceImpl @Inject constructor(
     }
 
     override suspend fun listOfCards(moduleName: String): List<Card> {
-        return listOf(
-            Card(
-                word = "Cat",
-                transcription = "|cat|",
-                type = "{not a verb}",
-                firstTranslation = "1. kot",
-                secondTranslation = "2. takie coś jak pies, ale inne",
-                thirdTranslation = "3. nie pies"
-            ),
-            Card(
-                word = "Dog",
-                transcription = "|dog|",
-                type = "{infinitive}",
-                firstTranslation = "1. pies",
-                secondTranslation = "2. takie coś jak kot, ale inne",
-                thirdTranslation = "3. nie kot"
-            ),
-            Card(
-                word = "Jesus Christ",
-                transcription = "|Jesus Christ|",
-                type = "{savior}",
-                firstTranslation = "1. Jezus Chrystus",
-                secondTranslation = "2. Zbawiciel",
-                thirdTranslation = "3. Bóg"
-            )
-        )
+        val resultCardsSnapshot = firebaseDatabase
+            .child("users")
+            .child("Y1CQmGnx8IdMIjTEwKdbVhXRiPl2")
+            .child("cards")
+            .child(moduleName)
+            .get()
+            .await()
+
+        val cardList: MutableList<Card> = resultCardsSnapshot.children.map { snap ->
+            snap.getValue(Card::class.java)!!
+        } as MutableList<Card>
+
+        cardList.remove(Card())
+        Log.d(TAG, "Those cards were received: $cardList")
+
+        return cardList
     }
 
     override suspend fun listOfModules(): List<String> {
-        return listOf(
-            "Food",
-            "Religion",
-            "Work",
-            "TravellingWithLessStress"
-        )
+        val moduleList: MutableList<String> = mutableListOf()
+
+        firebaseDatabase
+            .child("users")
+            .child("Y1CQmGnx8IdMIjTEwKdbVhXRiPl2")
+            .child("cards")
+            .get()
+            .await()
+            .children.forEach { snap ->
+                moduleList.add(snap.key ?: "")
+            }
+
+        Log.d(TAG, "Those modules were received: $moduleList")
+        return moduleList
     }
 
-    override suspend fun listOfTests(): List<Test> {
-        return listOf(
-            Test(
-                name = "Art",
-                description = "Very very very important questions about important food"
-            ),
-            Test(
-                name = "Countries",
-                description = "Yes, yes, this is good one"
-            )
-        )
+    override suspend fun listOfTests(moduleName: String): List<Test> {
+        val resultTestsSnapshot = firebaseDatabase
+            .child("users")
+            .child("Y1CQmGnx8IdMIjTEwKdbVhXRiPl2")
+            .child("cards")
+            .child(moduleName)
+            .child("tests")
+            .get()
+            .await()
+
+        val testList: List<Test> = resultTestsSnapshot.children.map { snap ->
+            snap.getValue(Test::class.java) ?: Test()
+        }
+
+        Log.d(TAG, "Those tests were received: $testList")
+        return testList
     }
 }

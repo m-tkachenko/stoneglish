@@ -37,7 +37,7 @@ class CoreActivity : AppCompatActivity(), CoreNavigator {
                     true
                 }
                 R.id.cards -> {
-                    replaceFragment(CardsFragment())
+                    replaceFragment(ModulesFragment())
                     true
                 }
                 R.id.profile -> {
@@ -65,4 +65,14 @@ class CoreActivity : AppCompatActivity(), CoreNavigator {
         if (supportFragmentManager.backStackEntryCount != 0) supportFragmentManager.popBackStack() else finish()
     }
 
+    override fun goToCard(module: String) {
+        val bundle = Bundle()
+        bundle.putString("ModuleName", module)
+
+        supportFragmentManager
+            .beginTransaction()
+            .replace(R.id.coreFragmentContainer, CardsFragment::class.java, bundle)
+            .addToBackStack("module")
+            .commit()
+    }
 }

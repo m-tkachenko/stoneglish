@@ -4,8 +4,12 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import pl.salo.stoneglish.databinding.CardsModuleItemBinding
+import pl.salo.stoneglish.util.Utils.getTopicIcon
 
-class CardModulesAdapter(private val modules: List<String>)
+class CardModulesAdapter(
+    private val modules: List<String>,
+    private val onModuleItemClicked: (String) -> Unit
+    )
     : RecyclerView.Adapter<CardModulesAdapter.ModulesViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ModulesViewHolder {
         val binding = CardsModuleItemBinding
@@ -22,8 +26,10 @@ class CardModulesAdapter(private val modules: List<String>)
         with(holder) {
             with(modules[position]) {
                 binding.moduleName.text = this
-                binding.moduleItem.setOnClickListener {
+                binding.moduleImageView.setImageResource(this.getTopicIcon())
 
+                binding.moduleItem.setOnClickListener {
+                    onModuleItemClicked(this)
                 }
             }
         }

@@ -46,8 +46,8 @@ class CardsViewModel @Inject constructor(
         }.launchIn(viewModelScope)
     }
 
-    fun downloadTests() {
-        database.testsList().onEach { tests ->
+    fun downloadTests(moduleName: String) {
+        database.testsList(moduleName).onEach { tests ->
             _testsState.postValue(Event(tests))
         }.launchIn(viewModelScope)
     }

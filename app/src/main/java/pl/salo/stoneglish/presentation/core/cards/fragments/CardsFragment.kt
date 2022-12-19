@@ -14,6 +14,7 @@ import pl.salo.stoneglish.presentation.core.cards.CardsViewModel
 import pl.salo.stoneglish.presentation.core.cards.adapters.CardsTranslationsAdapter
 import pl.salo.stoneglish.presentation.core.cards.adapters.CardTestsAdapter
 import pl.salo.stoneglish.presentation.core.cards.viewpager.CardsViewPagerAdapter
+import pl.salo.stoneglish.util.coreNavigator
 
 const val TAG = "CardsFragment"
 @AndroidEntryPoint
@@ -34,11 +35,19 @@ class CardsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        cardsViewModel.downloadCards(moduleName = "Food")
-        cardsViewModel.downloadTests()
+        val moduleName = arguments?.getString("ModuleName") ?: ""
+
+        cardsViewModel.downloadCards(moduleName)
+        cardsViewModel.downloadTests(moduleName)
 
         testsStateObserver()
         downloadCardsStateObserver()
+
+        with(binding) {
+            signInBackArrow.setOnClickListener {
+                this@CardsFragment.coreNavigator().goBack()
+            }
+        }
     }
 
     private fun testsStateObserver() {
@@ -49,7 +58,7 @@ class CardsFragment : Fragment() {
                         Log.d(TAG, "TestsDownload : Success")
 
                         binding.testsRecyclerviewInCards.adapter = CardTestsAdapter(
-                            tests = tests.data ?: listOf()
+                            tests = tests.data!!
                         )
                     }
                     is Resource.Error -> {
@@ -70,7 +79,7 @@ class CardsFragment : Fragment() {
                     is Resource.Success -> {
                         Log.d(TAG, "CardsDownload : Success")
 
-                        val notNullCards = cards.data ?: listOf()
+                        val notNullCards = cards.data!!
 
                         with(binding) {
                             cardsRecyclerviewInCards.adapter = CardsTranslationsAdapter(

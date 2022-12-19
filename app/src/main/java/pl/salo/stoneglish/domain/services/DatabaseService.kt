@@ -10,5 +10,5 @@ interface DatabaseService {
 
     suspend fun listOfCards(moduleName: String): List<Card>
     suspend fun listOfModules(): List<String>
-    suspend fun listOfTests(): List<Test>
+    suspend fun listOfTests(moduleName: String): List<Test>
 }

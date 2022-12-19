@@ -14,8 +14,8 @@ class DatabaseRepositoryImpl @Inject constructor(
         databaseService.listOfCards(moduleName)
     override suspend fun readModulesList(): List<String> =
         databaseService.listOfModules()
-    override suspend fun readTestsList(): List<Test> =
-        databaseService.listOfTests()
+    override suspend fun readTestsList(moduleName: String): List<Test> =
+        databaseService.listOfTests(moduleName)
 
     override suspend fun writeUserData(user: User) =
         databaseService.writeUserData(user)
