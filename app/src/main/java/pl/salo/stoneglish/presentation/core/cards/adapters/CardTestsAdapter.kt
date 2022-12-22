@@ -4,10 +4,10 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import pl.salo.stoneglish.databinding.CardsTestItemBinding
-import pl.salo.stoneglish.domain.model.card.Test
+import pl.salo.stoneglish.domain.model.card.TestForCards
 import pl.salo.stoneglish.util.Utils.getTopicIcon
 
-class CardTestsAdapter(private val tests: List<Test>)
+class CardTestsAdapter(private val tests: List<TestForCards>)
     : RecyclerView.Adapter<CardTestsAdapter.TestsViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TestsViewHolder {
         val binding = CardsTestItemBinding

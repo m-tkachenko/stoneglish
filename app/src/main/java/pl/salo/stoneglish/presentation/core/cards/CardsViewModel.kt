@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import pl.salo.stoneglish.common.Resource
 import pl.salo.stoneglish.domain.model.card.Card
-import pl.salo.stoneglish.domain.model.card.Test
+import pl.salo.stoneglish.domain.model.card.TestForCards
 import pl.salo.stoneglish.domain.use_cases.CardsUseCases
 import pl.salo.stoneglish.util.Event
 import javax.inject.Inject
@@ -26,8 +26,8 @@ class CardsViewModel @Inject constructor(
     val cardsDownloadState: LiveData<Event<Resource<List<Card>>>>
         get() = _cardsDownloadState
 
-    private val _testsState = MutableLiveData<Event<Resource<List<Test>>>>()
-    val testsState: LiveData<Event<Resource<List<Test>>>>
+    private val _testsState = MutableLiveData<Event<Resource<List<TestForCards>>>>()
+    val testsState: LiveData<Event<Resource<List<TestForCards>>>>
         get() = _testsState
 
     fun downloadCards(moduleName: String) {

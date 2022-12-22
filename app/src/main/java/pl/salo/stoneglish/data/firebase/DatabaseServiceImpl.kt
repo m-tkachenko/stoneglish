@@ -5,7 +5,7 @@ import com.google.firebase.database.DatabaseReference
 import kotlinx.coroutines.tasks.await
 import pl.salo.stoneglish.data.model.User
 import pl.salo.stoneglish.domain.model.card.Card
-import pl.salo.stoneglish.domain.model.card.Test
+import pl.salo.stoneglish.domain.model.card.TestForCards
 import pl.salo.stoneglish.domain.services.DatabaseService
 import javax.inject.Inject
 
@@ -75,7 +75,7 @@ class DatabaseServiceImpl @Inject constructor(
         return moduleList
     }
 
-    override suspend fun listOfTests(moduleName: String, userId: String): List<Test> {
+    override suspend fun listOfTests(moduleName: String, userId: String): List<TestForCards> {
         val resultTestsSnapshot = firebaseDatabase
             .child("users")
             .child(userId)
@@ -85,8 +85,8 @@ class DatabaseServiceImpl @Inject constructor(
             .get()
             .await()
 
-        val testList: List<Test> = resultTestsSnapshot.children.map { snap ->
-            snap.getValue(Test::class.java) ?: Test()
+        val testList: List<TestForCards> = resultTestsSnapshot.children.map { snap ->
+            snap.getValue(TestForCards::class.java) ?: TestForCards()
         }
 
         Log.d(TAG, "Those tests were received: $testList")

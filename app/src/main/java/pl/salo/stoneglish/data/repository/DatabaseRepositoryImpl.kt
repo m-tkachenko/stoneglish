@@ -2,7 +2,7 @@ package pl.salo.stoneglish.data.repository
 
 import pl.salo.stoneglish.data.model.User
 import pl.salo.stoneglish.domain.model.card.Card
-import pl.salo.stoneglish.domain.model.card.Test
+import pl.salo.stoneglish.domain.model.card.TestForCards
 import pl.salo.stoneglish.domain.repository.DatabaseRepository
 import pl.salo.stoneglish.domain.services.DatabaseService
 import javax.inject.Inject
@@ -18,7 +18,7 @@ class DatabaseRepositoryImpl @Inject constructor(
         databaseService.listOfCards(moduleName, userId)
     override suspend fun readModulesList(userId: String): List<String> =
         databaseService.listOfModules(userId)
-    override suspend fun readTestsList(moduleName: String, userId: String): List<Test> =
+    override suspend fun readTestsList(moduleName: String, userId: String): List<TestForCards> =
         databaseService.listOfTests(moduleName, userId)
 
     override suspend fun writeUserCard(card: Card, module: String, userId: String) =

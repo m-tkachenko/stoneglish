@@ -2,7 +2,7 @@ package pl.salo.stoneglish.domain.services
 
 import pl.salo.stoneglish.data.model.User
 import pl.salo.stoneglish.domain.model.card.Card
-import pl.salo.stoneglish.domain.model.card.Test
+import pl.salo.stoneglish.domain.model.card.TestForCards
 
 interface DatabaseService {
     suspend fun writeUserData(user: User)
@@ -12,5 +12,5 @@ interface DatabaseService {
 
     suspend fun listOfCards(moduleName: String, userId: String): List<Card>
     suspend fun listOfModules(userId: String): List<String>
-    suspend fun listOfTests(moduleName: String, userId: String): List<Test>
+    suspend fun listOfTests(moduleName: String, userId: String): List<TestForCards>
 }
