@@ -13,7 +13,8 @@ import pl.salo.stoneglish.common.Resource
 import pl.salo.stoneglish.databinding.ActivityCoreBinding
 import pl.salo.stoneglish.presentation.auth.AuthActivity
 import pl.salo.stoneglish.presentation.auth.AuthViewModel
-import pl.salo.stoneglish.presentation.core.cards.CardsFragment
+import pl.salo.stoneglish.presentation.core.cards.fragments.CardsFragment
+import pl.salo.stoneglish.presentation.core.cards.fragments.ModulesFragment
 import pl.salo.stoneglish.presentation.core.dictionary.DictionaryFragment
 import pl.salo.stoneglish.presentation.core.home.HomeFragment
 import pl.salo.stoneglish.presentation.core.profile.ProfileFragment
@@ -42,7 +43,7 @@ class CoreActivity : AppCompatActivity(), CoreNavigator {
                     true
                 }
                 R.id.cards -> {
-                    replaceFragment(CardsFragment())
+                    replaceFragment(ModulesFragment())
                     true
                 }
                 R.id.profile -> {
@@ -114,4 +115,14 @@ class CoreActivity : AppCompatActivity(), CoreNavigator {
         if (supportFragmentManager.backStackEntryCount != 0) supportFragmentManager.popBackStack() else finish()
     }
 
+    override fun goToCard(module: String) {
+        val bundle = Bundle()
+        bundle.putString("ModuleName", module)
+
+        supportFragmentManager
+            .beginTransaction()
+            .replace(R.id.coreFragmentContainer, CardsFragment::class.java, bundle)
+            .addToBackStack("module")
+            .commit()
+    }
 }

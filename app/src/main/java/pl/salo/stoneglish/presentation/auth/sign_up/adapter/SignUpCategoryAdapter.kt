@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import pl.salo.stoneglish.R
 import pl.salo.stoneglish.databinding.SignUpCategoryItemBinding
-import pl.salo.stoneglish.domain.model.SignUpCategoryItem
+import pl.salo.stoneglish.domain.model.auth.SignUpCategoryItem
 
 class SignUpCategoryAdapter() : RecyclerView.Adapter<SignUpCategoryAdapter.ViewHolder>() {
 

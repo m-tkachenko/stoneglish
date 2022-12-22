@@ -1,4 +1,4 @@
-package pl.salo.stoneglish.domain.model
+package pl.salo.stoneglish.domain.model.auth
 
 data class SignUpData(
     var id: String? = null,

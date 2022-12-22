@@ -5,8 +5,8 @@ import pl.salo.stoneglish.presentation.core.CoreActivity
 
 interface CoreNavigator {
     fun goToAuthActivity()
-
     fun goBack()
+    fun goToCard(module: String)
 
     fun signOut()
     fun makeToast(text: String)

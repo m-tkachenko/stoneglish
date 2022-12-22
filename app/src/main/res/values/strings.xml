@@ -38,7 +38,7 @@
     <string name="cards">Cards</string>
     <string name="profile">Profile</string>
     <string name="sport">Sport</string>
-    <string name="continue_string">Continue</string>    
+    <string name="continue_string">Continue</string>
     <string name="sign_out">Sign out</string>
     <string name="support">Support</string>
     <string name="settings">Settings</string>
@@ -46,4 +46,11 @@
     <string name="definitions">Definitions</string>
     <string name="search">Search</string>
     <string name="there_you_can_find_a_word_which_you_want">There you can find a word which you want!</string>
+
+    <!--  Texts for Cards functionality  -->
+    <string name="modules_top_navigation_bar">Modules</string>
+    <string name="cards_top_navigation_bar">Cards</string>
+    <string name="cards_loading_text">Downloading chosen cards…</string>
+    <string name="modules_loading_text">Downloading modules for chosen cards…</string>
+    <string name="modules_list_is_empty">Add new words to cards and you will see miracles on this screen :)</string>
 </resources>

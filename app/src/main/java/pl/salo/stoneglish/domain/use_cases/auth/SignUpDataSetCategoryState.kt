@@ -4,7 +4,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import pl.salo.stoneglish.common.Resource
 import pl.salo.stoneglish.data.repository.SignUpDataRepository
-import pl.salo.stoneglish.domain.model.SignUpCategoryItem
+import pl.salo.stoneglish.domain.model.auth.SignUpCategoryItem
 import javax.inject.Inject
 
 class SignUpDataSetCategoryState @Inject constructor(val signUpDataRepository: SignUpDataRepository) {

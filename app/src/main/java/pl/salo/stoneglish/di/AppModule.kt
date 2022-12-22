@@ -21,9 +21,14 @@ import pl.salo.stoneglish.domain.repository.DictionaryRepository
 import pl.salo.stoneglish.domain.services.AuthService
 import pl.salo.stoneglish.domain.services.DatabaseService
 import pl.salo.stoneglish.domain.use_cases.AuthUseCases
+import pl.salo.stoneglish.domain.use_cases.CardsUseCases
 import pl.salo.stoneglish.domain.use_cases.DatabaseUseCases
 import pl.salo.stoneglish.domain.use_cases.DictionaryUseCases
 import pl.salo.stoneglish.domain.use_cases.auth.*
+import pl.salo.stoneglish.domain.use_cases.cards.ReadListOfCardsUseCase
+import pl.salo.stoneglish.domain.use_cases.cards.ReadListOfModulesUseCase
+import pl.salo.stoneglish.domain.use_cases.cards.ReadListOfTestsUseCase
+import pl.salo.stoneglish.domain.use_cases.cards.WriteUserCardUseCase
 import pl.salo.stoneglish.domain.use_cases.database.GetCurrentUserUseCase
 import pl.salo.stoneglish.domain.use_cases.database.WriteUserDataUseCase
 import pl.salo.stoneglish.domain.use_cases.dictionary.DictionaryGetWordDataUseCase
@@ -74,6 +79,17 @@ object AppModule {
         ),
         signUpDataGetCategoriesUseCase = SignUpDataGetCategoriesUseCase(signUpDataRepository),
         signUpDataSetCategoryState = SignUpDataSetCategoryState(signUpDataRepository)
+    )
+
+    @Provides
+    fun providesCardsUseCases(
+        databaseRepository: DatabaseRepository,
+        authRepository: AuthRepository
+    ) = CardsUseCases(
+        cardsList = ReadListOfCardsUseCase(databaseRepository, authRepository),
+        modulesList = ReadListOfModulesUseCase(databaseRepository, authRepository),
+        testsList = ReadListOfTestsUseCase(databaseRepository, authRepository),
+        addNewCard = WriteUserCardUseCase(databaseRepository, authRepository)
     )
 
     @Singleton

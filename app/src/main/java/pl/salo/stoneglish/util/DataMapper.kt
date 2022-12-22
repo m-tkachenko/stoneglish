@@ -1,7 +1,7 @@
 package pl.salo.stoneglish.util
 
 import pl.salo.stoneglish.data.model.User
-import pl.salo.stoneglish.domain.model.SignUpData
+import pl.salo.stoneglish.domain.model.auth.SignUpData
 
 class DataMapper {
     fun signUpDataToUser(signUpData: SignUpData): User {
