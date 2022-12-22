@@ -15,7 +15,7 @@ import pl.salo.stoneglish.presentation.core.cards.adapters.CardsTranslationsAdap
 import pl.salo.stoneglish.presentation.core.cards.adapters.CardTestsAdapter
 import pl.salo.stoneglish.presentation.core.cards.viewpager.CardsViewPagerAdapter
 import pl.salo.stoneglish.util.Utils.isAbsoluteTrue
-import pl.salo.stoneglish.util.Utils.visible
+import pl.salo.stoneglish.util.Utils.ninja
 import pl.salo.stoneglish.util.coreNavigator
 
 const val TAG = "CardsFragment"
@@ -134,8 +134,8 @@ class CardsFragment : Fragment() {
 
     private fun loadingUiUpdate() {
         with(binding) {
-            cardsLoadingLayout.visible(!downloaded.isAbsoluteTrue())
-            cardsDownloadedLayout.visible(downloaded.isAbsoluteTrue())
+            cardsLoadingLayout.ninja(!downloaded.isAbsoluteTrue())
+            cardsDownloadedLayout.ninja(downloaded.isAbsoluteTrue())
         }
     }
 }

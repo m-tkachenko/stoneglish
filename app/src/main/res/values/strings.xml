@@ -53,4 +53,13 @@
     <string name="cards_loading_text">Downloading chosen cards…</string>
     <string name="modules_loading_text">Downloading modules for chosen cards…</string>
     <string name="modules_list_is_empty">Add new words to cards and you will see miracles on this screen :)</string>
+
+    <!--  Texts for Home functionality  -->
+    <string name="home_string">Home</string>
+    <string name="default_welcome_text_on_home">Welcome to a world of learning joy</string>
+    <string name="filter_travelling_text">Travelling</string>
+    <string name="filter_sport_text">Sport</string>
+    <string name="filter_education_text">Education</string>
+    <string name="filter_health_text">Health</string>
+    <string name="filter_books_text">Books</string>
 </resources>

@@ -10,11 +10,17 @@ object Utils {
     fun Boolean.isTrue() = this
     fun Pair<Boolean, Boolean>.isAbsoluteTrue() = first.isTrue() && second.isTrue()
 
-    fun View.visible(visibility: Boolean) {
+    fun View.ninja(visibility: Boolean) {
         if (visibility)
             this.visibility = View.VISIBLE
         else
             this.visibility = View.GONE
+    }
+    infix fun View.visible(visibility: Boolean) {
+        if (visibility)
+            this.visibility = View.VISIBLE
+        else
+            this.visibility = View.INVISIBLE
     }
 
     @DrawableRes
