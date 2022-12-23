@@ -1,17 +1,15 @@
 package pl.salo.stoneglish.presentation.core.home
 
 import android.animation.Animator
-import android.app.Activity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewAnimationUtils
 import android.view.ViewGroup
-import android.view.inputmethod.InputMethodManager
-import androidx.core.content.ContextCompat.getSystemService
 import dagger.hilt.android.AndroidEntryPoint
 import pl.salo.stoneglish.databinding.FragmentHomeBinding
+import pl.salo.stoneglish.domain.model.card.Card
 import pl.salo.stoneglish.util.Utils.visible
 import pl.salo.stoneglish.util.hideKeyboard
 import pl.salo.stoneglish.util.showKeyboard
@@ -34,7 +32,6 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ) {
         super.onViewCreated(view, savedInstanceState)
-
         with(binding) {
             openSearchButton.setOnClickListener {
                 openSearch()
@@ -42,6 +39,13 @@ class HomeFragment : Fragment() {
             closeOpenedSearchButton.setOnClickListener {
                 closeSearch()
             }
+
+            wordsOfTheDayCards.setUpCardsAdapter(
+                fragment = this@HomeFragment,
+                cards = listOf(Card(), Card(), Card()),
+                withTitle = true,
+                height = 300 // TODO: move to custom attr in view
+            )
         }
     }
 

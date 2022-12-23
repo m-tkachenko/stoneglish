@@ -53,6 +53,7 @@
     <string name="cards_loading_text">Downloading chosen cards…</string>
     <string name="modules_loading_text">Downloading modules for chosen cards…</string>
     <string name="modules_list_is_empty">Add new words to cards and you will see miracles on this screen :)</string>
+    <string name="test_title_string">Tests</string>
 
     <!--  Texts for Home functionality  -->
     <string name="home_string">Home</string>
@@ -62,4 +63,5 @@
     <string name="filter_education_text">Education</string>
     <string name="filter_health_text">Health</string>
     <string name="filter_books_text">Books</string>
+    <string name="cards_title_home_screen">Word of the day</string>
 </resources>

@@ -11,11 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/card_item"
-        app:cardBackgroundColor="@color/white"
-        android:elevation="20dp"
-        app:cardCornerRadius="20dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginHorizontal="4dp">
+        app:cardBackgroundColor="@color/white">
 
         <TextView
             android:id="@+id/cardSwitcherNumber"
