@@ -49,6 +49,8 @@ class TopicFragment : Fragment() {
         homeViewModel.getTopic()
 
         homeViewModel.selectedTopic.observe(viewLifecycleOwner) {
+            coreNavigator().setClickableWords(it.text, binding.topicText)
+
             keywordsAdapter.items = it.keywords
             similarTopicsAdapter.items = it.similarTopics ?: emptyList()
             listeningAndSpeakingAdapter.items = it.listeningAndSpeaking
