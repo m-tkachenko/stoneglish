@@ -27,23 +27,43 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <TextView
-                android:id="@+id/cardViewTitle"
+            <LinearLayout
+                android:id="@id/cardViewTitle"
 
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
+                android:gravity="center_vertical"
 
-                android:background="@drawable/background_top_corner_rounded"
+                android:orientation="horizontal"
+                android:background="@drawable/background_top_corner_rounded">
 
-                android:text="@string/cards_title_home_screen"
-                android:textColor="@color/white"
-                android:textSize="20sp"
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
 
-                android:paddingHorizontal="16dp"
-                android:paddingVertical="8dp"/>
+                    android:text="@string/cards_title_home_screen"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+
+                    android:paddingHorizontal="16dp"
+                    android:paddingVertical="8dp"/>
+
+                <ImageView
+                    android:id="@+id/addWordToCardsButton"
+
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_marginHorizontal="16dp"
+
+                    android:clickable="true"
+                    android:src="@drawable/ic_plus"
+                    app:tint="@color/white"
+                    android:contentDescription="@string/cd" />
+            </LinearLayout>
 
             <androidx.viewpager2.widget.ViewPager2
                 android:id="@+id/cardsViewPager"

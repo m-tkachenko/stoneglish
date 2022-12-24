@@ -91,9 +91,7 @@ class CardsFragment : Fragment() {
 
                             cardsView.setUpCardsAdapter(
                                 fragment = this@CardsFragment,
-                                cards = notNullCards,
-                                withTitle = false,
-                                height = 800 // TODO: move to custom attr in view
+                                cards = notNullCards
                             )
                         }
 

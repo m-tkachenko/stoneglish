@@ -64,4 +64,8 @@
     <string name="filter_health_text">Health</string>
     <string name="filter_books_text">Books</string>
     <string name="cards_title_home_screen">Word of the day</string>
+    <string name="topic_text_on_home_screen">Topics</string>
+    <string name="start_to_learn_text">Start learning</string>
+    <string name="just_text">Just text</string>
+    <string name="start_journey_text">Start journey</string>
 </resources>

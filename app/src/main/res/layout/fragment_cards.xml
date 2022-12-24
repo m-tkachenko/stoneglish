@@ -88,7 +88,7 @@
                     android:textStyle="bold" />
             </LinearLayout>
 
-            <ScrollView
+            <androidx.core.widget.NestedScrollView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -97,13 +97,14 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="100dp"
                     android:orientation="vertical">
 
-                    <pl.salo.stoneglish.util.CardSwiperView
+                    <pl.salo.stoneglish.presentation.core.CardSwiperView
                         android:id="@+id/cardsView"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content"
+
+                        app:viewPagerHeight="300dp"/>
 
                     <TextView
                         android:id="@+id/tests_text_view"
@@ -142,9 +143,7 @@
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
                 </LinearLayout>
 
-            </ScrollView>
-
+            </androidx.core.widget.NestedScrollView>
         </LinearLayout>
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

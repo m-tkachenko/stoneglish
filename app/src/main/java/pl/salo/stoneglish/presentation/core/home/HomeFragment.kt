@@ -2,12 +2,13 @@ package pl.salo.stoneglish.presentation.core.home
 
 import android.animation.Animator
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewAnimationUtils
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import dagger.hilt.android.AndroidEntryPoint
+import pl.salo.stoneglish.R
 import pl.salo.stoneglish.databinding.FragmentHomeBinding
 import pl.salo.stoneglish.domain.model.card.Card
 import pl.salo.stoneglish.util.Utils.visible
@@ -17,6 +18,8 @@ import pl.salo.stoneglish.util.showKeyboard
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
+
+    private lateinit var topicsAdapter: HomeTopicsAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -32,6 +35,9 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ) {
         super.onViewCreated(view, savedInstanceState)
+
+        initAdapters()
+
         with(binding) {
             openSearchButton.setOnClickListener {
                 openSearch()
@@ -42,10 +48,14 @@ class HomeFragment : Fragment() {
 
             wordsOfTheDayCards.setUpCardsAdapter(
                 fragment = this@HomeFragment,
-                cards = listOf(Card(), Card(), Card()),
-                withTitle = true,
-                height = 300 // TODO: move to custom attr in view
+                cards = listOf(Card(word = "Nu"), Card(word="Sho"), Card("ty?"))
             )
+
+            topicsAdapter.topicsList = listOf("Buuu", "Uuuuu", "Aaaaa", "Paaaaa", "Waaaa", "Tatatata")
+            topicsRecycler.adapter = topicsAdapter
+
+            startLearnImage.setImageResource(R.drawable.me)
+            startLearnCardTitle.text = "To moje zdjęcie jest na dole piękneee. Polecam ten przycisk naciśnąc i zobaczysz"
         }
     }
 
@@ -93,5 +103,9 @@ class HomeFragment : Fragment() {
             circularConceal.duration = 300
             circularConceal.start()
         }
+    }
+
+    private fun initAdapters() {
+        topicsAdapter = HomeTopicsAdapter()
     }
 }
