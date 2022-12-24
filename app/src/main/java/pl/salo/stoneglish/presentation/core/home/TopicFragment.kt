@@ -54,6 +54,8 @@ class TopicFragment : Fragment() {
             listeningAndSpeakingAdapter.items = it.listeningAndSpeaking
 
             binding.topicText.text = it.text
+            coreNavigator().setClickableWords(it.text, binding.topicText)
+
             binding.topicTitle.text = it.title
             binding.topicEngLevel.text = it.eng_level.first().name
             binding.signInBackArrow.setOnClickListener {
@@ -79,7 +81,7 @@ class TopicFragment : Fragment() {
                 if (!isLSSpeakingBlocked) {
                     val items = keywordsAdapter.items.toMutableList()
                     isKeywordsSpeakingBlocked = true
-                    coreNavigator().speak(keyword.word).onEach { res ->
+                    coreNavigator().speakWithFlow(keyword.word).onEach { res ->
                         when (res) {
                             is TextToSpeechResult.Loading -> {
                                 items.forEach { it.isSpeaking = false }
@@ -112,7 +114,7 @@ class TopicFragment : Fragment() {
                 if (!isKeywordsSpeakingBlocked) {
                     val items = listeningAndSpeakingAdapter.items.toMutableList()
                     isLSSpeakingBlocked = true
-                    coreNavigator().speak(listeningSpeaking.text).onEach { res ->
+                    coreNavigator().speakWithFlow(listeningSpeaking.text).onEach { res ->
                         when (res) {
                             is TextToSpeechResult.Loading -> {
                                 items.forEach { it.isSpeaking = false }
