@@ -5,7 +5,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.mlkit.common.model.DownloadConditions
-import com.google.mlkit.nl.translate.*
+import com.google.mlkit.nl.translate.TranslateLanguage
+import com.google.mlkit.nl.translate.Translation
+import com.google.mlkit.nl.translate.TranslatorOptions
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -26,6 +28,7 @@ class TranslateViewModel @Inject constructor() : ViewModel() {
         .build()
 
     private val translator = Translation.getClient(options)
+
     init {
         englishPolishTranslator.downloadModelIfNeeded(conditions)
             .addOnSuccessListener {
@@ -36,7 +39,7 @@ class TranslateViewModel @Inject constructor() : ViewModel() {
             }
     }
 
-    fun translate(text:String) {
+    fun translate(text: String) {
         englishPolishTranslator.translate(text)
             .addOnSuccessListener { translatedText ->
                 _translatedWord.postValue(translatedText)
@@ -51,7 +54,7 @@ class TranslateViewModel @Inject constructor() : ViewModel() {
         super.onCleared()
     }
 
-    companion object{
+    companion object {
         const val TAG = "TranslateViewModel"
     }
 }

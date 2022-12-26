@@ -31,12 +31,25 @@ class DatabaseServiceImpl @Inject constructor(
             .child(userId)
             .child("cards")
             .child(module)
-            .child(card.word)
+            .push()
 
             .setValue(card)
             .await()
 
         Log.d(TAG, "writeUserCard")
+    }
+
+    override suspend fun writeUserCards(cards: List<Card>, module: String, userId: String) {
+        firebaseDatabase
+            .child("users")
+            .child(userId)
+            .child("cards")
+            .child(module)
+
+            .setValue(cards)
+            .await()
+
+        Log.d(TAG, "writeUserCards")
     }
 
     override suspend fun listOfCards(moduleName: String, userId: String): List<Card> {

@@ -14,9 +14,11 @@ interface CoreNavigator {
 
     fun goBack()
     fun goToCard(module: String)
+    fun goToModules()
 
     fun signOut()
     fun makeToast(text: String)
+    fun goToCreateModule()
 }
 
 fun Fragment.coreNavigator(): CoreNavigator {

@@ -22,6 +22,7 @@ import pl.salo.stoneglish.databinding.ActivityCoreBinding
 import pl.salo.stoneglish.presentation.auth.AuthActivity
 import pl.salo.stoneglish.presentation.auth.AuthViewModel
 import pl.salo.stoneglish.presentation.core.cards.fragments.CardsFragment
+import pl.salo.stoneglish.presentation.core.cards.fragments.CreateModuleFragment
 import pl.salo.stoneglish.presentation.core.cards.fragments.ModulesFragment
 import pl.salo.stoneglish.presentation.core.dictionary.DictionaryFragment
 import pl.salo.stoneglish.presentation.core.home.HomeFragment
@@ -91,6 +92,13 @@ class CoreActivity : AppCompatActivity(), CoreNavigator, TextToSpeech.OnInitList
             .commit()
     }
 
+    private fun addFragmentToStack(fragment: Fragment) {
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.coreFragmentContainer, fragment)
+            .addToBackStack(null)
+            .commit()
+    }
+
     private fun observeSignOut() {
         authViewModel.onSignOut.observe(this) {
             when (it) {
@@ -128,6 +136,10 @@ class CoreActivity : AppCompatActivity(), CoreNavigator, TextToSpeech.OnInitList
 
     override fun makeToast(text: String) {
         Toast.makeText(this, text, Toast.LENGTH_SHORT).show()
+    }
+
+    override fun goToCreateModule() {
+        addFragmentToStack(CreateModuleFragment())
     }
 
     override fun onBackPressed() = goBack()
@@ -189,12 +201,16 @@ class CoreActivity : AppCompatActivity(), CoreNavigator, TextToSpeech.OnInitList
         supportFragmentManager
             .beginTransaction()
             .replace(
-                pl.salo.stoneglish.R.id.coreFragmentContainer,
+                R.id.coreFragmentContainer,
                 CardsFragment::class.java,
                 bundle
             )
             .addToBackStack("module")
             .commit()
+    }
+
+    override fun goToModules() {
+        replaceFragment(ModulesFragment())
     }
 
     override fun onInit(status: Int) {
