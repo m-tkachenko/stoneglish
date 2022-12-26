@@ -249,6 +249,46 @@
                 android:orientation="vertical"
                 android:weightSum="1">
 
+                <LinearLayout
+                    android:id="@+id/dailyCardLoading"
+
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="16dp"
+
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:visibility="visible">
+
+                    <ProgressBar
+                        android:id="@+id/modulesProgressBar"
+
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:maxWidth="300dp"
+
+                        android:text="@string/words_of_the_day_loading_text"
+                        android:textColor="@color/black"
+                        android:textSize="20sp"
+                        android:textAlignment="center"
+
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/modulesProgressBar" />
+
+                </LinearLayout>
+
                 <pl.salo.stoneglish.presentation.core.views.CardSwiperView
                     android:id="@+id/wordsOfTheDayCards"
                     android:layout_width="match_parent"
@@ -256,7 +296,9 @@
 
                     app:showCardsTitle="true"
                     app:showAddWordButton="true"
-                    app:viewPagerHeight="100dp"/>
+                    app:viewPagerHeight="100dp"
+
+                    android:visibility="gone"/>
 
                 <TextView
                     android:id="@+id/topicTextOnHomeScreen"
@@ -353,11 +395,14 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginHorizontal="8dp"
+                            android:layout_marginBottom="4dp"
 
                             app:cornerRadius="10dp"
                             android:backgroundTint="@color/main_orange"
 
                             android:text="@string/start_journey_text"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
                             android:textAllCaps="false"/>
 
 

@@ -10,12 +10,14 @@ import kotlinx.coroutines.flow.onEach
 import pl.salo.stoneglish.common.Resource
 import pl.salo.stoneglish.domain.model.card.Card
 import pl.salo.stoneglish.domain.use_cases.CardsUseCases
+import pl.salo.stoneglish.domain.use_cases.HomeUseCases
 import pl.salo.stoneglish.util.Event
 import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val database: CardsUseCases
+    private val cardDatabase: CardsUseCases,
+    private val homeDatabase: HomeUseCases
 ) : ViewModel() {
     private val _modulesState = MutableLiveData<Event<Resource<List<String>>>>()
     val modulesState: LiveData<Event<Resource<List<String>>>>
@@ -25,15 +27,25 @@ class HomeViewModel @Inject constructor(
     val addCardState: LiveData<Event<Resource<Boolean>>>
         get() = _addCardState
 
+    private val _dailyCardState = MutableLiveData<Event<Resource<List<Card>>>>()
+    val dailyCardState: LiveData<Event<Resource<List<Card>>>>
+        get() = _dailyCardState
+
+    fun downloadDailyCards() {
+        homeDatabase.dailyCards().onEach { dailyCards ->
+            _dailyCardState.postValue(Event(dailyCards))
+        }.launchIn(viewModelScope)
+    }
+
     fun downloadModules() {
-        database.modulesList().onEach { modules ->
+        cardDatabase.modulesList().onEach { modules ->
             _modulesState.postValue(Event(modules))
         }.launchIn(viewModelScope)
     }
 
-    fun addNewCard(newWord: String, moduleName: String) {
-        database.addNewCard(
-            card = Card(word = newWord),
+    fun addNewCard(newCard: Card, moduleName: String) {
+        cardDatabase.addNewCard(
+            card = newCard,
             moduleName = moduleName
         ).onEach { status ->
             _addCardState.postValue(Event(status))

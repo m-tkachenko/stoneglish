@@ -13,12 +13,10 @@ class CardsViewPagerAdapter(
     fragment: Fragment
 ) : FragmentStateAdapter(fragment) {
     var cardItems: List<Card> = listOf()
-    var cardName: String = ""
+    var card: Card? = null
 
     override fun createFragment(position: Int): Fragment {
         val fragment = SwitchCardsFragment()
-
-        cardName = cardItems[position].word
 
         fragment.arguments = Bundle().apply {
             putInt(CARD_POSITION, position)
@@ -27,6 +25,11 @@ class CardsViewPagerAdapter(
         }
 
         return fragment
+    }
+
+    override fun getItemId(position: Int): Long {
+        card = cardItems[position]
+        return super.getItemId(position)
     }
 
     override fun getItemCount(): Int = cardItems.size

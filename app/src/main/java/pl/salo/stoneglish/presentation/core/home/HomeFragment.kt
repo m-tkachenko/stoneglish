@@ -2,16 +2,19 @@ package pl.salo.stoneglish.presentation.core.home
 
 import android.animation.Animator
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewAnimationUtils
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import pl.salo.stoneglish.R
+import pl.salo.stoneglish.common.Resource
 import pl.salo.stoneglish.databinding.FragmentHomeBinding
-import pl.salo.stoneglish.domain.model.card.Card
 import pl.salo.stoneglish.presentation.core.home.dialog.AddNewCardDialog
+import pl.salo.stoneglish.util.Utils.ninja
 import pl.salo.stoneglish.util.Utils.visible
 import pl.salo.stoneglish.util.coreNavigator
 import pl.salo.stoneglish.util.hideKeyboard
@@ -20,6 +23,7 @@ import pl.salo.stoneglish.util.showKeyboard
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
+    private val homeViewModel: HomeViewModel by viewModels()
 
     private lateinit var topicsAdapter: HomeTopicsAdapter
 
@@ -37,30 +41,62 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ) {
         super.onViewCreated(view, savedInstanceState)
-
         initAdapters()
+
+        homeViewModel.downloadDailyCards()
+        dailyCardsObserver()
 
         with(binding) {
             openSearchButton.setOnClickListener { openSearch() }
             closeOpenedSearchButton.setOnClickListener { closeSearch() }
 
-            wordsOfTheDayCards.setUpCardsAdapter(
-                fragment = this@HomeFragment,
-                cards = listOf(Card(word = "Nu"), Card(word="Sho"), Card("ty?"))
-            ) { word ->
+            wordsOfTheDayCards.addCardClicked = {
                 coreNavigator().showAddCardDialog(
                     AddNewCardDialog(
-                        selectedWord = word
+                        selectedCard = wordsOfTheDayCards.cardForAdd!!
                     )
                 )
             }
-
 
             topicsAdapter.topicsList = listOf("Buuu", "Uuuuu", "Aaaaa", "Paaaaa", "Waaaa", "Tatatata")
             topicsRecycler.adapter = topicsAdapter
 
             startLearnImage.setImageResource(R.drawable.me)
             startLearnCardTitle.text = "To moje zdjęcie jest na dole piękneee. Polecam ten przycisk naciśnąc i zobaczysz"
+        }
+    }
+
+    private fun dailyCardsObserver() {
+        homeViewModel.dailyCardState.observe(viewLifecycleOwner) { dailyCardsResult ->
+            dailyCardsResult.getContentIfNotHandled()?.let { dailyCards ->
+                when(dailyCards) {
+                    is Resource.Success -> {
+                        Log.d(TAG, "DailyCardsDownload : Success")
+
+                        binding.dailyCardLoading.ninja(false)
+                        binding.wordsOfTheDayCards.apply {
+                            ninja(true)
+                            setUpCardsAdapter(
+                                fragment = this@HomeFragment,
+                                cards = dailyCards.data ?: listOf()
+                            )
+                        }
+                    }
+                    is Resource.Error -> {
+                        binding.wordsOfTheDayCards.ninja(true)
+                        binding.dailyCardLoading.ninja(false)
+
+                        Log.d(TAG, "DailyCardsDownload : Failure : Error = ${dailyCards.message}")
+                    }
+                    is Resource.Loading -> {
+                        Log.d(TAG, "DailyCardsDownload : Loading")
+
+                        binding.wordsOfTheDayCards.ninja(false)
+                        binding.dailyCardLoading.ninja(true)
+                    }
+                }
+
+            }
         }
     }
 
@@ -113,4 +149,6 @@ class HomeFragment : Fragment() {
     private fun initAdapters() {
         topicsAdapter = HomeTopicsAdapter()
     }
+
+    val TAG = "HomeFragment"
 }

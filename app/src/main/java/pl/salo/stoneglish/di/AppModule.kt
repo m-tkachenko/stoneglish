@@ -20,10 +20,7 @@ import pl.salo.stoneglish.domain.repository.DatabaseRepository
 import pl.salo.stoneglish.domain.repository.DictionaryRepository
 import pl.salo.stoneglish.domain.services.AuthService
 import pl.salo.stoneglish.domain.services.DatabaseService
-import pl.salo.stoneglish.domain.use_cases.AuthUseCases
-import pl.salo.stoneglish.domain.use_cases.CardsUseCases
-import pl.salo.stoneglish.domain.use_cases.DatabaseUseCases
-import pl.salo.stoneglish.domain.use_cases.DictionaryUseCases
+import pl.salo.stoneglish.domain.use_cases.*
 import pl.salo.stoneglish.domain.use_cases.auth.*
 import pl.salo.stoneglish.domain.use_cases.cards.ReadListOfCardsUseCase
 import pl.salo.stoneglish.domain.use_cases.cards.ReadListOfModulesUseCase
@@ -33,6 +30,7 @@ import pl.salo.stoneglish.domain.use_cases.database.GetCurrentUserUseCase
 import pl.salo.stoneglish.domain.use_cases.database.WriteUserDataUseCase
 import pl.salo.stoneglish.domain.use_cases.dictionary.DictionaryGetWordDataUseCase
 import pl.salo.stoneglish.domain.use_cases.dictionary.PlayAudioByUrl
+import pl.salo.stoneglish.domain.use_cases.home.ReadListOfDailyCardsUseCase
 import pl.salo.stoneglish.util.Constants
 import pl.salo.stoneglish.util.DataMapper
 import retrofit2.Retrofit
@@ -90,6 +88,13 @@ object AppModule {
         modulesList = ReadListOfModulesUseCase(databaseRepository, authRepository),
         testsList = ReadListOfTestsUseCase(databaseRepository, authRepository),
         addNewCard = WriteUserCardUseCase(databaseRepository, authRepository)
+    )
+
+    @Provides
+    fun providesHomeUseCases(
+        databaseRepository: DatabaseRepository
+    ) = HomeUseCases(
+        dailyCards = ReadListOfDailyCardsUseCase(databaseRepository)
     )
 
     @Singleton

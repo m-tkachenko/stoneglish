@@ -13,4 +13,6 @@ interface DatabaseRepository {
     suspend fun readCardsList(moduleName: String, userId: String): List<Card>
     suspend fun readModulesList(userId: String): List<String>
     suspend fun readTestsList(moduleName: String, userId: String): List<TestForCards>
+
+    suspend fun readListOfDailyCards(): List<Card>
 }

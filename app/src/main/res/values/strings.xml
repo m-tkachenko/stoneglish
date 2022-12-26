@@ -73,4 +73,5 @@
     <string name="card_dialog_modules_loading_text">Downloading your modules…</string>
     <string name="card_dialog_add_card_loading_text">Uploading new card…</string>
     <string name="card_dialog_success_text">Card successfully uploaded</string>
+    <string name="words_of_the_day_loading_text">Downloading words of the day...</string>
 </resources>

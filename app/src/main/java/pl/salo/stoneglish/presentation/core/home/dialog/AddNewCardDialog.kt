@@ -13,13 +13,14 @@ import dagger.hilt.android.AndroidEntryPoint
 import pl.salo.stoneglish.R
 import pl.salo.stoneglish.common.Resource
 import pl.salo.stoneglish.databinding.DialogAddNewCardBinding
+import pl.salo.stoneglish.domain.model.card.Card
 import pl.salo.stoneglish.presentation.core.home.HomeViewModel
 import pl.salo.stoneglish.util.Utils.visible
 import pl.salo.stoneglish.util.coreNavigator
 
 @AndroidEntryPoint
 class AddNewCardDialog(
-    private val selectedWord: String
+    private val selectedCard: Card
 ): DialogFragment() {
     private lateinit var binding: DialogAddNewCardBinding
     private val homeViewModel: HomeViewModel by viewModels()
@@ -64,7 +65,7 @@ class AddNewCardDialog(
                                 modulesList = modules.data ?: listOf()
                             ) { moduleName ->
                                 homeViewModel.addNewCard(
-                                    newWord = selectedWord,
+                                    newCard = selectedCard,
                                     moduleName = moduleName
                                 )
                             }

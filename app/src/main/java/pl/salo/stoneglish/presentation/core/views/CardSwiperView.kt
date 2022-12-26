@@ -21,6 +21,9 @@ class CardSwiperView(
     private var showPlusButton = false
     private var viewPagerHeight: Float = 300F
 
+    var addCardClicked: (() -> Unit) = {}
+    var cardForAdd: Card? = null
+
     init {
         context
             .theme
@@ -39,8 +42,7 @@ class CardSwiperView(
 
     fun setUpCardsAdapter(
         fragment: Fragment,
-        cards: List<Card>,
-        addCardClicked: (String) -> Unit = {}
+        cards: List<Card>
     ) {
         val cardAdapter = CardsViewPagerAdapter(fragment)
         cardAdapter.cardItems = cards
@@ -50,7 +52,8 @@ class CardSwiperView(
 
             addWordToCardsButton.ninja(showPlusButton)
             addWordToCardsButton.setOnClickListener {
-                addCardClicked(cardAdapter.cardName)
+                cardForAdd = cardAdapter.card
+                addCardClicked.invoke()
             }
 
             cardsViewPager.layoutParams.height = viewPagerHeight.toInt()
