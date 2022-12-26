@@ -2,6 +2,7 @@
 <resources>
     <color name="purple_200">#FFBB86FC</color>
     <color name="main_green">#168C85</color>
+    <color name="main_orange">#EB9486</color>
     <color name="purple_700">#168C85</color>
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
@@ -14,6 +15,11 @@
     <color name="background_card">#FCFCFC</color>
     <color name="background_card_favorite">#C6DEDD</color>
 
+    <color name="text_title_color">#FF000000</color>
+    <color name="text_color">#FF000000</color>
+    <color name="sub_text_color">@color/grey</color>
+    <color name="text_green">@color/main_green</color>
+
     <!--buttons-->
     <color name="main_button">#168C85</color>
     <color name="google_button">#E1E1E1</color>
@@ -25,5 +31,7 @@
 
     <color name="background">#F2F2F2</color>
     <color name="stroke_color">#8D8D8D</color>
+
+    <color name="recycler_view_item_color">#f2f2f2</color>
 
 </resources>
