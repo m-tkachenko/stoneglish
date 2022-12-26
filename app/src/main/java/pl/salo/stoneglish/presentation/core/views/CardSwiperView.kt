@@ -1,4 +1,4 @@
-package pl.salo.stoneglish.presentation.core
+package pl.salo.stoneglish.presentation.core.views
 
 import android.content.Context
 import android.util.AttributeSet
@@ -37,13 +37,21 @@ class CardSwiperView(
             }
     }
 
-    fun setUpCardsAdapter(fragment: Fragment, cards: List<Card>) {
+    fun setUpCardsAdapter(
+        fragment: Fragment,
+        cards: List<Card>,
+        addCardClicked: (String) -> Unit = {}
+    ) {
         val cardAdapter = CardsViewPagerAdapter(fragment)
         cardAdapter.cardItems = cards
 
         with(binding) {
             cardViewTitle.ninja(showTitle)
+
             addWordToCardsButton.ninja(showPlusButton)
+            addWordToCardsButton.setOnClickListener {
+                addCardClicked(cardAdapter.cardName)
+            }
 
             cardsViewPager.layoutParams.height = viewPagerHeight.toInt()
             cardsViewPager.adapter = cardAdapter

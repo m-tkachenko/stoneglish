@@ -13,9 +13,12 @@ class CardsViewPagerAdapter(
     fragment: Fragment
 ) : FragmentStateAdapter(fragment) {
     var cardItems: List<Card> = listOf()
+    var cardName: String = ""
 
     override fun createFragment(position: Int): Fragment {
         val fragment = SwitchCardsFragment()
+
+        cardName = cardItems[position].word
 
         fragment.arguments = Bundle().apply {
             putInt(CARD_POSITION, position)

@@ -11,7 +11,9 @@ import dagger.hilt.android.AndroidEntryPoint
 import pl.salo.stoneglish.R
 import pl.salo.stoneglish.databinding.FragmentHomeBinding
 import pl.salo.stoneglish.domain.model.card.Card
+import pl.salo.stoneglish.presentation.core.home.dialog.AddNewCardDialog
 import pl.salo.stoneglish.util.Utils.visible
+import pl.salo.stoneglish.util.coreNavigator
 import pl.salo.stoneglish.util.hideKeyboard
 import pl.salo.stoneglish.util.showKeyboard
 
@@ -39,17 +41,20 @@ class HomeFragment : Fragment() {
         initAdapters()
 
         with(binding) {
-            openSearchButton.setOnClickListener {
-                openSearch()
-            }
-            closeOpenedSearchButton.setOnClickListener {
-                closeSearch()
-            }
+            openSearchButton.setOnClickListener { openSearch() }
+            closeOpenedSearchButton.setOnClickListener { closeSearch() }
 
             wordsOfTheDayCards.setUpCardsAdapter(
                 fragment = this@HomeFragment,
                 cards = listOf(Card(word = "Nu"), Card(word="Sho"), Card("ty?"))
-            )
+            ) { word ->
+                coreNavigator().showAddCardDialog(
+                    AddNewCardDialog(
+                        selectedWord = word
+                    )
+                )
+            }
+
 
             topicsAdapter.topicsList = listOf("Buuu", "Uuuuu", "Aaaaa", "Paaaaa", "Waaaa", "Tatatata")
             topicsRecycler.adapter = topicsAdapter

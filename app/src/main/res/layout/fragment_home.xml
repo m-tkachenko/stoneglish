@@ -249,7 +249,7 @@
                 android:orientation="vertical"
                 android:weightSum="1">
 
-                <pl.salo.stoneglish.presentation.core.CardSwiperView
+                <pl.salo.stoneglish.presentation.core.views.CardSwiperView
                     android:id="@+id/wordsOfTheDayCards"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

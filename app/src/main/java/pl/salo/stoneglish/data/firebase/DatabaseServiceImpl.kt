@@ -36,7 +36,7 @@ class DatabaseServiceImpl @Inject constructor(
             .setValue(card)
             .await()
 
-        Log.d(TAG, "writeUserCard")
+        Log.d(TAG, "User card was upload")
     }
 
     override suspend fun listOfCards(moduleName: String, userId: String): List<Card> {

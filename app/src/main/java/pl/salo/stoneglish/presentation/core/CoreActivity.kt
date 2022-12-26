@@ -7,6 +7,7 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import pl.salo.stoneglish.R
 import pl.salo.stoneglish.common.Resource
@@ -17,6 +18,7 @@ import pl.salo.stoneglish.presentation.core.cards.fragments.CardsFragment
 import pl.salo.stoneglish.presentation.core.cards.fragments.ModulesFragment
 import pl.salo.stoneglish.presentation.core.dictionary.DictionaryFragment
 import pl.salo.stoneglish.presentation.core.home.HomeFragment
+import pl.salo.stoneglish.presentation.core.home.dialog.AddNewCardDialog
 import pl.salo.stoneglish.presentation.core.profile.ProfileFragment
 import pl.salo.stoneglish.util.CoreNavigator
 
@@ -102,6 +104,11 @@ class CoreActivity : AppCompatActivity(), CoreNavigator {
     override fun makeToast(text: String) {
         Toast.makeText(this, text, Toast.LENGTH_SHORT).show()
     }
+    override fun makeSnack(text: String) {
+        Snackbar
+            .make(binding.root, text, Snackbar.LENGTH_SHORT)
+            .show()
+    }
 
     override fun onBackPressed() = goBack()
     override fun goToAuthActivity() {
@@ -124,5 +131,9 @@ class CoreActivity : AppCompatActivity(), CoreNavigator {
             .replace(R.id.coreFragmentContainer, CardsFragment::class.java, bundle)
             .addToBackStack("module")
             .commit()
+    }
+
+    override fun showAddCardDialog(dialog: AddNewCardDialog) {
+        dialog.show(supportFragmentManager, "add_new_card")
     }
 }

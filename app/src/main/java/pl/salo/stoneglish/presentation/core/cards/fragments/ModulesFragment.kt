@@ -75,7 +75,6 @@ class ModulesFragment : Fragment() {
                         Log.d(TAG, "ModulesDownload : Loading")
                     }
                 }
-
             }
         }
     }

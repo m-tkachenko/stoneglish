@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import pl.salo.stoneglish.R
 import pl.salo.stoneglish.databinding.CardTopicItemBinding
 
-class HomeTopicsAdapter() : RecyclerView.Adapter<HomeTopicsAdapter.HomeTopicsHolder>() {
+class HomeTopicsAdapter : RecyclerView.Adapter<HomeTopicsAdapter.HomeTopicsHolder>() {
     var topicsList: List<String> = listOf()
     var onTopicClick: (() -> Unit)? = null
 
