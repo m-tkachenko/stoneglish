@@ -6,6 +6,8 @@ import android.os.Bundle
 import android.speech.tts.TextToSpeech
 import android.speech.tts.UtteranceProgressListener
 import android.util.Log
+import android.view.View
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -28,19 +30,32 @@ import pl.salo.stoneglish.presentation.core.profile.ProfileFragment
 import pl.salo.stoneglish.util.CoreNavigator
 import java.util.*
 
+
 const val TAG = "CoreActivity"
 
 @AndroidEntryPoint
 class CoreActivity : AppCompatActivity(), CoreNavigator, TextToSpeech.OnInitListener {
 
     lateinit var binding: ActivityCoreBinding
-    private val viewModel: AuthViewModel by viewModels()
+    private val authViewModel: AuthViewModel by viewModels()
+    private val translateViewModel: TranslateViewModel by viewModels()
+    private val viewModel: CoreViewModel by viewModels()
     private lateinit var speaker: TextToSpeech
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityCoreBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        translateViewModel
+        observeClickedWord()
+        observeTranslatedWord()
+
+        binding.closeActionButton.setOnClickListener {
+            binding.topWordContainer.visibility = View.GONE
+        }
+        binding.audioActionButton.setOnClickListener {
+            speak(binding.clickedWord.text.toString())
+        }
 
         speaker = TextToSpeech(this, this)
         observeSignOut()
@@ -76,9 +91,9 @@ class CoreActivity : AppCompatActivity(), CoreNavigator, TextToSpeech.OnInitList
             .commit()
     }
 
-    private fun observeSignOut(){
-        viewModel.onSignOut.observe(this){
-            when(it){
+    private fun observeSignOut() {
+        authViewModel.onSignOut.observe(this) {
+            when (it) {
                 is Resource.Success -> {
                     goToAuthActivity()
                 }
@@ -98,7 +113,7 @@ class CoreActivity : AppCompatActivity(), CoreNavigator, TextToSpeech.OnInitList
         builder.setTitle("Sign Out")
         builder.setMessage("Do you want to sign out?")
         builder.setPositiveButton("Yes") { _, _ ->
-            viewModel.signOut()
+            authViewModel.signOut()
         }
         builder.setNegativeButton("No") { _, _ ->
             dialog?.dismiss()
@@ -126,13 +141,8 @@ class CoreActivity : AppCompatActivity(), CoreNavigator, TextToSpeech.OnInitList
         replaceFragment(TopicFragment())
     }
 
-    override fun speak(text: String): Flow<TextToSpeechResult> = callbackFlow {
-        speaker.speak(
-            text,
-            TextToSpeech.QUEUE_FLUSH,
-            null,
-            TextToSpeech.ACTION_TTS_QUEUE_PROCESSING_COMPLETED
-        )
+    override fun speakWithFlow(text: String): Flow<TextToSpeechResult> = callbackFlow {
+        speak(text)
 
         val progressListener = object : UtteranceProgressListener() {
             override fun onStart(p0: String?) {
@@ -155,6 +165,18 @@ class CoreActivity : AppCompatActivity(), CoreNavigator, TextToSpeech.OnInitList
 
     }
 
+    private fun speak(text:String){
+        speaker.speak(
+            text,
+            TextToSpeech.QUEUE_FLUSH,
+            null,
+            TextToSpeech.ACTION_TTS_QUEUE_PROCESSING_COMPLETED
+        )
+    }
+
+    override fun setClickableWords(content: String, textView: TextView) {
+        viewModel.setClickableText(content, textView)
+    }
 
     override fun goBack() {
         if (supportFragmentManager.backStackEntryCount != 0) supportFragmentManager.popBackStack() else finish()
@@ -166,7 +188,11 @@ class CoreActivity : AppCompatActivity(), CoreNavigator, TextToSpeech.OnInitList
 
         supportFragmentManager
             .beginTransaction()
-            .replace(R.id.coreFragmentContainer, CardsFragment::class.java, bundle)
+            .replace(
+                pl.salo.stoneglish.R.id.coreFragmentContainer,
+                CardsFragment::class.java,
+                bundle
+            )
             .addToBackStack("module")
             .commit()
     }
@@ -181,6 +207,24 @@ class CoreActivity : AppCompatActivity(), CoreNavigator, TextToSpeech.OnInitList
             }
         } else {
             Log.e(TAG, "Initialization Failed!")
+        }
+    }
+
+    private fun observeClickedWord() {
+        viewModel.word.observe(this) { word ->
+            binding.clickedWord.text = word.replaceFirstChar {
+                if (it.isLowerCase()) it.titlecase(
+                    Locale.getDefault()
+                ) else it.toString()
+            }
+            translateViewModel.translate(word)
+        }
+    }
+
+    private fun observeTranslatedWord() {
+        translateViewModel.translatedWord.observe(this) { word ->
+            binding.translatedWord.text = word.lowercase()
+            binding.topWordContainer.visibility = View.VISIBLE
         }
     }
 
