@@ -3,11 +3,17 @@ package pl.salo.stoneglish.presentation.core
 import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
+import android.speech.tts.TextToSpeech
+import android.speech.tts.UtteranceProgressListener
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.channels.awaitClose
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.callbackFlow
 import pl.salo.stoneglish.R
 import pl.salo.stoneglish.common.Resource
 import pl.salo.stoneglish.databinding.ActivityCoreBinding
@@ -20,18 +26,23 @@ import pl.salo.stoneglish.presentation.core.home.HomeFragment
 import pl.salo.stoneglish.presentation.core.home.TopicFragment
 import pl.salo.stoneglish.presentation.core.profile.ProfileFragment
 import pl.salo.stoneglish.util.CoreNavigator
+import java.util.*
+
+const val TAG = "CoreActivity"
 
 @AndroidEntryPoint
-class CoreActivity : AppCompatActivity(), CoreNavigator {
+class CoreActivity : AppCompatActivity(), CoreNavigator, TextToSpeech.OnInitListener {
 
     lateinit var binding: ActivityCoreBinding
     private val viewModel: AuthViewModel by viewModels()
+    private lateinit var speaker: TextToSpeech
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityCoreBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        speaker = TextToSpeech(this, this)
         observeSignOut()
         binding.bottomNavigation.setOnItemSelectedListener { item ->
             when (item.itemId) {
@@ -115,6 +126,35 @@ class CoreActivity : AppCompatActivity(), CoreNavigator {
         replaceFragment(TopicFragment())
     }
 
+    override fun speak(text: String): Flow<TextToSpeechResult> = callbackFlow {
+        speaker.speak(
+            text,
+            TextToSpeech.QUEUE_FLUSH,
+            null,
+            TextToSpeech.ACTION_TTS_QUEUE_PROCESSING_COMPLETED
+        )
+
+        val progressListener = object : UtteranceProgressListener() {
+            override fun onStart(p0: String?) {
+                trySend(TextToSpeechResult.Loading)
+            }
+
+            override fun onDone(p0: String?) {
+                trySend(TextToSpeechResult.Done).also { close() }
+            }
+
+            @Deprecated("Deprecated in Java", ReplaceWith("trySend(TextToSpeechResult.Error)"))
+            override fun onError(p0: String?) {
+                trySend(TextToSpeechResult.Error).also { close() }
+            }
+
+        }
+        speaker.setOnUtteranceProgressListener(progressListener)
+
+        awaitClose()
+
+    }
+
 
     override fun goBack() {
         if (supportFragmentManager.backStackEntryCount != 0) supportFragmentManager.popBackStack() else finish()
@@ -130,4 +170,29 @@ class CoreActivity : AppCompatActivity(), CoreNavigator {
             .addToBackStack("module")
             .commit()
     }
+
+    override fun onInit(status: Int) {
+        if (status == TextToSpeech.SUCCESS) {
+
+            val result = speaker.setLanguage(Locale.US)
+
+            if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
+                Log.e(TAG, "The Language specified is not supported!")
+            }
+        } else {
+            Log.e(TAG, "Initialization Failed!")
+        }
+    }
+
+    override fun onDestroy() {
+        speaker.stop()
+        speaker.shutdown()
+        super.onDestroy()
+    }
+}
+
+sealed class TextToSpeechResult {
+    object Done : TextToSpeechResult()
+    object Loading : TextToSpeechResult()
+    object Error : TextToSpeechResult()
 }
