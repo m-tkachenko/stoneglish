@@ -6,6 +6,8 @@ import pl.salo.stoneglish.presentation.core.home.dialog.AddNewCardDialog
 
 interface CoreNavigator {
     fun goToAuthActivity()
+    fun goToTopicFragment()
+
     fun goBack()
     fun goToCard(module: String)
 

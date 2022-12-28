@@ -27,17 +27,15 @@ class HomeTopicsAdapter : RecyclerView.Adapter<HomeTopicsAdapter.HomeTopicsHolde
                 topicCardTitle.text = this
                 topicCardDescription.text = "Rok - to muzyka, kor - to kora, ork - to nie człowiek"
                 topicImage.setImageResource(R.drawable.me)
+
+                topicCardLayout.setOnClickListener {
+                    onTopicClick?.invoke()
+                }
             }
         }
     }
 
     override fun getItemCount() = topicsList.size
 
-    inner class HomeTopicsHolder(val binding: CardTopicItemBinding) : RecyclerView.ViewHolder(binding.root) {
-        init {
-            binding.root.setOnClickListener {
-                onTopicClick
-            }
-        }
-    }
+    inner class HomeTopicsHolder(val binding: CardTopicItemBinding) : RecyclerView.ViewHolder(binding.root)
 }

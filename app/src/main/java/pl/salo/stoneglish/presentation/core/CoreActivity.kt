@@ -18,6 +18,7 @@ import pl.salo.stoneglish.presentation.core.cards.fragments.CardsFragment
 import pl.salo.stoneglish.presentation.core.cards.fragments.ModulesFragment
 import pl.salo.stoneglish.presentation.core.dictionary.DictionaryFragment
 import pl.salo.stoneglish.presentation.core.home.HomeFragment
+import pl.salo.stoneglish.presentation.core.home.TopicFragment
 import pl.salo.stoneglish.presentation.core.home.dialog.AddNewCardDialog
 import pl.salo.stoneglish.presentation.core.profile.ProfileFragment
 import pl.salo.stoneglish.util.CoreNavigator
@@ -115,6 +116,10 @@ class CoreActivity : AppCompatActivity(), CoreNavigator {
         val intent = Intent(this@CoreActivity, AuthActivity::class.java)
         startActivity(intent)
         finish()
+    }
+
+    override fun goToTopicFragment() {
+        replaceFragment(TopicFragment())
     }
 
 

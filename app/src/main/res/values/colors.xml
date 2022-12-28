@@ -15,6 +15,11 @@
     <color name="background_card">#FCFCFC</color>
     <color name="background_card_favorite">#C6DEDD</color>
 
+    <color name="text_title_color">#FF000000</color>
+    <color name="text_color">#FF000000</color>
+    <color name="sub_text_color">@color/grey</color>
+    <color name="text_green">@color/main_green</color>
+
     <!--buttons-->
     <color name="main_button">#168C85</color>
     <color name="google_button">#E1E1E1</color>
@@ -24,5 +29,7 @@
     <color name="screen_background">#f0f0f0</color>
     <color name="item_background">#fcfcfc</color>
     <color name="stroke_color">#8D8D8D</color>
+
+    <color name="recycler_view_item_color">#f2f2f2</color>
 
 </resources>

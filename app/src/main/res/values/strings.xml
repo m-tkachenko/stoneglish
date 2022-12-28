@@ -74,4 +74,12 @@
     <string name="card_dialog_add_card_loading_text">Uploading new card…</string>
     <string name="card_dialog_success_text">Card successfully uploaded</string>
     <string name="words_of_the_day_loading_text">Downloading words of the day...</string>
+
+    <!--  Topic screen  -->
+    <string name="topic_title">Topic Title</string>
+    <string name="topic_text">Topic Text</string>
+    <string name="train_your_listening_and_speaking">Train your listening and speaking!</string>
+    <string name="start_test">Start test</string>
+    <string name="keywords">Keywords</string>
+    <string name="similar_topics">Similar topics</string>
 </resources>

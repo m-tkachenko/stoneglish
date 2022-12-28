@@ -59,6 +59,7 @@ class HomeFragment : Fragment() {
             }
 
             topicsAdapter.topicsList = listOf("Buuu", "Uuuuu", "Aaaaa", "Paaaaa", "Waaaa", "Tatatata")
+            topicsAdapter.onTopicClick = { coreNavigator().goToTopicFragment() }
             topicsRecycler.adapter = topicsAdapter
 
             startLearnImage.setImageResource(R.drawable.me)
