@@ -27,6 +27,5 @@ class HomeFragment : Fragment() {
         viewModel.selectTopic()
 
         coreNavigator().goToTopicFragment()
-
     }
 }

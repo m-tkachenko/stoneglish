@@ -13,6 +13,7 @@ import pl.salo.stoneglish.common.Resource
 import pl.salo.stoneglish.databinding.ActivityCoreBinding
 import pl.salo.stoneglish.presentation.auth.AuthActivity
 import pl.salo.stoneglish.presentation.auth.AuthViewModel
+import pl.salo.stoneglish.presentation.core.admin.AddTopicFragment
 import pl.salo.stoneglish.presentation.core.cards.fragments.CardsFragment
 import pl.salo.stoneglish.presentation.core.cards.fragments.ModulesFragment
 import pl.salo.stoneglish.presentation.core.dictionary.DictionaryFragment
@@ -36,7 +37,7 @@ class CoreActivity : AppCompatActivity(), CoreNavigator {
         binding.bottomNavigation.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.home -> {
-                    replaceFragment(HomeFragment())
+                    replaceFragment(AddTopicFragment())
                     true
                 }
                 R.id.dictionary -> {
