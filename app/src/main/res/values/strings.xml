@@ -64,9 +64,9 @@
 
     <!--  Texts for Add Topic functionality  -->
     <string name="add_topic_title_screen">Add Topic</string>
-    <string name="topic_title_input_hint">Type topic title</string>
-    <string name="add_topic_title_and_level">Topic title and level</string>
-    <string name="new_text_input_hint">Type text for new topic</string>
+    <string name="topic_title_input_hint">Topic title</string>
+    <string name="add_topic_title_type_and_level">Title, type and level</string>
+    <string name="new_text_input_hint">Text for new topic</string>
     <string name="add_image_and_text_button">Add image and text</string>
     <string name="add_title_and_level_button">Add title and level</string>
     <string name="topic_test_listening_keywords_title">Topic test, listening, keywords</string>
@@ -75,14 +75,18 @@
     <string name="new_topic_test_title">Test</string>
     <string name="new_topic_listening_title">Listening and speaking</string>
     <string name="add_keyword_to_topic_button">Add keyword</string>
-    <string name="new_keyword_input_hint">Type keyword</string>
-    <string name="new_keyword_translation_input_hint">Type translation for keyword</string>
+    <string name="new_keyword_input_hint">Keyword</string>
+    <string name="new_keyword_translation_input_hint">Translation for keyword</string>
     <string name="new_keyword_to_topic_title">Keyword</string>
-    <string name="new_listening_and_speaking_input_hint">Type new listening and speaking text</string>
-    <string name="new_listening_and_speaking_definition_input_hint">Type definition for listening and speaking</string>
+    <string name="new_listening_and_speaking_input_hint">Listening and speaking text</string>
+    <string name="new_listening_and_speaking_definition_input_hint">Definition for listening and speaking</string>
     <string name="add_listening_to_topic_button">Add listening and speaking</string>
     <string name="new_topic_similar_topics_title">Similar topics</string>
     <string name="add_similar_topics_from_db_button">Add similar topics from DB</string>
     <string name="add_created_topic_button">Add created topic</string>
     <string name="show_created_topic_button">Show created topic</string>
+    <string name="topic_type_input_hint">Topic type</string>
+    <string name="topic_image_and_text_title">Topic image and text</string>
+    <string name="paste_img_url_input_hint">Img url</string>
+    <string name="show_image_preview_button">Show image preview</string>
 </resources>

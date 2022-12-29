@@ -54,14 +54,13 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/addTitleAndLevelTitle"
                     android:layout_width="wrap_content"
 
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
 
-                    android:text="@string/add_topic_title_and_level"
+                    android:text="@string/add_topic_title_type_and_level"
                     android:textColor="@color/black"
                     android:textSize="24sp"
                     android:textStyle="bold" />
@@ -87,13 +86,26 @@
                         android:inputType="text"
                         android:autofillHints="none" />
 
+                    <EditText
+                        android:id="@+id/topicTypeInput"
+
+                        android:layout_width="250dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+
+                        android:maxLines="1"
+                        android:hint="@string/topic_type_input_hint"
+                        android:inputType="text"
+                        android:autofillHints="none" />
+
                     <com.google.android.material.chip.ChipGroup
                         android:id="@+id/topicEngLevelsChipGroup"
 
-                        android:layout_marginTop="4dp"
+                        android:layout_marginTop="8dp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
 
+                        app:singleLine="true"
                         app:singleSelection="true"/>
 
                     <com.google.android.material.button.MaterialButton
@@ -123,7 +135,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
 
-                    android:text="@string/add_topic_title_and_level"
+                    android:text="@string/topic_image_and_text_title"
                     android:textColor="@color/black"
                     android:textSize="24sp"
                     android:textStyle="bold" />
@@ -138,6 +150,34 @@
 
                     android:orientation="vertical">
 
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+
+                        android:orientation="horizontal">
+
+                        <EditText
+                            android:layout_width="100dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+
+                            android:hint="@string/paste_img_url_input_hint"
+                            android:inputType="none"
+                            android:autofillHints="none" />
+
+                        <com.google.android.material.button.MaterialButton
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+
+                            android:text="@string/show_image_preview_button"
+                            android:textAllCaps="false"
+
+                            app:cornerRadius="10dp"/>
+
+                    </LinearLayout>
+
                     <ImageView
                         android:id="@+id/newImageForTopic"
 
@@ -148,6 +188,7 @@
                         android:scaleType="fitCenter"
                         android:adjustViewBounds="true"
 
+                        android:visibility="gone"
                         android:clickable="true"
                         android:background="@color/grey"
                         android:contentDescription="@string/cd" />
@@ -158,7 +199,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1"
-                        android:layout_marginTop="4dp"
+                        android:layout_marginTop="8dp"
 
                         android:hint="@string/new_text_input_hint"
                         android:inputType="text"
