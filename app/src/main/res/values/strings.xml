@@ -61,4 +61,9 @@
     <string name="start_test">Start test</string>
     <string name="keywords">Keywords</string>
     <string name="similar_topics">Similar topics</string>
+    <string name="create_module">Create module</string>
+    <string name="module_name">Module name</string>
+    <string name="add_word">Add word</string>
+    <string name="term">Term</string>
+    <string name="definition">Definition</string>
 </resources>

@@ -25,10 +25,7 @@ import pl.salo.stoneglish.domain.use_cases.CardsUseCases
 import pl.salo.stoneglish.domain.use_cases.DatabaseUseCases
 import pl.salo.stoneglish.domain.use_cases.DictionaryUseCases
 import pl.salo.stoneglish.domain.use_cases.auth.*
-import pl.salo.stoneglish.domain.use_cases.cards.ReadListOfCardsUseCase
-import pl.salo.stoneglish.domain.use_cases.cards.ReadListOfModulesUseCase
-import pl.salo.stoneglish.domain.use_cases.cards.ReadListOfTestsUseCase
-import pl.salo.stoneglish.domain.use_cases.cards.WriteUserCardUseCase
+import pl.salo.stoneglish.domain.use_cases.cards.*
 import pl.salo.stoneglish.domain.use_cases.database.GetCurrentUserUseCase
 import pl.salo.stoneglish.domain.use_cases.database.WriteUserDataUseCase
 import pl.salo.stoneglish.domain.use_cases.dictionary.DictionaryGetWordDataUseCase
@@ -89,7 +86,8 @@ object AppModule {
         cardsList = ReadListOfCardsUseCase(databaseRepository, authRepository),
         modulesList = ReadListOfModulesUseCase(databaseRepository, authRepository),
         testsList = ReadListOfTestsUseCase(databaseRepository, authRepository),
-        addNewCard = WriteUserCardUseCase(databaseRepository, authRepository)
+        addNewCard = WriteUserCardUseCase(databaseRepository, authRepository),
+        writeCardsUseCase = WriteUserCardsUseCase(databaseRepository, authRepository)
     )
 
     @Singleton
