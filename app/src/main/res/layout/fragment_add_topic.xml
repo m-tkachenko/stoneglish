@@ -86,17 +86,14 @@
                         android:inputType="text"
                         android:autofillHints="none" />
 
-                    <EditText
-                        android:id="@+id/topicTypeInput"
+                    <com.google.android.material.chip.ChipGroup
+                        android:id="@+id/topicTypesChipGroup"
 
-                        android:layout_width="250dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
 
-                        android:maxLines="1"
-                        android:hint="@string/topic_type_input_hint"
-                        android:inputType="text"
-                        android:autofillHints="none" />
+                        app:selectionRequired="true"/>
 
                     <com.google.android.material.chip.ChipGroup
                         android:id="@+id/topicEngLevelsChipGroup"
@@ -105,20 +102,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
 
-                        app:singleLine="true"
-                        app:singleSelection="true"/>
-
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/submitTitleAndLevel"
-
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-
-                        android:text="@string/add_title_and_level_button"
-                        android:textAllCaps="false"
-
-                        app:cornerRadius="10dp"/>
+                        app:selectionRequired="true"/>
                 </LinearLayout>
 
                 <View
@@ -150,72 +134,64 @@
 
                     android:orientation="vertical">
 
-                    <LinearLayout
+                    <EditText
+                        android:id="@+id/topicImgUrlInput"
+
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
 
-                        android:orientation="horizontal">
-
-                        <EditText
-                            android:layout_width="100dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-
-                            android:hint="@string/paste_img_url_input_hint"
-                            android:inputType="none"
-                            android:autofillHints="none" />
-
-                        <com.google.android.material.button.MaterialButton
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-
-                            android:text="@string/show_image_preview_button"
-                            android:textAllCaps="false"
-
-                            app:cornerRadius="10dp"/>
-
-                    </LinearLayout>
-
-                    <ImageView
-                        android:id="@+id/newImageForTopic"
-
-                        android:layout_width="match_parent"
-                        android:layout_height="250dp"
-
-                        android:src="@drawable/ic_plus"
-                        android:scaleType="fitCenter"
-                        android:adjustViewBounds="true"
-
-                        android:visibility="gone"
-                        android:clickable="true"
-                        android:background="@color/grey"
-                        android:contentDescription="@string/cd" />
+                        android:hint="@string/paste_img_url_input_hint"
+                        android:inputType="textUri"
+                        android:autofillHints="none" />
 
                     <EditText
-                        android:id="@+id/addTopicTextInput"
+                        android:id="@+id/topicTextInput"
 
                         android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
-                        android:layout_marginTop="8dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
 
                         android:hint="@string/new_text_input_hint"
                         android:inputType="text"
                         android:autofillHints="none" />
 
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/submitImageAndTopicText"
+                    <TextView
+                        android:id="@+id/topicText"
 
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+
+                        tools:text="Just text"
+                        android:textSize="20sp"
+                        android:textColor="@color/black"
+
+                        android:visibility="gone"/>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/showText"
+
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
                         android:layout_marginTop="8dp"
 
-                        android:text="@string/add_image_and_text_button"
+                        android:text="@string/show_text_button"
                         android:textAllCaps="false"
 
                         app:cornerRadius="10dp"/>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/editText"
+
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="8dp"
+
+                        android:text="@string/edit_text_button"
+                        android:textAllCaps="false"
+
+                        app:cornerRadius="10dp"
+                        android:visibility="gone"/>
                 </LinearLayout>
 
                 <View
@@ -403,6 +379,16 @@
                     android:textSize="24sp"
                     android:textStyle="bold" />
 
+                <com.google.android.material.chip.ChipGroup
+                    android:id="@+id/topicChosedTypeChipGroup"
+
+                    android:layout_marginTop="8dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    app:singleSelection="true"
+                    app:selectionRequired="true"/>
+
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/addSimilarTopics"
 
@@ -423,23 +409,10 @@
                     android:background="@color/black" />
 
                 <com.google.android.material.button.MaterialButton
-                    android:id="@+id/addTopicToDB"
-
-                    android:layout_width="match_parent"
-                    android:layout_height="70dp"
-                    android:layout_marginHorizontal="8dp"
-
-                    android:text="@string/add_created_topic_button"
-                    android:textAllCaps="false"
-                    android:textStyle="bold"
-
-                    app:cornerRadius="10dp"/>
-
-                <com.google.android.material.button.MaterialButton
                     android:id="@+id/showCreatedTopic"
 
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="70dp"
                     android:layout_marginHorizontal="8dp"
 
                     android:text="@string/show_created_topic_button"
