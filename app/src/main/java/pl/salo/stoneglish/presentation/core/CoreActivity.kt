@@ -12,6 +12,7 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
@@ -27,6 +28,7 @@ import pl.salo.stoneglish.presentation.core.cards.fragments.ModulesFragment
 import pl.salo.stoneglish.presentation.core.dictionary.DictionaryFragment
 import pl.salo.stoneglish.presentation.core.home.HomeFragment
 import pl.salo.stoneglish.presentation.core.home.TopicFragment
+import pl.salo.stoneglish.presentation.core.home.dialog.AddNewCardDialog
 import pl.salo.stoneglish.presentation.core.profile.ProfileFragment
 import pl.salo.stoneglish.util.CoreNavigator
 import java.util.*
@@ -137,6 +139,11 @@ class CoreActivity : AppCompatActivity(), CoreNavigator, TextToSpeech.OnInitList
     override fun makeToast(text: String) {
         Toast.makeText(this, text, Toast.LENGTH_SHORT).show()
     }
+    override fun makeSnack(text: String) {
+        Snackbar
+            .make(binding.root, text, Snackbar.LENGTH_SHORT)
+            .show()
+    }
 
     override fun goToCreateModule() {
         addFragmentToStack(CreateModuleFragment())
@@ -207,6 +214,10 @@ class CoreActivity : AppCompatActivity(), CoreNavigator, TextToSpeech.OnInitList
             )
             .addToBackStack("module")
             .commit()
+    }
+
+    override fun showAddCardDialog(dialog: AddNewCardDialog) {
+        dialog.show(supportFragmentManager, "add_new_card")
     }
 
     override fun goToModules() {

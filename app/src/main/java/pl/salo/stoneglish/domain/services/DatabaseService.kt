@@ -14,4 +14,6 @@ interface DatabaseService {
     suspend fun listOfCards(moduleName: String, userId: String): List<Card>
     suspend fun listOfModules(userId: String): List<String>
     suspend fun listOfTests(moduleName: String, userId: String): List<TestForCards>
+
+    suspend fun getListOfDailyCards(): List<Card>
 }

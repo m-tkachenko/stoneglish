@@ -12,7 +12,7 @@ import pl.salo.stoneglish.common.Resource
 import pl.salo.stoneglish.databinding.FragmentModulesBinding
 import pl.salo.stoneglish.presentation.core.cards.CardsViewModel
 import pl.salo.stoneglish.presentation.core.cards.adapters.CardModulesAdapter
-import pl.salo.stoneglish.util.Utils.visible
+import pl.salo.stoneglish.util.Utils.ninja
 import pl.salo.stoneglish.util.coreNavigator
 
 @AndroidEntryPoint
@@ -79,17 +79,19 @@ class ModulesFragment : Fragment() {
                         Log.d(TAG, "ModulesDownload : Loading")
                     }
                 }
-
             }
         }
     }
 
     private fun updateModulesUi() {
         with(binding) {
-            modulesNoModulesLayout.visible(visibility = noModulesThere)
+            modulesNoModulesLayout.ninja(visibility = noModulesThere)
 
-            modulesLoadingLayout.visible(
+            modulesLoadingLayout.ninja(
                 visibility = !modulesDownloaded && !noModulesThere
+            )
+            modulesDownloadedLayout.ninja(
+                visibility = modulesDownloaded && !noModulesThere
             )
         }
     }

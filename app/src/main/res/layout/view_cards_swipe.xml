@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+
+    android:background="@color/screen_background">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="8dp"
+        android:layout_marginVertical="16dp"
+        android:elevation="20dp"
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="20dp"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:id="@id/cardViewTitle"
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:gravity="center_vertical"
+
+                android:orientation="horizontal"
+                android:background="@drawable/background_top_corner_rounded">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+
+                    android:text="@string/cards_title_home_screen"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+
+                    android:paddingHorizontal="16dp"
+                    android:paddingVertical="8dp"/>
+
+                <ImageView
+                    android:id="@+id/addWordToCardsButton"
+
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_marginHorizontal="16dp"
+
+                    android:clickable="true"
+                    android:src="@drawable/ic_plus"
+                    app:tint="@color/white"
+                    android:contentDescription="@string/cd" />
+            </LinearLayout>
+
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/cardsViewPager"
+
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cardViewTitle" />
+
+            <com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator
+                android:id="@+id/cards_worm_dots_indicator"
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                app:dotsColor="@color/main_green"
+                app:dotsCornerRadius="8dp"
+                app:dotsSize="12dp"
+
+                app:dotsSpacing="4dp"
+                app:dotsStrokeWidth="2dp"
+
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cardsViewPager" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -10,20 +10,27 @@ const val CARDS_QUANTITY = "CARDS_QUANTITY"
 const val CARD_NAME = "CARD_NAME"
 
 class CardsViewPagerAdapter(
-    fragment: Fragment,
-    private val cardsList: List<Card>
+    fragment: Fragment
 ) : FragmentStateAdapter(fragment) {
+    var cardItems: List<Card> = listOf()
+    var card: Card? = null
+
     override fun createFragment(position: Int): Fragment {
         val fragment = SwitchCardsFragment()
 
         fragment.arguments = Bundle().apply {
             putInt(CARD_POSITION, position)
             putInt(CARDS_QUANTITY, itemCount)
-            putString(CARD_NAME, cardsList[position].word)
+            putString(CARD_NAME, cardItems[position].word)
         }
 
         return fragment
     }
 
-    override fun getItemCount(): Int = cardsList.size
+    override fun getItemId(position: Int): Long {
+        card = cardItems[position]
+        return super.getItemId(position)
+    }
+
+    override fun getItemCount(): Int = cardItems.size
 }

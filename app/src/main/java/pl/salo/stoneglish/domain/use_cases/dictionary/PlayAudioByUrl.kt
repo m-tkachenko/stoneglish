@@ -13,7 +13,7 @@ class PlayAudioByUrl {
     operator fun invoke(url: String?): Flow<Resource<Unit>> = callbackFlow {
         try {
             if (url == null) throw Exception(Constants.SOMETHING_WENT_WRONG)
-            delay(500) //time to make the progress bar visible
+            delay(500) //time to make the progress bar ninja
 
             player = MediaPlayer().apply {
                 setDataSource(url)

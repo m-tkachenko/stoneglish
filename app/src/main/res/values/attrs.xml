@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="CardSwiperView">
+        <attr name="showCardsTitle" format="boolean"/>
+        <attr name="showAddWordButton" format="boolean"/>
+        <attr name="viewPagerHeight" format="dimension"/>
+    </declare-styleable>
+</resources>
