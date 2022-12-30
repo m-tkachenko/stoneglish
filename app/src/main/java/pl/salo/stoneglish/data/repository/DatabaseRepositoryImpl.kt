@@ -26,4 +26,8 @@ class DatabaseRepositoryImpl @Inject constructor(
     override suspend fun readListOfDailyCards(): List<Card> =
         databaseService.getListOfDailyCards()
 
+    override suspend fun writeUserCards(cards: List<Card>, module: String, userId: String) {
+        databaseService.writeUserCards(cards, module, userId)
+    }
+
 }

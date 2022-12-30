@@ -22,10 +22,7 @@ import pl.salo.stoneglish.domain.services.AuthService
 import pl.salo.stoneglish.domain.services.DatabaseService
 import pl.salo.stoneglish.domain.use_cases.*
 import pl.salo.stoneglish.domain.use_cases.auth.*
-import pl.salo.stoneglish.domain.use_cases.cards.ReadListOfCardsUseCase
-import pl.salo.stoneglish.domain.use_cases.cards.ReadListOfModulesUseCase
-import pl.salo.stoneglish.domain.use_cases.cards.ReadListOfTestsUseCase
-import pl.salo.stoneglish.domain.use_cases.cards.WriteUserCardUseCase
+import pl.salo.stoneglish.domain.use_cases.cards.*
 import pl.salo.stoneglish.domain.use_cases.database.GetCurrentUserUseCase
 import pl.salo.stoneglish.domain.use_cases.database.WriteUserDataUseCase
 import pl.salo.stoneglish.domain.use_cases.dictionary.DictionaryGetWordDataUseCase
@@ -87,7 +84,8 @@ object AppModule {
         cardsList = ReadListOfCardsUseCase(databaseRepository, authRepository),
         modulesList = ReadListOfModulesUseCase(databaseRepository, authRepository),
         testsList = ReadListOfTestsUseCase(databaseRepository, authRepository),
-        addNewCard = WriteUserCardUseCase(databaseRepository, authRepository)
+        addNewCard = WriteUserCardUseCase(databaseRepository, authRepository),
+        writeCardsUseCase = WriteUserCardsUseCase(databaseRepository, authRepository)
     )
 
     @Provides

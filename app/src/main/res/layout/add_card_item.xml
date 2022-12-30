@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp"
+        android:background="@color/recycler_view_item_color"
+        android:orientation="vertical"
+        tools:ignore="UselessParent">
+
+        <EditText
+            android:id="@+id/originWord"
+            android:layout_width="@dimen/view_width"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            android:backgroundTint="@color/main_green"
+            android:hint="@string/term"
+            android:importantForAutofill="no"
+            android:inputType="textEmailAddress" />
+
+        <AutoCompleteTextView
+            android:id="@+id/translatedWord"
+            android:layout_width="@dimen/view_width"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            android:backgroundTint="@color/main_green"
+            android:hint="@string/definition"
+            android:importantForAutofill="no"
+            android:inputType="textEmailAddress" />
+    </LinearLayout>
+</LinearLayout>

@@ -48,6 +48,10 @@ class ModulesFragment : Fragment() {
 
         cardsViewModel.downloadModules()
         modulesStateObserver()
+
+        binding.addModule.setOnClickListener {
+          coreNavigator().goToCreateModule()
+        }
     }
 
     private fun modulesStateObserver() {

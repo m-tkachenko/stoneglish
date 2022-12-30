@@ -3,18 +3,27 @@ package pl.salo.stoneglish.presentation.core
 import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
+import android.speech.tts.TextToSpeech
+import android.speech.tts.UtteranceProgressListener
+import android.util.Log
+import android.view.View
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.channels.awaitClose
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.callbackFlow
 import pl.salo.stoneglish.R
 import pl.salo.stoneglish.common.Resource
 import pl.salo.stoneglish.databinding.ActivityCoreBinding
 import pl.salo.stoneglish.presentation.auth.AuthActivity
 import pl.salo.stoneglish.presentation.auth.AuthViewModel
 import pl.salo.stoneglish.presentation.core.cards.fragments.CardsFragment
+import pl.salo.stoneglish.presentation.core.cards.fragments.CreateModuleFragment
 import pl.salo.stoneglish.presentation.core.cards.fragments.ModulesFragment
 import pl.salo.stoneglish.presentation.core.dictionary.DictionaryFragment
 import pl.salo.stoneglish.presentation.core.home.HomeFragment
@@ -22,18 +31,36 @@ import pl.salo.stoneglish.presentation.core.home.TopicFragment
 import pl.salo.stoneglish.presentation.core.home.dialog.AddNewCardDialog
 import pl.salo.stoneglish.presentation.core.profile.ProfileFragment
 import pl.salo.stoneglish.util.CoreNavigator
+import java.util.*
+
+
+const val TAG = "CoreActivity"
 
 @AndroidEntryPoint
-class CoreActivity : AppCompatActivity(), CoreNavigator {
+class CoreActivity : AppCompatActivity(), CoreNavigator, TextToSpeech.OnInitListener {
 
     lateinit var binding: ActivityCoreBinding
-    private val viewModel: AuthViewModel by viewModels()
+    private val authViewModel: AuthViewModel by viewModels()
+    private val translateViewModel: TranslateViewModel by viewModels()
+    private val viewModel: CoreViewModel by viewModels()
+    private lateinit var speaker: TextToSpeech
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityCoreBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        translateViewModel
+        observeClickedWord()
+        observeTranslatedWord()
 
+        binding.closeActionButton.setOnClickListener {
+            binding.topWordContainer.visibility = View.GONE
+        }
+        binding.audioActionButton.setOnClickListener {
+            speak(binding.clickedWord.text.toString())
+        }
+
+        speaker = TextToSpeech(this, this)
         observeSignOut()
         binding.bottomNavigation.setOnItemSelectedListener { item ->
             when (item.itemId) {
@@ -67,9 +94,16 @@ class CoreActivity : AppCompatActivity(), CoreNavigator {
             .commit()
     }
 
-    private fun observeSignOut(){
-        viewModel.onSignOut.observe(this){
-            when(it){
+    private fun addFragmentToStack(fragment: Fragment) {
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.coreFragmentContainer, fragment)
+            .addToBackStack(null)
+            .commit()
+    }
+
+    private fun observeSignOut() {
+        authViewModel.onSignOut.observe(this) {
+            when (it) {
                 is Resource.Success -> {
                     goToAuthActivity()
                 }
@@ -89,7 +123,7 @@ class CoreActivity : AppCompatActivity(), CoreNavigator {
         builder.setTitle("Sign Out")
         builder.setMessage("Do you want to sign out?")
         builder.setPositiveButton("Yes") { _, _ ->
-            viewModel.signOut()
+            authViewModel.signOut()
         }
         builder.setNegativeButton("No") { _, _ ->
             dialog?.dismiss()
@@ -111,6 +145,10 @@ class CoreActivity : AppCompatActivity(), CoreNavigator {
             .show()
     }
 
+    override fun goToCreateModule() {
+        addFragmentToStack(CreateModuleFragment())
+    }
+
     override fun onBackPressed() = goBack()
     override fun goToAuthActivity() {
         val intent = Intent(this@CoreActivity, AuthActivity::class.java)
@@ -122,6 +160,42 @@ class CoreActivity : AppCompatActivity(), CoreNavigator {
         replaceFragment(TopicFragment())
     }
 
+    override fun speakWithFlow(text: String): Flow<TextToSpeechResult> = callbackFlow {
+        speak(text)
+
+        val progressListener = object : UtteranceProgressListener() {
+            override fun onStart(p0: String?) {
+                trySend(TextToSpeechResult.Loading)
+            }
+
+            override fun onDone(p0: String?) {
+                trySend(TextToSpeechResult.Done).also { close() }
+            }
+
+            @Deprecated("Deprecated in Java", ReplaceWith("trySend(TextToSpeechResult.Error)"))
+            override fun onError(p0: String?) {
+                trySend(TextToSpeechResult.Error).also { close() }
+            }
+
+        }
+        speaker.setOnUtteranceProgressListener(progressListener)
+
+        awaitClose()
+
+    }
+
+    private fun speak(text:String){
+        speaker.speak(
+            text,
+            TextToSpeech.QUEUE_FLUSH,
+            null,
+            TextToSpeech.ACTION_TTS_QUEUE_PROCESSING_COMPLETED
+        )
+    }
+
+    override fun setClickableWords(content: String, textView: TextView) {
+        viewModel.setClickableText(content, textView)
+    }
 
     override fun goBack() {
         if (supportFragmentManager.backStackEntryCount != 0) supportFragmentManager.popBackStack() else finish()
@@ -133,7 +207,11 @@ class CoreActivity : AppCompatActivity(), CoreNavigator {
 
         supportFragmentManager
             .beginTransaction()
-            .replace(R.id.coreFragmentContainer, CardsFragment::class.java, bundle)
+            .replace(
+                R.id.coreFragmentContainer,
+                CardsFragment::class.java,
+                bundle
+            )
             .addToBackStack("module")
             .commit()
     }
@@ -141,4 +219,51 @@ class CoreActivity : AppCompatActivity(), CoreNavigator {
     override fun showAddCardDialog(dialog: AddNewCardDialog) {
         dialog.show(supportFragmentManager, "add_new_card")
     }
+
+    override fun goToModules() {
+        replaceFragment(ModulesFragment())
+    }
+
+    override fun onInit(status: Int) {
+        if (status == TextToSpeech.SUCCESS) {
+
+            val result = speaker.setLanguage(Locale.US)
+
+            if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
+                Log.e(TAG, "The Language specified is not supported!")
+            }
+        } else {
+            Log.e(TAG, "Initialization Failed!")
+        }
+    }
+
+    private fun observeClickedWord() {
+        viewModel.word.observe(this) { word ->
+            binding.clickedWord.text = word.replaceFirstChar {
+                if (it.isLowerCase()) it.titlecase(
+                    Locale.getDefault()
+                ) else it.toString()
+            }
+            translateViewModel.translate(word)
+        }
+    }
+
+    private fun observeTranslatedWord() {
+        translateViewModel.translatedWord.observe(this) { word ->
+            binding.translatedWord.text = word.lowercase()
+            binding.topWordContainer.visibility = View.VISIBLE
+        }
+    }
+
+    override fun onDestroy() {
+        speaker.stop()
+        speaker.shutdown()
+        super.onDestroy()
+    }
+}
+
+sealed class TextToSpeechResult {
+    object Done : TextToSpeechResult()
+    object Loading : TextToSpeechResult()
+    object Error : TextToSpeechResult()
 }

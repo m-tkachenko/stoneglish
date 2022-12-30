@@ -9,6 +9,7 @@ interface DatabaseRepository {
     suspend fun writeUserData(user: User)
 
     suspend fun writeUserCard(card: Card, module: String, userId: String)
+    suspend fun writeUserCards(cards: List<Card>, module: String, userId: String)
 
     suspend fun readCardsList(moduleName: String, userId: String): List<Card>
     suspend fun readModulesList(userId: String): List<String>
