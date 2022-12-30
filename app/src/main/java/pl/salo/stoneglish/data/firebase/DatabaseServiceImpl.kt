@@ -31,12 +31,25 @@ class DatabaseServiceImpl @Inject constructor(
             .child(userId)
             .child("cards")
             .child(module)
-            .child(card.word)
+            .push()
 
             .setValue(card)
             .await()
 
-        Log.d(TAG, "writeUserCard")
+        Log.d(TAG, "User card was upload")
+    }
+
+    override suspend fun writeUserCards(cards: List<Card>, module: String, userId: String) {
+        firebaseDatabase
+            .child("users")
+            .child(userId)
+            .child("cards")
+            .child(module)
+
+            .setValue(cards)
+            .await()
+
+        Log.d(TAG, "writeUserCards")
     }
 
     override suspend fun listOfCards(moduleName: String, userId: String): List<Card> {
@@ -91,5 +104,22 @@ class DatabaseServiceImpl @Inject constructor(
 
         Log.d(TAG, "Those tests were received: $testList")
         return testList
+    }
+
+    override suspend fun getListOfDailyCards(): List<Card> {
+        val resultDailyCardsSnapshot = firebaseDatabase
+            .child("users")
+            .child("dailyWord")
+            .get()
+            .await()
+
+        val dailyCardsList: MutableList<Card> = resultDailyCardsSnapshot.children.map { snap ->
+            snap.getValue(Card::class.java)!!
+        } as MutableList<Card>
+
+        dailyCardsList.remove(Card())
+        Log.d(TAG, "Those cards were received: $dailyCardsList")
+
+        return dailyCardsList
     }
 }

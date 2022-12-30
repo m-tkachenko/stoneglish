@@ -28,8 +28,6 @@
 
     <color name="screen_background">#f0f0f0</color>
     <color name="item_background">#fcfcfc</color>
-
-    <color name="background">#F2F2F2</color>
     <color name="stroke_color">#8D8D8D</color>
 
     <color name="recycler_view_item_color">#f2f2f2</color>

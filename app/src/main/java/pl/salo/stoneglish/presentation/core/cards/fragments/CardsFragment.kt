@@ -13,9 +13,8 @@ import pl.salo.stoneglish.databinding.FragmentCardsBinding
 import pl.salo.stoneglish.presentation.core.cards.CardsViewModel
 import pl.salo.stoneglish.presentation.core.cards.adapters.CardsTranslationsAdapter
 import pl.salo.stoneglish.presentation.core.cards.adapters.CardTestsAdapter
-import pl.salo.stoneglish.presentation.core.cards.viewpager.CardsViewPagerAdapter
 import pl.salo.stoneglish.util.Utils.isAbsoluteTrue
-import pl.salo.stoneglish.util.Utils.visible
+import pl.salo.stoneglish.util.Utils.ninja
 import pl.salo.stoneglish.util.coreNavigator
 
 const val TAG = "CardsFragment"
@@ -23,25 +22,6 @@ const val TAG = "CardsFragment"
 class CardsFragment : Fragment() {
     private lateinit var binding: FragmentCardsBinding
     private val cardsViewModel: CardsViewModel by viewModels()
-
-    private var downloaded = Pair(false, false)
-
-    private var testsDownloaded = false
-        set(value) {
-            field = value
-            downloaded = Pair(cardsDownloaded, testsDownloaded)
-
-            if (value)
-                loadingUiUpdate()
-        }
-    private var cardsDownloaded = false
-        set(value) {
-            field = value
-            downloaded = Pair(cardsDownloaded, testsDownloaded)
-
-            if (value)
-                loadingUiUpdate()
-        }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -109,12 +89,10 @@ class CardsFragment : Fragment() {
                                 cards = notNullCards
                             )
 
-                            cardsViewPager.adapter =
-                                CardsViewPagerAdapter(
-                                    fragment = this@CardsFragment,
-                                    cardsList = notNullCards
-                                )
-                            cardsWormDotsIndicator.attachTo(cardsViewPager)
+                            cardsView.setUpCardsAdapter(
+                                fragment = this@CardsFragment,
+                                cards = notNullCards
+                            )
                         }
 
                         cardsDownloaded = true
@@ -132,10 +110,29 @@ class CardsFragment : Fragment() {
         }
     }
 
+    private var downloaded = Pair(false, false)
+
+    private var testsDownloaded = false
+        set(value) {
+            field = value
+            downloaded = Pair(cardsDownloaded, testsDownloaded)
+
+            if (value)
+                loadingUiUpdate()
+        }
+    private var cardsDownloaded = false
+        set(value) {
+            field = value
+            downloaded = Pair(cardsDownloaded, testsDownloaded)
+
+            if (value)
+                loadingUiUpdate()
+        }
+
     private fun loadingUiUpdate() {
         with(binding) {
-            cardsLoadingLayout.visible(!downloaded.isAbsoluteTrue())
-            cardsDownloadedLayout.visible(downloaded.isAbsoluteTrue())
+            cardsLoadingLayout.ninja(!downloaded.isAbsoluteTrue())
+            cardsDownloadedLayout.ninja(downloaded.isAbsoluteTrue())
         }
     }
 }

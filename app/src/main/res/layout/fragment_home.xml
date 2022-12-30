@@ -1,13 +1,417 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+
     tools:context=".presentation.core.home.HomeFragment">
 
-    <TextView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Home fragment" />
 
+        android:background="@color/screen_background">
+
+        <FrameLayout
+            android:id="@+id/searchHomeMainLayout"
+
+            android:layout_width="match_parent"
+            android:layout_height="?actionBarSize"
+
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+
+            android:background="@color/white">
+
+            <RelativeLayout
+                android:id="@+id/searchClosedView"
+
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="16dp"
+
+                    android:text="@string/home_string"
+                    android:textSize="26sp"
+                    android:textColor="@color/black"/>
+
+                <ImageView
+                    android:id="@+id/openSearchButton"
+
+                    android:src="@drawable/ic_search"
+
+                    android:layout_width="26dp"
+                    android:layout_height="26dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="16dp"
+
+                    android:contentDescription="@string/cd" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/searchOpenedView"
+
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_margin="4dp"
+
+                android:background="@drawable/background_for_search_home_screen"
+                android:visibility="invisible">
+
+                <ImageView
+                    android:id="@+id/closeOpenedSearchButton"
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="16dp"
+
+                    android:src="@drawable/ic_close"
+                    android:contentDescription="@string/cd" />
+
+                <EditText
+                    android:id="@+id/searchInput"
+
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_toEndOf="@id/closeOpenedSearchButton"
+
+                    android:inputType="text"
+                    android:hint="@string/search"
+                    android:imeOptions="actionGo"
+                    android:singleLine="true" />
+            </RelativeLayout>
+        </FrameLayout>
+
+        <View
+            android:id="@+id/divider"
+
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/searchHomeMainLayout"
+
+            android:background="@color/stroke_color" />
+
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="match_parent"
+
+            android:layout_height="65dp"
+            android:background="@color/white"
+            android:orientation="horizontal"
+
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/divider">
+
+            <ImageView
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:layout_marginHorizontal="8dp"
+                android:layout_marginTop="8dp"
+
+                android:contentDescription="@string/cd"
+                android:src="@drawable/ic_tag_smile_face" />
+
+            <TextView
+                android:id="@+id/textForNewUsers"
+
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="8dp"
+
+                android:text="@string/default_welcome_text_on_home"
+                android:textColor="@color/grey"
+                android:textSize="18sp" />
+        </LinearLayout>
+
+        <HorizontalScrollView
+            android:id="@+id/homeTopicFilters"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+
+            android:background="@color/white"
+            android:scrollbars="none">
+
+            <com.google.android.material.chip.ChipGroup
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+
+                android:paddingHorizontal="8dp"
+                app:singleLine="true">
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/travelChip"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+
+                    app:chipIconVisible="true"
+                    app:chipStartPadding="10dp"
+                    app:chipIcon="@drawable/ic_simple_travel"
+                    app:chipIconSize="20dp"
+
+                    android:text="@string/filter_travelling_text"/>
+
+                <com.google.android.material.chip.Chip
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+
+                    app:chipIconVisible="true"
+                    app:chipStartPadding="10dp"
+                    app:chipIcon="@drawable/ic_simple_sport"
+                    app:chipIconSize="20dp"
+
+                    android:text="@string/filter_sport_text"/>
+
+                <com.google.android.material.chip.Chip
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+
+                    app:chipIconVisible="true"
+                    app:chipStartPadding="10dp"
+                    app:chipIcon="@drawable/ic_simple_education"
+                    app:chipIconSize="20dp"
+
+                    android:text="@string/filter_education_text"/>
+
+                <com.google.android.material.chip.Chip
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+
+                    app:chipIconVisible="true"
+                    app:chipStartPadding="10dp"
+                    app:chipIcon="@drawable/ic_simple_health"
+                    app:chipIconSize="20dp"
+
+                    android:text="@string/filter_health_text"/>
+
+                <com.google.android.material.chip.Chip
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+
+                    app:chipIconVisible="true"
+                    app:chipStartPadding="10dp"
+                    app:chipIcon="@drawable/ic_simple_books"
+                    app:chipIconSize="20dp"
+
+                    android:text="@string/filter_books_text"/>
+
+            </com.google.android.material.chip.ChipGroup>
+        </HorizontalScrollView>
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/homeTopicFilters"
+
+            android:fillViewport="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:paddingBottom="200dp"
+
+                android:orientation="vertical"
+                android:weightSum="1">
+
+                <LinearLayout
+                    android:id="@+id/dailyCardLoading"
+
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="16dp"
+
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:visibility="visible">
+
+                    <ProgressBar
+                        android:id="@+id/modulesProgressBar"
+
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:maxWidth="300dp"
+
+                        android:text="@string/words_of_the_day_loading_text"
+                        android:textColor="@color/black"
+                        android:textSize="20sp"
+                        android:textAlignment="center"
+
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/modulesProgressBar" />
+
+                </LinearLayout>
+
+                <pl.salo.stoneglish.presentation.core.views.CardSwiperView
+                    android:id="@+id/wordsOfTheDayCards"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    app:showCardsTitle="true"
+                    app:showAddWordButton="true"
+                    app:viewPagerHeight="100dp"
+
+                    android:visibility="gone"/>
+
+                <TextView
+                    android:id="@+id/topicTextOnHomeScreen"
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="8dp"
+
+                    android:text="@string/topic_text_on_home_screen"
+                    android:textSize="28sp"
+                    android:textColor="@color/black"/>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/topicsRecycler"
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="16dp"
+
+                    android:overScrollMode="never"
+                    android:nestedScrollingEnabled="false"
+                    app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
+                    app:spanCount="2"/>
+
+                <TextView
+                    android:id="@+id/startDividerLearnText"
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="8dp"
+
+                    android:text="@string/start_to_learn_text"
+                    android:textSize="28sp"
+                    android:textColor="@color/black"/>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="8dp"
+                    android:layout_marginHorizontal="8dp"
+
+                    app:cardCornerRadius="20dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/startLearnCardTitle"
+
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+
+                            android:paddingTop="10dp"
+                            android:paddingHorizontal="12dp"
+                            android:maxLines="2"
+                            android:maxWidth="350dp"
+
+                            android:text="@string/just_text"
+                            android:textColor="@color/black"
+                            android:textSize="16sp" />
+
+                        <com.google.android.material.card.MaterialCardView
+                            android:layout_width="match_parent"
+                            android:layout_height="150dp"
+
+                            android:layout_marginHorizontal="8dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginBottom="8dp"
+                            app:cardCornerRadius="20dp">
+
+                            <ImageView
+                                android:id="@+id/startLearnImage"
+
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+
+                                android:adjustViewBounds="true"
+                                android:contentDescription="@string/cd"
+                                android:elevation="20dp"
+
+                                android:scaleType="fitXY"
+                                android:src="@color/main_green" />
+
+                        </com.google.android.material.card.MaterialCardView>
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/startLearnButton"
+
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="8dp"
+                            android:layout_marginBottom="4dp"
+
+                            app:cornerRadius="10dp"
+                            android:backgroundTint="@color/main_orange"
+
+                            android:text="@string/start_journey_text"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            android:textAllCaps="false"/>
+
+
+                    </LinearLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

@@ -92,4 +92,7 @@ dependencies {
     //Material View Pager Dots Indicator
     implementation("com.tbuonomo:dotsindicator:4.3")
 
+    //ML kit (translator)
+    implementation 'com.google.mlkit:translate:17.0.1'
+
 }
