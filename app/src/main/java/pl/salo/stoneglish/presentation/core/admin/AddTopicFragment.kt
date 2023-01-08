@@ -5,23 +5,24 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import com.google.android.material.chip.Chip
 import dagger.hilt.android.AndroidEntryPoint
-import pl.salo.stoneglish.data.model.home.EngLevel
-import pl.salo.stoneglish.data.model.home.ListeningSpeaking
-import pl.salo.stoneglish.data.model.home.Topic
-import pl.salo.stoneglish.data.model.home.TopicType
+import pl.salo.stoneglish.data.model.home.*
 import pl.salo.stoneglish.databinding.FragmentAddTopicBinding
+import pl.salo.stoneglish.presentation.core.home.HomeViewModel
+import pl.salo.stoneglish.util.Utils.ninja
 import pl.salo.stoneglish.util.coreNavigator
 
 @AndroidEntryPoint
 class AddTopicFragment : Fragment() {
     private lateinit var binding: FragmentAddTopicBinding
-    private val viewModel: AddTopicViewModel by viewModels()
+
+    private val homeViewModel: HomeViewModel by activityViewModels()
 
     private val listeningSpeakingList = mutableListOf<ListeningSpeaking>()
+    private val keywordsList = mutableListOf<Keyword>()
+    private val similarTopicList = mutableListOf<SimilarTopic>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -40,11 +41,10 @@ class AddTopicFragment : Fragment() {
 
         with(binding) {
             showCreatedTopic.setOnClickListener {
-                if (allEditTextNotBlank() &&
-                    getTopicTypeList().isNotEmpty() &&
-                    getTopicEngLevelList().isNotEmpty() &&
-                    listeningSpeakingList.isNotEmpty())
-                    viewModel.sendTopic(getTopicModel())
+                if (allEditTextNotBlank() && allListsNotEmpty()) {
+                    homeViewModel.setTopicToPreview(getTopicModel())
+                    coreNavigator().goToTopicFragment()
+                }
                 else
                     coreNavigator().makeToast("Please add all information")
             }
@@ -64,6 +64,24 @@ class AddTopicFragment : Fragment() {
                 newListeningTranslationInput.setText("")
             }
 
+            addSimilarTopics.setOnClickListener {
+                if (similarTopicInput.text.isNotBlank())
+                    similarTopicList.add(
+                        SimilarTopic(
+                            imgUrl = "",
+                            title = similarTopicInput.text.toString()
+                        )
+                    )
+                else
+                    coreNavigator().makeToast("Add similar topic name")
+
+                similarTopicInput.setText("")
+            }
+
+            horizontalViewTypeChip.setOnCheckedChangeListener { _, checked ->
+                topicGroupTitleInput.ninja(checked)
+            }
+
             showText.setOnClickListener {
                 topicText.text = topicTextInput.text
 
@@ -72,6 +90,12 @@ class AddTopicFragment : Fragment() {
 
                 it.visibility = View.GONE
                 editText.visibility = View.VISIBLE
+
+                coreNavigator().setClickableWords(topicText.text.toString(), topicText)
+                coreNavigator().setKeywordAddAction { newKeyword ->
+                    if(!keywordsList.contains(newKeyword))
+                        keywordsList.add(newKeyword)
+                }
             }
             editText.setOnClickListener {
                 topicText.visibility = View.GONE
@@ -87,26 +111,30 @@ class AddTopicFragment : Fragment() {
         return with(binding) {
             Topic(
                 title = topicTitleInput.text.toString(),
-                type = getTopicTypeList(),
-                eng_level = getTopicEngLevelList(),
+                horizontalGroupTitle = topicGroupTitleInput.text.toString(),
                 imgUrl = topicImgUrlInput.text.toString(),
                 text = topicTextInput.text.toString(),
-                exercises = Any(),
-                listeningAndSpeaking = listeningSpeakingList,
-                keywords = listOf(),
-                similarTopics = listOf()
+                type = getTopicTypeList(),
+                eng_level = getTopicEngLevelList(),
+                exercises = null,
+                listeningAndSpeaking = listeningSpeakingList.toList(),
+                keywords = keywordsList.toList(),
+                similarTopics = similarTopicList.toList()
             )
         }
     }
 
     private fun getTopicTypeList(): List<TopicType> {
         val typeList: MutableList<TopicType> = mutableListOf()
-        val checkedIds = binding.topicTypesChipGroup.checkedChipIds
+        val chipsQuantity = binding.topicTypesChipGroup.childCount
 
-        for (checked in checkedIds) {
-            typeList.add(
-                TopicType.values()[checked-1]
-            )
+        for (index in 0..chipsQuantity) {
+            val type = binding.topicTypesChipGroup.getChildAt(index) as Chip?
+
+            if (type?.isChecked == true)
+                typeList.add(
+                    TopicType.valueOf(type.text.toString())
+                )
         }
 
         return typeList.toList()
@@ -114,14 +142,23 @@ class AddTopicFragment : Fragment() {
 
     private fun getTopicEngLevelList(): List<EngLevel> {
         val engLevelList: MutableList<EngLevel> = mutableListOf()
+        val chipsQuantity = binding.topicEngLevelsChipGroup.childCount
 
-        for (level in binding.topicEngLevelsChipGroup.checkedChipIds) {
-            engLevelList.add(
-                EngLevel.values()[level-15]
-            )
+        for (index in 0..chipsQuantity) {
+            val level = binding.topicEngLevelsChipGroup.getChildAt(index) as Chip?
+
+            if (level?.isChecked == true)
+                engLevelList.add(
+                    EngLevel.valueOf(level.text.toString())
+                )
         }
 
         return engLevelList
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        homeViewModel.isNotPreview = true
     }
 
     private fun setUpTypeChipGroup() {
@@ -148,13 +185,17 @@ class AddTopicFragment : Fragment() {
         }
     }
 
-    private fun allEditTextNotBlank(): Boolean {
-        return listOf(
-            binding.topicTextInput,
-            binding.topicTitleInput,
-            binding.topicImgUrlInput
-        ).all {
-            it.text.isNotBlank()
-        }
+    private fun allListsNotEmpty() = getTopicTypeList().isNotEmpty() &&
+            getTopicEngLevelList().isNotEmpty() &&
+            listeningSpeakingList.isNotEmpty() &&
+            keywordsList.isNotEmpty() &&
+            similarTopicList.isNotEmpty()
+
+    private fun allEditTextNotBlank() = listOf(
+        binding.topicTextInput,
+        binding.topicTitleInput,
+        binding.topicImgUrlInput
+    ).all {
+        it.text.isNotBlank()
     }
 }

@@ -2,11 +2,12 @@ package pl.salo.stoneglish.data.model.home
 
 data class Topic(
     val title: String,
+    val horizontalGroupTitle: String?,
     val eng_level: List<EngLevel>,
     val type: List<TopicType>,
     val imgUrl: String,
     val text: String,
-    val exercises: Any?,
+    val exercises: TopicTest?,
     val listeningAndSpeaking: List<ListeningSpeaking>,
     val keywords: List<Keyword>,
     val similarTopics: List<SimilarTopic>?
