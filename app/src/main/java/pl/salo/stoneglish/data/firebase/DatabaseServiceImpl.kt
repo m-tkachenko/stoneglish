@@ -66,8 +66,8 @@ class DatabaseServiceImpl @Inject constructor(
             .child("dashboard")
             .child("horizontal")
 
-            .child(topic.horizontalGroupTitle ?: "Error")
             .child(topic.type[0].type)
+            .child(topic.horizontalGroupTitle ?: "Error")
             .child(topic.title)
 
             .setValue(topic)
