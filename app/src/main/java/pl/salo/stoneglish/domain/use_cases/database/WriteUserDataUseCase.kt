@@ -13,11 +13,12 @@ class WriteUserDataUseCase @Inject constructor(
     private val databaseRepository: DatabaseRepository,
     private val dataMapper: DataMapper
 ) {
-    suspend operator fun invoke(
+    operator fun invoke(
         user: User? = null,
         signUpData: SignUpData? = null
     ): Flow<Resource<Unit>> = flow {
         try {
+            emit(Resource.Loading())
             if (user == null && signUpData == null) throw Exception("Something went wrong :(")
             val userData = user ?: signUpData
             if (userData is SignUpData) {

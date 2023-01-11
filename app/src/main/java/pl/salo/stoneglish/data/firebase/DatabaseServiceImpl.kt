@@ -173,4 +173,30 @@ class DatabaseServiceImpl @Inject constructor(
                 word.value as String
             }
     }
+
+    override suspend fun writeUserCategories(userId: String, categories: List<String>) {
+        firebaseDatabase
+            .child("users")
+            .child(userId)
+            .child("interestedTopics")
+
+            .setValue(categories)
+            .await()
+
+        Log.d(TAG, "writeUserCategories")
+    }
+
+    override suspend fun changeUserField(userId: String, field: String, newValue: String) {
+
+        val value = if(field == "age") newValue.toInt() else newValue
+        firebaseDatabase
+            .child("users")
+            .child(userId)
+            .child(field)
+
+            .setValue(value)
+            .await()
+
+        Log.d(TAG, "changeUserField")
+    }
 }

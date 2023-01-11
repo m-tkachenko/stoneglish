@@ -1,5 +1,6 @@
 package pl.salo.stoneglish.presentation.auth
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -10,6 +11,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import pl.salo.stoneglish.R
 import pl.salo.stoneglish.common.Resource
+import pl.salo.stoneglish.data.repository.SignUpDataRepository
 import pl.salo.stoneglish.domain.model.auth.SignUpCategoryItem
 import pl.salo.stoneglish.domain.use_cases.AuthUseCases
 import pl.salo.stoneglish.domain.use_cases.database.WriteUserDataUseCase
@@ -21,7 +23,8 @@ private const val TAG = "AuthViewModel"
 @HiltViewModel
 class AuthViewModel @Inject constructor(
     private val auth: AuthUseCases,
-    private val writeUserDataUseCase: WriteUserDataUseCase
+    private val writeUserDataUseCase: WriteUserDataUseCase,
+    private val signUpDataRepository: SignUpDataRepository
 ) : ViewModel() {
     private val _authState = MutableLiveData<Event<Resource<Boolean>>>()
     val authState: LiveData<Event<Resource<Boolean>>>
@@ -109,8 +112,17 @@ class AuthViewModel @Inject constructor(
         }.launchIn(viewModelScope)
     }
 
+    fun getSelectedCategories(): List<String>{
+        val categories = signUpDataRepository.getSignUpData().interestedTopics.map {
+            it.title
+        }
+        Log.d(TAG, "getSelectedCategories: ${categories}")
+        return categories
+    }
+
     fun setCategoryState(category: SignUpCategoryItem){
         auth.signUpDataSetCategoryState(category).onEach { result ->
+            Log.d(TAG, "setCategoryState: $result")
             if(result is Resource.Success){
                 getCategories()
             }else{
@@ -123,6 +135,10 @@ class AuthViewModel @Inject constructor(
         auth.signOut().onEach {
             _onSignOut.postValue(it)
         }.launchIn(viewModelScope)
+    }
+
+    fun clearData() {
+        signUpDataRepository.clearCategories()
     }
 
 

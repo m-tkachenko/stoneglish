@@ -20,4 +20,6 @@ interface DatabaseService {
 
     suspend fun getListOfDailyCards(): List<Card>
     suspend fun getListOfPolishWords(): List<String>
+    suspend fun writeUserCategories(userId: String, categories: List<String>)
+    suspend fun changeUserField(userId: String, field: String, newValue: String)
 }

@@ -24,6 +24,8 @@ import pl.salo.stoneglish.domain.use_cases.*
 import pl.salo.stoneglish.domain.use_cases.auth.*
 import pl.salo.stoneglish.domain.use_cases.cards.*
 import pl.salo.stoneglish.domain.use_cases.database.GetCurrentUserUseCase
+import pl.salo.stoneglish.domain.use_cases.database.UpdateUserCategoriesUseCase
+import pl.salo.stoneglish.domain.use_cases.database.UpdateUserFieldUseCase
 import pl.salo.stoneglish.domain.use_cases.database.WriteNewTopicUseCase
 import pl.salo.stoneglish.domain.use_cases.database.WriteUserDataUseCase
 import pl.salo.stoneglish.domain.use_cases.dictionary.DictionaryGetWordDataUseCase
@@ -138,7 +140,9 @@ object AppModule {
     ) = DatabaseUseCases(
         getCurrentUserUseCase = GetCurrentUserUseCase(databaseRepository, authRepository),
         writeUserDataUseCase = WriteUserDataUseCase(databaseRepository, mapper),
-        writeNewTopic = WriteNewTopicUseCase(databaseRepository)
+        writeNewTopic = WriteNewTopicUseCase(databaseRepository),
+        updateUserCategories = UpdateUserCategoriesUseCase(databaseRepository),
+        updateUserFieldUseCase = UpdateUserFieldUseCase(databaseRepository)
     )
 
     //Dictionary
