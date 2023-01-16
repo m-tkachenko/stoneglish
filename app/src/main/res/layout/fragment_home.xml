@@ -156,79 +156,13 @@
             android:scrollbars="none">
 
             <com.google.android.material.chip.ChipGroup
+                android:id="@+id/favouriteTopics"
+
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
 
                 android:paddingHorizontal="8dp"
-                app:singleLine="true">
-
-                <com.google.android.material.chip.Chip
-                    android:id="@+id/travelChip"
-                    style="@style/Widget.MaterialComponents.Chip.Choice"
-
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-
-                    app:chipIconVisible="true"
-                    app:chipStartPadding="10dp"
-                    app:chipIcon="@drawable/ic_simple_travel"
-                    app:chipIconSize="20dp"
-
-                    android:text="@string/filter_travelling_text"/>
-
-                <com.google.android.material.chip.Chip
-                    style="@style/Widget.MaterialComponents.Chip.Choice"
-
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-
-                    app:chipIconVisible="true"
-                    app:chipStartPadding="10dp"
-                    app:chipIcon="@drawable/ic_simple_sport"
-                    app:chipIconSize="20dp"
-
-                    android:text="@string/filter_sport_text"/>
-
-                <com.google.android.material.chip.Chip
-                    style="@style/Widget.MaterialComponents.Chip.Choice"
-
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-
-                    app:chipIconVisible="true"
-                    app:chipStartPadding="10dp"
-                    app:chipIcon="@drawable/ic_simple_education"
-                    app:chipIconSize="20dp"
-
-                    android:text="@string/filter_education_text"/>
-
-                <com.google.android.material.chip.Chip
-                    style="@style/Widget.MaterialComponents.Chip.Choice"
-
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-
-                    app:chipIconVisible="true"
-                    app:chipStartPadding="10dp"
-                    app:chipIcon="@drawable/ic_simple_health"
-                    app:chipIconSize="20dp"
-
-                    android:text="@string/filter_health_text"/>
-
-                <com.google.android.material.chip.Chip
-                    style="@style/Widget.MaterialComponents.Chip.Choice"
-
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-
-                    app:chipIconVisible="true"
-                    app:chipStartPadding="10dp"
-                    app:chipIcon="@drawable/ic_simple_books"
-                    app:chipIconSize="20dp"
-
-                    android:text="@string/filter_books_text"/>
-
-            </com.google.android.material.chip.ChipGroup>
+                app:singleLine="true"/>
         </HorizontalScrollView>
 
         <androidx.core.widget.NestedScrollView
@@ -301,7 +235,7 @@
                     android:visibility="gone"/>
 
                 <TextView
-                    android:id="@+id/topicTextOnHomeScreen"
+                    android:id="@+id/topicVerticalTitleOnHomeScreen"
 
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -312,7 +246,7 @@
                     android:textColor="@color/black"/>
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/topicsRecycler"
+                    android:id="@+id/topicsGridRecycler"
 
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -324,6 +258,31 @@
                     android:nestedScrollingEnabled="false"
                     app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
                     app:spanCount="2"/>
+
+                <TextView
+                    android:id="@+id/topicHorizontalTitle"
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="8dp"
+
+                    tools:text="Example text"
+                    android:textSize="28sp"
+                    android:textColor="@color/black"/>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/topicsHorizontalRecycler"
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="16dp"
+
+                    android:overScrollMode="never"
+                    android:nestedScrollingEnabled="false"
+                    android:orientation="horizontal"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
                 <TextView
                     android:id="@+id/startDividerLearnText"

@@ -7,11 +7,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewAnimationUtils
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import com.bumptech.glide.Glide
+import com.google.android.material.chip.Chip
 import dagger.hilt.android.AndroidEntryPoint
 import pl.salo.stoneglish.R
 import pl.salo.stoneglish.common.Resource
+import pl.salo.stoneglish.databinding.ChoiceChipBinding
 import pl.salo.stoneglish.databinding.FragmentHomeBinding
 import pl.salo.stoneglish.presentation.core.home.dialog.AddNewCardDialog
 import pl.salo.stoneglish.util.Utils.ninja
@@ -46,6 +50,8 @@ class HomeFragment : Fragment() {
         homeViewModel.downloadDailyCards()
         dailyCardsObserver()
 
+        observeCurrentUser()
+
         with(binding) {
             openSearchButton.setOnClickListener { openSearch() }
             closeOpenedSearchButton.setOnClickListener { closeSearch() }
@@ -60,7 +66,7 @@ class HomeFragment : Fragment() {
 
             topicsAdapter.topicsList = listOf("Buuu", "Uuuuu", "Aaaaa", "Paaaaa", "Waaaa", "Tatatata")
             topicsAdapter.onTopicClick = { coreNavigator().goToTopicFragment() }
-            topicsRecycler.adapter = topicsAdapter
+            topicsGridRecycler.adapter = topicsAdapter
 
             startLearnImage.setImageResource(R.drawable.me)
             startLearnCardTitle.text = "To moje zdjęcie jest na dole piękneee. Polecam ten przycisk naciśnąc i zobaczysz"
@@ -97,6 +103,34 @@ class HomeFragment : Fragment() {
                     }
                 }
 
+            }
+        }
+    }
+
+    private fun observeCurrentUser() {
+        homeViewModel.currentUser.observe(viewLifecycleOwner) { user ->
+            when (user) {
+                is Resource.Loading -> {}
+                is Resource.Success -> {
+                    setUpFavouriteTopics(user.data?.interestedTopics)
+                }
+                is Resource.Error -> {
+                    Toast.makeText(requireContext(), user.message, Toast.LENGTH_SHORT).show()
+                    homeViewModel.getCurrentUser()
+                }
+            }
+        }
+    }
+
+    private fun setUpFavouriteTopics(list: List<String>?) {
+        if (list != null) {
+            for (choosedTopic in list) {
+                val favouriteTopic = ChoiceChipBinding.inflate(layoutInflater).root
+
+                favouriteTopic.text = choosedTopic
+                favouriteTopic.textSize = 14F
+
+                binding.favouriteTopics.addView(favouriteTopic)
             }
         }
     }

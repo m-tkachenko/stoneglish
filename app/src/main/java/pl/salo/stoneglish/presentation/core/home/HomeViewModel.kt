@@ -9,8 +9,10 @@ import pl.salo.stoneglish.data.model.home.*
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import pl.salo.stoneglish.common.Resource
+import pl.salo.stoneglish.data.model.User
 import pl.salo.stoneglish.domain.model.card.Card
 import pl.salo.stoneglish.domain.use_cases.CardsUseCases
+import pl.salo.stoneglish.domain.use_cases.DatabaseUseCases
 import pl.salo.stoneglish.domain.use_cases.HomeUseCases
 import pl.salo.stoneglish.util.Event
 import javax.inject.Inject
@@ -18,7 +20,8 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val cardDatabase: CardsUseCases,
-    private val homeDatabase: HomeUseCases
+    private val homeDatabase: HomeUseCases,
+    private val databaseUseCases: DatabaseUseCases
 ) : ViewModel() {
     private val _modulesState = MutableLiveData<Event<Resource<List<String>>>>()
     val modulesState: LiveData<Event<Resource<List<String>>>>
@@ -34,6 +37,14 @@ class HomeViewModel @Inject constructor(
 
     private val _selectedTopic = MutableLiveData<Topic>()
     val selectedTopic: LiveData<Topic> get() = _selectedTopic
+
+    private val _currentUser = MutableLiveData<Resource<User>>()
+    val currentUser: LiveData<Resource<User>>
+        get() = _currentUser
+
+    init {
+        getCurrentUser()
+    }
 
     fun downloadDailyCards() {
         homeDatabase.dailyCards().onEach { dailyCards ->
@@ -53,6 +64,12 @@ class HomeViewModel @Inject constructor(
             moduleName = moduleName
         ).onEach { status ->
             _addCardState.postValue(Event(status))
+        }.launchIn(viewModelScope)
+    }
+
+    fun getCurrentUser() {
+        databaseUseCases.getCurrentUserUseCase().onEach {
+            _currentUser.postValue(it)
         }.launchIn(viewModelScope)
     }
 
