@@ -19,9 +19,11 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import pl.salo.stoneglish.R
 import pl.salo.stoneglish.common.Resource
+import pl.salo.stoneglish.data.model.home.Keyword
 import pl.salo.stoneglish.databinding.ActivityCoreBinding
 import pl.salo.stoneglish.presentation.auth.AuthActivity
 import pl.salo.stoneglish.presentation.auth.AuthViewModel
+import pl.salo.stoneglish.presentation.core.admin.AddTopicFragment
 import pl.salo.stoneglish.presentation.core.cards.fragments.CardsFragment
 import pl.salo.stoneglish.presentation.core.cards.fragments.CreateModuleFragment
 import pl.salo.stoneglish.presentation.core.cards.fragments.ModulesFragment
@@ -157,7 +159,11 @@ class CoreActivity : AppCompatActivity(), CoreNavigator, TextToSpeech.OnInitList
     }
 
     override fun goToTopicFragment() {
-        replaceFragment(TopicFragment())
+        addFragmentToStack(TopicFragment())
+    }
+
+    override fun goToAddTopicFragment() {
+        addFragmentToStack(AddTopicFragment())
     }
 
     override fun speakWithFlow(text: String): Flow<TextToSpeechResult> = callbackFlow {
@@ -197,6 +203,19 @@ class CoreActivity : AppCompatActivity(), CoreNavigator, TextToSpeech.OnInitList
         viewModel.setClickableText(content, textView)
     }
 
+    override fun setKeywordAddAction(onPlusClick: (Keyword) -> Unit) {
+        binding.plusActionButton.setOnClickListener {
+            onPlusClick(
+                Keyword(
+                    word = binding.clickedWord.text.toString(),
+                    phonetic = "",
+                    translate = binding.translatedWord.text.toString()
+                )
+            )
+            makeToast("Keyword added")
+        }
+    }
+
     override fun goBack() {
         if (supportFragmentManager.backStackEntryCount != 0) supportFragmentManager.popBackStack() else finish()
     }
@@ -218,6 +237,23 @@ class CoreActivity : AppCompatActivity(), CoreNavigator, TextToSpeech.OnInitList
 
     override fun showAddCardDialog(dialog: AddNewCardDialog) {
         dialog.show(supportFragmentManager, "add_new_card")
+    }
+
+    override fun showAddedTopicDialog() {
+        var dialog: AlertDialog? = null
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Topic added")
+        builder.setMessage("Do you want to add one more topic to this view type?")
+        builder.setPositiveButton("Yes") { _, _ ->
+            replaceFragment(AddTopicFragment())
+            dialog?.dismiss()
+        }
+        builder.setNegativeButton("No") { _, _ ->
+            finish()
+            dialog?.dismiss()
+        }
+        dialog = builder.create()
+        dialog.show()
     }
 
     override fun goToModules() {

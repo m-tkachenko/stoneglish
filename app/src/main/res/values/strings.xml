@@ -87,4 +87,37 @@
     <string name="add_word">Add word</string>
     <string name="term">Term</string>
     <string name="definition">Definition</string>
+
+    <!--  Texts for Add Topic functionality  -->
+    <string name="add_topic_title_screen">Add Topic</string>
+    <string name="topic_title_input_hint">Topic title</string>
+    <string name="add_topic_title_type_and_level">Title, type and level</string>
+    <string name="new_text_input_hint">Text for new topic</string>
+    <string name="topic_test_and_listening_title">Topic test and listening</string>
+    <string name="create_test_for_topic_button">Create test</string>
+    <string name="test_from_db_for_topic_button">From DB</string>
+    <string name="new_topic_test_title">Test</string>
+    <string name="new_topic_listening_title">Listening and speaking</string>
+    <string name="add_keyword_to_topic_button">Add keyword</string>
+    <string name="new_keyword_input_hint">Keyword</string>
+    <string name="new_keyword_translation_input_hint">Translation for keyword</string>
+    <string name="new_keyword_to_topic_title">Keyword</string>
+    <string name="new_listening_and_speaking_input_hint">Listening and speaking text</string>
+    <string name="new_listening_and_speaking_definition_input_hint">Definition for listening and speaking</string>
+    <string name="add_listening_to_topic_button">Add listening and speaking</string>
+    <string name="new_topic_similar_topics_title">Similar topics</string>
+    <string name="add_similar_topics_from_db_button">Add similar topics</string>
+    <string name="add_created_topic_button">Add created topic</string>
+    <string name="show_created_topic_button">Show created topic</string>
+    <string name="topic_type_input_hint">Topic type</string>
+    <string name="topic_image_and_text_title">Topic image and text</string>
+    <string name="paste_img_url_input_hint">Img url</string>
+    <string name="show_image_preview_button">Show image preview</string>
+    <string name="show_text_button">Show text</string>
+    <string name="edit_text_button">Edit text</string>
+    <string name="similar_topic_input_hint">Similar topic name</string>
+    <string name="add_topic_to_db_button">Add topic to DB</string>
+    <string name="horizontal_group_title_hint_input">Horizontal group title</string>
+    <string name="vertical_view_chip_text">Vertical</string>
+    <string name="horizontal_view_chip_text">Horizontal</string>
 </resources>

@@ -50,6 +50,8 @@ class HomeFragment : Fragment() {
             openSearchButton.setOnClickListener { openSearch() }
             closeOpenedSearchButton.setOnClickListener { closeSearch() }
 
+            addTopicImg.setOnClickListener { coreNavigator().goToAddTopicFragment() }
+
             wordsOfTheDayCards.addCardClicked = {
                 coreNavigator().showAddCardDialog(
                     AddNewCardDialog(
