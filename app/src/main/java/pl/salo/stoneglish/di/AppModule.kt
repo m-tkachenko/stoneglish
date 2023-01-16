@@ -24,6 +24,7 @@ import pl.salo.stoneglish.domain.use_cases.*
 import pl.salo.stoneglish.domain.use_cases.auth.*
 import pl.salo.stoneglish.domain.use_cases.cards.*
 import pl.salo.stoneglish.domain.use_cases.database.GetCurrentUserUseCase
+import pl.salo.stoneglish.domain.use_cases.home.WriteNewTopicUseCase
 import pl.salo.stoneglish.domain.use_cases.database.WriteUserDataUseCase
 import pl.salo.stoneglish.domain.use_cases.dictionary.DictionaryGetWordDataUseCase
 import pl.salo.stoneglish.domain.use_cases.dictionary.PlayAudioByUrl
@@ -137,6 +138,13 @@ object AppModule {
     ) = DatabaseUseCases(
         getCurrentUserUseCase = GetCurrentUserUseCase(databaseRepository, authRepository),
         writeUserDataUseCase = WriteUserDataUseCase(databaseRepository, mapper)
+    )
+
+    @Provides
+    fun providesTopicUseCases(
+        databaseRepository: DatabaseRepository
+    ) = TopicUseCases(
+        writeNewTopic = WriteNewTopicUseCase(databaseRepository)
     )
 
     //Dictionary

@@ -2,6 +2,7 @@ package pl.salo.stoneglish.presentation.core.home
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,18 +15,22 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import pl.salo.stoneglish.common.Resource
 import pl.salo.stoneglish.databinding.FragmentTopicBinding
 import pl.salo.stoneglish.presentation.core.TextToSpeechResult
+import pl.salo.stoneglish.presentation.core.admin.AddTopicViewModel
 import pl.salo.stoneglish.presentation.core.home.adapters.KeywordsAdapter
 import pl.salo.stoneglish.presentation.core.home.adapters.ListeningAndSpeakingAdapter
 import pl.salo.stoneglish.presentation.core.home.adapters.SimilarTopicsAdapter
+import pl.salo.stoneglish.util.Utils.ninja
 import pl.salo.stoneglish.util.coreNavigator
 
 @AndroidEntryPoint
 class TopicFragment : Fragment() {
+    private lateinit var binding: FragmentTopicBinding
 
     private val homeViewModel: HomeViewModel by activityViewModels()
-    private lateinit var binding: FragmentTopicBinding
+    private val addTopicViewModel: AddTopicViewModel by activityViewModels()
 
     private val keywordsAdapter = KeywordsAdapter()
     private val listeningAndSpeakingAdapter = ListeningAndSpeakingAdapter()
@@ -46,7 +51,16 @@ class TopicFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         initAdapters()
+        observeAddTopicState()
+
+        if (homeViewModel.isNotPreview)
+            homeViewModel.selectTopic()
         homeViewModel.getTopic()
+
+        binding.addTopicToDBLayout.ninja(!homeViewModel.isNotPreview)
+        binding.addTopicToDB.setOnClickListener {
+            addTopicViewModel.addNewTopic(homeViewModel.getTopic()!!)
+        }
 
         homeViewModel.selectedTopic.observe(viewLifecycleOwner) {
             coreNavigator().setClickableWords(it.text, binding.topicText)
@@ -70,6 +84,28 @@ class TopicFragment : Fragment() {
                 .into(binding.topicImg)
         }
 
+    }
+
+    private fun observeAddTopicState() {
+        addTopicViewModel.newTopicUploadState.observe(viewLifecycleOwner) { uploadResult ->
+            uploadResult.getContentIfNotHandled()?.let { result ->
+                when(result) {
+                    is Resource.Success -> {
+                        Log.d(TAG, "UploadNewTopic : Success")
+
+                        coreNavigator().showAddedTopicDialog()
+                    }
+                    is Resource.Error -> {
+                        Log.d(TAG, "UploadNewTopic : Failure : Error = ${result.message}")
+                    }
+                    is Resource.Loading -> {
+                        Log.d(TAG, "UploadNewTopic : Loading")
+
+                        coreNavigator().makeToast("Loading...")
+                    }
+                }
+            }
+        }
     }
 
 
@@ -146,4 +182,5 @@ class TopicFragment : Fragment() {
         }
     }
 
+    private val TAG = "TopicFragment"
 }

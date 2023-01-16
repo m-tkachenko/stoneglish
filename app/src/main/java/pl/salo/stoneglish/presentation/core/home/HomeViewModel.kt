@@ -46,6 +46,8 @@ class HomeViewModel @Inject constructor(
         getCurrentUser()
     }
 
+    var isNotPreview = true
+
     fun downloadDailyCards() {
         homeDatabase.dailyCards().onEach { dailyCards ->
             _dailyCardState.postValue(Event(dailyCards))
@@ -113,9 +115,15 @@ class HomeViewModel @Inject constructor(
             exercises = null,
             listeningAndSpeaking = listeningSpeaking,
             keywords = keywords,
-            similarTopics = similarTopics
+            similarTopics = similarTopics,
+            horizontalGroupTitle = null
         )
         _selectedTopic.value = t
+    }
+
+    fun setTopicToPreview(newPreviewTopic: Topic) {
+        _selectedTopic.postValue(newPreviewTopic)
+        isNotPreview = false
     }
 
     fun getTopic() =

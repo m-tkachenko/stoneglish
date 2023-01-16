@@ -1,6 +1,7 @@
 package pl.salo.stoneglish.data.repository
 
 import pl.salo.stoneglish.data.model.User
+import pl.salo.stoneglish.data.model.home.Topic
 import pl.salo.stoneglish.domain.model.card.Card
 import pl.salo.stoneglish.domain.model.card.TestForCards
 import pl.salo.stoneglish.domain.repository.DatabaseRepository
@@ -30,4 +31,6 @@ class DatabaseRepositoryImpl @Inject constructor(
         databaseService.writeUserCards(cards, module, userId)
     }
 
+    override suspend fun writeNewTopic(topic: Topic) =
+        databaseService.writeNewTopic(topic)
 }
