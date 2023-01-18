@@ -12,6 +12,7 @@ interface AuthNavigator {
     fun goToSignIn()
     fun goBack()
     fun goToCoreActivity()
+    fun goToEnglishTest()
 
     fun setProgressDialog(state: ProgressDialogState, text: String? = null)
 
