@@ -14,6 +14,7 @@ import pl.salo.stoneglish.domain.model.card.Card
 import pl.salo.stoneglish.domain.use_cases.CardsUseCases
 import pl.salo.stoneglish.domain.use_cases.DatabaseUseCases
 import pl.salo.stoneglish.domain.use_cases.HomeUseCases
+import pl.salo.stoneglish.domain.use_cases.TopicUseCases
 import pl.salo.stoneglish.util.Event
 import javax.inject.Inject
 
@@ -21,8 +22,11 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor(
     private val cardDatabase: CardsUseCases,
     private val homeDatabase: HomeUseCases,
-    private val databaseUseCases: DatabaseUseCases
+    private val databaseUseCases: DatabaseUseCases,
+    private val topicDatabase: TopicUseCases
 ) : ViewModel() {
+
+    // State for daily cards
     private val _modulesState = MutableLiveData<Event<Resource<List<String>>>>()
     val modulesState: LiveData<Event<Resource<List<String>>>>
         get() = _modulesState
@@ -35,19 +39,26 @@ class HomeViewModel @Inject constructor(
     val dailyCardState: LiveData<Event<Resource<List<Card>>>>
         get() = _dailyCardState
 
-    private val _selectedTopic = MutableLiveData<Topic>()
-    val selectedTopic: LiveData<Topic> get() = _selectedTopic
-
+    // State for favourite topics chips
     private val _currentUser = MutableLiveData<Resource<User>>()
     val currentUser: LiveData<Resource<User>>
         get() = _currentUser
 
+    // State for topics
+    private val _selectedTopic = MutableLiveData<Topic>()
+    val selectedTopic: LiveData<Topic>
+        get() = _selectedTopic
+
+    private val _verticalTopics = MutableLiveData<Event<Resource<List<Topic>>>>()
+    val verticalTopics: LiveData<Event<Resource<List<Topic>>>>
+        get() = _verticalTopics
+
+    var isNotPreview = true
     init {
         getCurrentUser()
     }
 
-    var isNotPreview = true
-
+    // Functions for daily card
     fun downloadDailyCards() {
         homeDatabase.dailyCards().onEach { dailyCards ->
             _dailyCardState.postValue(Event(dailyCards))
@@ -69,14 +80,15 @@ class HomeViewModel @Inject constructor(
         }.launchIn(viewModelScope)
     }
 
+    // Functions for favourite topics chips
     fun getCurrentUser() {
-        databaseUseCases.getCurrentUserUseCase().onEach {
-            _currentUser.postValue(it)
+        databaseUseCases.getCurrentUserUseCase().onEach { user ->
+            _currentUser.postValue(user)
         }.launchIn(viewModelScope)
     }
 
+    // Functions for favourite topics chips
     fun selectTopic() {
-
         val listeningSpeaking = listOf(
             ListeningSpeaking("This text is example", "Ten tekst jest przykładem"),
             ListeningSpeaking("But this is no an example", "Ale to nie jest przykład"),
@@ -88,7 +100,6 @@ class HomeViewModel @Inject constructor(
             Keyword("Example", "/elpmaxe/", "przykład"),
             Keyword("Stoneglish", "/very cool/", "najlepsza appka")
         )
-
         val similarTopics = listOf(
             SimilarTopic("https://pixlr.com/images/index/remove-bg.webp", "Wow"),
             SimilarTopic(
@@ -128,4 +139,12 @@ class HomeViewModel @Inject constructor(
 
     fun getTopic() =
         selectedTopic.value
+
+    fun readVerticalTopics(topicType: TopicType) {
+        topicDatabase.readVerticalTopics(
+            topicType = topicType
+        ).onEach { topics ->
+            _verticalTopics.postValue(Event(topics))
+        }.launchIn(viewModelScope)
+    }
 }

@@ -5,6 +5,7 @@ import com.google.firebase.database.DatabaseReference
 import kotlinx.coroutines.tasks.await
 import pl.salo.stoneglish.data.model.User
 import pl.salo.stoneglish.data.model.home.Topic
+import pl.salo.stoneglish.data.model.home.TopicType
 import pl.salo.stoneglish.domain.model.card.Card
 import pl.salo.stoneglish.domain.model.card.TestForCards
 import pl.salo.stoneglish.domain.services.DatabaseService
@@ -53,6 +54,43 @@ class DatabaseServiceImpl @Inject constructor(
         Log.d(TAG, "writeUserCards")
     }
 
+    override suspend fun readVerticalTopics(topicType: TopicType): List<Topic> {
+        val resultTopicsSnapshot = firebaseDatabase
+            .child("data")
+            .child("dashboard")
+            .child("vertical")
+
+            .child(topicType.type)
+            .get()
+            .await()
+
+        val verticalTopics: List<Topic> = resultTopicsSnapshot.children.map { snap ->
+            snap.getValue(Topic::class.java)!!
+        }
+
+        Log.d(TAG, "Those vertical topics were received: $verticalTopics")
+
+        return verticalTopics
+    }
+
+    override suspend fun readVerticalTopicByTitle(topicType: String, title: String): Topic? {
+        val resultTopicSnapshot = firebaseDatabase
+            .child("data")
+            .child("dashboard")
+            .child("vertical")
+
+            .child(topicType)
+            .child(title)
+            .get()
+            .await()
+
+        val verticalTopic: Topic? = resultTopicSnapshot.getValue(Topic::class.java)
+
+        Log.d(TAG, "This vertical topic with title $title was received: $verticalTopic")
+
+        return verticalTopic
+    }
+
     override suspend fun writeNewTopic(topic: Topic) {
         if (topic.horizontalGroupTitle.isNullOrEmpty())
             verticalTopicWrite(topic)
@@ -88,7 +126,7 @@ class DatabaseServiceImpl @Inject constructor(
             .setValue(topic)
             .await()
 
-        Log.d(TAG, "write new VerticalTopic to DB")
+        Log.d(TAG, "write new HorizontalTopic to DB")
     }
 
     override suspend fun listOfCards(moduleName: String, userId: String): List<Card> {

@@ -1,28 +1,28 @@
 package pl.salo.stoneglish.data.model.home
 
 data class Topic(
-    val title: String,
-    val horizontalGroupTitle: String?,
-    val eng_level: List<EngLevel>,
-    val type: List<TopicType>,
-    val imgUrl: String,
-    val text: String,
-    val exercises: TopicTest?,
-    val listeningAndSpeaking: List<ListeningSpeaking>,
-    val keywords: List<Keyword>,
-    val similarTopics: List<SimilarTopic>?
+    val title: String = "",
+    val horizontalGroupTitle: String? = null,
+    val eng_level: List<EngLevel> = listOf(),
+    val type: List<TopicType> = listOf(),
+    val imgUrl: String = "",
+    val text: String = "",
+    val exercises: TopicTest? = null,
+    val listeningAndSpeaking: List<ListeningSpeaking> = listOf(),
+    val keywords: List<Keyword> = listOf(),
+    val similarTopics: List<SimilarTopic>? = null
 )
 
 enum class EngLevel {
     A0, A1, A2, B1, B2, C1, C2
 }
 
-enum class TopicType(val type: String) {
+enum class TopicType(val type: String = "") {
     Art("art"),
     Books("books"),
     Celebrities("celebrities"),
     Countries("countries"),
-    Educations("educations"),
+    Education("education"),
     Films("films"),
     Holidays("holidays"),
     Lifehack("lifehack"),
@@ -31,5 +31,6 @@ enum class TopicType(val type: String) {
     Sport("sport"),
     Traveling("traveling"),
     Work("work"),
+    Health("health"),
     Other("other")
 }

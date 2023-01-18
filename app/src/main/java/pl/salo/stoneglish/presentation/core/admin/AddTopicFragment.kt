@@ -67,17 +67,18 @@ class AddTopicFragment : Fragment() {
             }
 
             addSimilarTopics.setOnClickListener {
-                if (similarTopicInput.text.isNotBlank())
+                if (similarTopicInput.text.isNotBlank() && similarTopicImgInput.text.isNotBlank())
                     similarTopicList.add(
                         SimilarTopic(
-                            imgUrl = "",
+                            imgUrl = similarTopicImgInput.text.toString(),
                             title = similarTopicInput.text.toString()
                         )
                     )
                 else
-                    coreNavigator().makeToast("Add similar topic name")
+                    coreNavigator().makeToast("Add similar topic info")
 
                 similarTopicInput.setText("")
+                similarTopicImgInput.setText("")
             }
 
             horizontalViewTypeChip.setOnCheckedChangeListener { _, checked ->

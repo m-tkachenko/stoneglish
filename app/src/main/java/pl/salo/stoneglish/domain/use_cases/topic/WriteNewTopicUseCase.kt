@@ -1,4 +1,4 @@
-package pl.salo.stoneglish.domain.use_cases.home
+package pl.salo.stoneglish.domain.use_cases.topic
 
 import com.bumptech.glide.load.HttpException
 import kotlinx.coroutines.flow.Flow

@@ -9,12 +9,12 @@ import android.view.ViewAnimationUtils
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
-import com.bumptech.glide.Glide
-import com.google.android.material.chip.Chip
 import dagger.hilt.android.AndroidEntryPoint
 import pl.salo.stoneglish.R
 import pl.salo.stoneglish.common.Resource
+import pl.salo.stoneglish.data.model.home.TopicType
 import pl.salo.stoneglish.databinding.ChoiceChipBinding
 import pl.salo.stoneglish.databinding.FragmentHomeBinding
 import pl.salo.stoneglish.presentation.core.home.dialog.AddNewCardDialog
@@ -27,9 +27,12 @@ import pl.salo.stoneglish.util.showKeyboard
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
-    private val homeViewModel: HomeViewModel by viewModels()
 
-    private lateinit var topicsAdapter: HomeTopicsAdapter
+    private val homeViewModel: HomeViewModel by activityViewModels()
+
+    private lateinit var topicsAdapter: HomeVerticalTopicsAdapter
+
+    private var interestedTopics = listOf(TopicType.Art, TopicType.Art, TopicType.Art, TopicType.Art)
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -47,10 +50,13 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         initAdapters()
 
+        observeCurrentUser()
+
         homeViewModel.downloadDailyCards()
         dailyCardsObserver()
 
-        observeCurrentUser()
+        homeViewModel.readVerticalTopics(topicType = interestedTopics[3])
+        verticalTopicsObserver()
 
         with(binding) {
             openSearchButton.setOnClickListener { openSearch() }
@@ -65,13 +71,6 @@ class HomeFragment : Fragment() {
                     )
                 )
             }
-
-            topicsAdapter.topicsList = listOf("Buuu", "Uuuuu", "Aaaaa", "Paaaaa", "Waaaa", "Tatatata")
-            topicsAdapter.onTopicClick = { coreNavigator().goToTopicFragment() }
-            topicsGridRecycler.adapter = topicsAdapter
-
-            startLearnImage.setImageResource(R.drawable.me)
-            startLearnCardTitle.text = "To moje zdjęcie jest na dole piękneee. Polecam ten przycisk naciśnąc i zobaczysz"
         }
     }
 
@@ -104,7 +103,41 @@ class HomeFragment : Fragment() {
                         binding.dailyCardLoading.ninja(true)
                     }
                 }
+            }
+        }
+    }
 
+    private fun verticalTopicsObserver() {
+        homeViewModel.verticalTopics.observe(viewLifecycleOwner) { verticalTopicsResult ->
+            verticalTopicsResult.getContentIfNotHandled()?.let { verticalTopics ->
+                when(verticalTopics) {
+                    is Resource.Success -> {
+                        Log.d(TAG, "VerticalTopicsDownload : Success : Data = ${verticalTopics.data}")
+
+                        topicsAdapter.topicsList = verticalTopics.data ?: listOf()
+                        topicsAdapter.onTopicClick = { title ->
+                            coreNavigator().goToTopicFragment(
+                                type = interestedTopics[3],
+                                title = title,
+                                isVertical = true
+                            )
+                        }
+
+                        binding.topicVerticalLoading.ninja(false)
+                        binding.verticalTopicsGridRecycler.ninja(true)
+
+                        binding.verticalTopicsGridRecycler.adapter = topicsAdapter
+                    }
+                    is Resource.Error -> {
+                        Log.d(TAG, "VerticalTopicsDownload : Failure : Error = ${verticalTopics.message}")
+                    }
+                    is Resource.Loading -> {
+                        Log.d(TAG, "VerticalTopicsDownload : Loading")
+
+                        binding.topicVerticalLoading.ninja(true)
+                        binding.verticalTopicsGridRecycler.ninja(false)
+                    }
+                }
             }
         }
     }
@@ -114,7 +147,11 @@ class HomeFragment : Fragment() {
             when (user) {
                 is Resource.Loading -> {}
                 is Resource.Success -> {
-                    setUpFavouriteTopics(user.data?.interestedTopics)
+                    interestedTopics = user.data?.interestedTopics?.map { interested ->
+                        TopicType.valueOf(interested)
+                    } ?: listOf()
+
+                    setUpFavouriteTopics(interestedTopics)
                 }
                 is Resource.Error -> {
                     Toast.makeText(requireContext(), user.message, Toast.LENGTH_SHORT).show()
@@ -124,16 +161,14 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private fun setUpFavouriteTopics(list: List<String>?) {
-        if (list != null) {
-            for (choosedTopic in list) {
-                val favouriteTopic = ChoiceChipBinding.inflate(layoutInflater).root
+    private fun setUpFavouriteTopics(list: List<TopicType>) {
+        for (choosedTopic in list) {
+            val favouriteTopic = ChoiceChipBinding.inflate(layoutInflater).root
 
-                favouriteTopic.text = choosedTopic
-                favouriteTopic.textSize = 14F
+            favouriteTopic.text = choosedTopic.type
+            favouriteTopic.textSize = 14F
 
-                binding.favouriteTopics.addView(favouriteTopic)
-            }
+            binding.favouriteTopics.addView(favouriteTopic)
         }
     }
 
@@ -184,7 +219,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun initAdapters() {
-        topicsAdapter = HomeTopicsAdapter()
+        topicsAdapter = HomeVerticalTopicsAdapter(requireContext())
     }
 
     val TAG = "HomeFragment"

@@ -20,6 +20,7 @@ import kotlinx.coroutines.flow.callbackFlow
 import pl.salo.stoneglish.R
 import pl.salo.stoneglish.common.Resource
 import pl.salo.stoneglish.data.model.home.Keyword
+import pl.salo.stoneglish.data.model.home.TopicType
 import pl.salo.stoneglish.databinding.ActivityCoreBinding
 import pl.salo.stoneglish.presentation.auth.AuthActivity
 import pl.salo.stoneglish.presentation.auth.AuthViewModel
@@ -156,6 +157,28 @@ class CoreActivity : AppCompatActivity(), CoreNavigator, TextToSpeech.OnInitList
         val intent = Intent(this@CoreActivity, AuthActivity::class.java)
         startActivity(intent)
         finish()
+    }
+
+    override fun goToTopicFragment(type: TopicType, title: String, isVertical: Boolean) {
+        val bundle = Bundle()
+        bundle.putString("TopicType", type.name)
+        bundle.putString("TopicTitle", title)
+        bundle.putBoolean("IsTopicVertical", isVertical)
+
+        supportFragmentManager
+            .beginTransaction()
+            .replace(
+                R.id.coreFragmentContainer,
+                TopicFragment::class.java,
+                bundle
+            )
+            .addToBackStack(
+                if(isVertical)
+                    "verticalTopic"
+                else
+                    "horizontalTopic"
+            )
+            .commit()
     }
 
     override fun goToTopicFragment() {

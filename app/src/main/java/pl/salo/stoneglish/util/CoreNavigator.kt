@@ -4,6 +4,7 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import kotlinx.coroutines.flow.Flow
 import pl.salo.stoneglish.data.model.home.Keyword
+import pl.salo.stoneglish.data.model.home.TopicType
 import pl.salo.stoneglish.presentation.core.CoreActivity
 import pl.salo.stoneglish.presentation.core.TextToSpeechResult
 import pl.salo.stoneglish.presentation.core.home.dialog.AddNewCardDialog
@@ -11,6 +12,7 @@ import pl.salo.stoneglish.presentation.core.home.dialog.AddNewCardDialog
 interface CoreNavigator {
     fun goBack()
     fun goToAuthActivity()
+    fun goToTopicFragment(type: TopicType, title: String, isVertical: Boolean)
     fun goToTopicFragment()
     fun goToAddTopicFragment()
     fun goToCard(module: String)
