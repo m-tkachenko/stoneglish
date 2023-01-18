@@ -1,6 +1,10 @@
 package pl.salo.stoneglish.domain.model.card
 
 data class TestForCards(
-    val name: String = "KRYM",
-    val description: String = "NASZ OURS НАШ"
+    val name: TestType,
+    val description: String
 )
+
+enum class TestType(val type: String){
+    MEMORIZATION("Memorization")
+}

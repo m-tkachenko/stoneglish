@@ -21,10 +21,12 @@ import pl.salo.stoneglish.R
 import pl.salo.stoneglish.common.Resource
 import pl.salo.stoneglish.data.model.home.Keyword
 import pl.salo.stoneglish.databinding.ActivityCoreBinding
+import pl.salo.stoneglish.domain.model.card.TestType
 import pl.salo.stoneglish.presentation.auth.AuthActivity
 import pl.salo.stoneglish.presentation.auth.AuthViewModel
 import pl.salo.stoneglish.presentation.core.admin.AddTopicFragment
 import pl.salo.stoneglish.presentation.core.cards.fragments.CardsFragment
+import pl.salo.stoneglish.presentation.core.cards.fragments.CardsMemoTestFragment
 import pl.salo.stoneglish.presentation.core.cards.fragments.CreateModuleFragment
 import pl.salo.stoneglish.presentation.core.cards.fragments.ModulesFragment
 import pl.salo.stoneglish.presentation.core.dictionary.DictionaryFragment
@@ -149,6 +151,11 @@ class CoreActivity : AppCompatActivity(), CoreNavigator, TextToSpeech.OnInitList
 
     override fun goToCreateModule() {
         addFragmentToStack(CreateModuleFragment())
+    }
+
+    override fun goToTest(type: TestType) {
+        val fragment = if(type == TestType.MEMORIZATION) CardsMemoTestFragment() else return
+        addFragmentToStack(fragment)
     }
 
     override fun onBackPressed() = goBack()
