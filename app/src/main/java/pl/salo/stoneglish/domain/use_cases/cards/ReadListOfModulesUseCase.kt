@@ -12,7 +12,7 @@ class ReadListOfModulesUseCase @Inject constructor(
     private val databaseRepository: DatabaseRepository,
     private val authRepository: AuthRepository
 ) {
-    operator fun invoke(): Flow<Resource<List<String>>> = flow {
+    operator fun invoke(): Flow<Resource<List<Pair<Int, String>>>> = flow {
         try {
             emit(Resource.Loading())
             val id = authRepository.getUserId()
