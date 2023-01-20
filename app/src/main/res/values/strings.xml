@@ -10,9 +10,9 @@
     <string name="i_already_have_an_account">I already have an account</string>
 
     <!--  Texts for welcome viewPager  -->
-    <string name="text_0">Stoneglish will make your English learning easy and interesting</string>
-    <string name="text_1">Stoneglish is the best application for study English</string>
-    <string name="text_2">Stoneglish will make your English learning easy and interesting :)))</string>
+    <string name="text_0">Stoneglish will make your learning English easy and interesting</string>
+    <string name="text_1">Stoneglish makes the impossible possible</string>
+    <string name="text_2">Learn English from all over the world with Stoneglish</string>
 
     <string name="cd">CD</string>
     <string name="forgot_your_password">Forgot your password?</string>
@@ -73,7 +73,7 @@
     <string name="card_dialog_modules_loading_text">Downloading your modules…</string>
     <string name="card_dialog_add_card_loading_text">Uploading new card…</string>
     <string name="card_dialog_success_text">Card successfully uploaded</string>
-    <string name="words_of_the_day_loading_text">Downloading words of the day...</string>
+    <string name="words_of_the_day_loading_text">Downloading words of the day..</string>
 
     <!--  Topic screen  -->
     <string name="topic_title">Topic Title</string>
