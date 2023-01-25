@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import pl.salo.stoneglish.databinding.ModuleItemInDialogBinding
 
 class NewCardModulesAdapter(
-    private val modulesList: List<String>,
+    private val modulesList: List<Pair<Int, String>>,
     private val onAddModuleClicked: (String) -> Unit
 ) : RecyclerView.Adapter<NewCardModulesAdapter.NewCardModulesHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewCardModulesHolder {
@@ -23,7 +23,7 @@ class NewCardModulesAdapter(
     override fun onBindViewHolder(holder: NewCardModulesHolder, position: Int) {
         with(holder.binding) {
             with(modulesList[position]) {
-                moduleName.text = this
+                moduleName.text = this.second
             }
         }
     }
@@ -33,7 +33,7 @@ class NewCardModulesAdapter(
     inner class NewCardModulesHolder(val binding: ModuleItemInDialogBinding) : RecyclerView.ViewHolder(binding.root) {
         init {
             binding.root.setOnClickListener {
-                onAddModuleClicked(modulesList[layoutPosition])
+                onAddModuleClicked(modulesList[layoutPosition].second)
             }
         }
     }

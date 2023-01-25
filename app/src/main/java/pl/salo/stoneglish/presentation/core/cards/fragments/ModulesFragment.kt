@@ -90,9 +90,6 @@ class ModulesFragment : Fragment() {
             modulesLoadingLayout.ninja(
                 visibility = !modulesDownloaded && !noModulesThere
             )
-            modulesDownloadedLayout.ninja(
-                visibility = modulesDownloaded && !noModulesThere
-            )
         }
     }
 

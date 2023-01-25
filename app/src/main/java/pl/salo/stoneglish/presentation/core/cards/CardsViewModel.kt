@@ -18,8 +18,8 @@ import javax.inject.Inject
 class CardsViewModel @Inject constructor(
     private val database: CardsUseCases
 ): ViewModel() {
-    private val _modulesState = MutableLiveData<Event<Resource<List<String>>>>()
-    val modulesState: LiveData<Event<Resource<List<String>>>>
+    private val _modulesState = MutableLiveData<Event<Resource<List<Pair<Int, String>>>>>()
+    val modulesState: LiveData<Event<Resource<List<Pair<Int, String>>>>>
         get() = _modulesState
 
     private val _cardsDownloadState = MutableLiveData<Resource<List<Card>>>()

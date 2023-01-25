@@ -111,8 +111,8 @@ class DatabaseServiceImpl @Inject constructor(
         return cardList
     }
 
-    override suspend fun listOfModules(userId: String): List<String> {
-        val moduleList: MutableList<String> = mutableListOf()
+    override suspend fun listOfModules(userId: String): List<Pair<Int, String>> {
+        val moduleList: MutableList<Pair<Int, String>> = mutableListOf()
 
         firebaseDatabase
             .child("users")
@@ -121,7 +121,8 @@ class DatabaseServiceImpl @Inject constructor(
             .get()
             .await()
             .children.forEach { snap ->
-                moduleList.add(snap.key ?: "")
+                moduleList.add(Pair(snap.childrenCount.toInt(),
+                    snap.key ?: ""))
             }
 
         Log.d(TAG, "Those modules were received: $moduleList")
