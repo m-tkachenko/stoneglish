@@ -20,7 +20,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
                 android:layout_marginTop="8dp"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:background="@color/white">
 
                 <ImageButton
                     android:id="@+id/signInBackArrow"
@@ -62,7 +63,9 @@
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:background="@color/screen_background">
+
 
 
         <LinearLayout
@@ -89,7 +92,7 @@
                 android:textColor="@color/text_color"
                 android:text="@string/topic_text"
                 android:textColorLink="@color/text_color"
-                android:textSize="@dimen/text_main" />
+                android:textSize="@dimen/text_main"/>
 
             <Button
                 android:id="@+id/topicExerciseBtn"
@@ -98,7 +101,8 @@
                 android:layout_gravity="center_horizontal"
                 android:backgroundTint="@color/main_orange"
                 android:text="@string/start_test"
-                android:textAllCaps="false" />
+                android:textAllCaps="false"
+                android:textSize="16sp" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -113,7 +117,9 @@
                 android:id="@+id/topicListeningAndSpeakingRecycler"
                 android:overScrollMode="never"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:color="@color/screen_background"/>
 
             <TextView
                 android:layout_width="match_parent"
@@ -128,7 +134,9 @@
                 android:id="@+id/topicKeywordsRecycler"
                 android:overScrollMode="never"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:color="@color/screen_background"/>
 
             <TextView
                 android:layout_width="match_parent"
@@ -143,7 +151,9 @@
                 android:id="@+id/similarTopicsRecycler"
                 android:overScrollMode="never"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:color="@color/screen_background"/>
 
             <LinearLayout
                 android:id="@+id/addTopicToDBLayout"

@@ -13,7 +13,8 @@
         android:layout_margin="5dp"
         app:cardCornerRadius="20dp"
         app:contentPadding="15dp"
-        android:backgroundTint="@color/recycler_view_item_color">
+        android:color="@color/screen_background">
+        <!--android:backgroundTint="@color/recycler_view_item_color"-->
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -31,6 +32,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+
                     android:textSize="@dimen/text_main"
                     android:textStyle="bold"
                     android:textColor="@color/text_color"
@@ -61,12 +63,13 @@
 
             <TextView
                 android:id="@+id/translatedText"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/sub_text"
+                android:layout_marginTop="8dp"
                 android:textColor="@color/sub_text_color"
-                android:layout_marginTop="5dp"
-                tools:text="Translated word"/>
+                android:textSize="@dimen/sub_text"
+                android:text="Translated word" />
+
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
