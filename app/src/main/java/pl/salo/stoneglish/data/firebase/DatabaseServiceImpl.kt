@@ -7,6 +7,7 @@ import pl.salo.stoneglish.data.model.User
 import pl.salo.stoneglish.data.model.home.Topic
 import pl.salo.stoneglish.domain.model.card.Card
 import pl.salo.stoneglish.domain.model.card.TestForCards
+import pl.salo.stoneglish.domain.model.card.TestType
 import pl.salo.stoneglish.domain.services.DatabaseService
 import javax.inject.Inject
 
@@ -110,8 +111,8 @@ class DatabaseServiceImpl @Inject constructor(
         return cardList
     }
 
-    override suspend fun listOfModules(userId: String): List<String> {
-        val moduleList: MutableList<String> = mutableListOf()
+    override suspend fun listOfModules(userId: String): List<Pair<Int, String>> {
+        val moduleList: MutableList<Pair<Int, String>> = mutableListOf()
 
         firebaseDatabase
             .child("users")
@@ -120,7 +121,8 @@ class DatabaseServiceImpl @Inject constructor(
             .get()
             .await()
             .children.forEach { snap ->
-                moduleList.add(snap.key ?: "")
+                moduleList.add(Pair(snap.childrenCount.toInt(),
+                    snap.key ?: ""))
             }
 
         Log.d(TAG, "Those modules were received: $moduleList")
@@ -138,7 +140,7 @@ class DatabaseServiceImpl @Inject constructor(
             .await()
 
         val testList: List<TestForCards> = resultTestsSnapshot.children.map { snap ->
-            snap.getValue(TestForCards::class.java) ?: TestForCards()
+            snap.getValue(TestForCards::class.java) ?: TestForCards(TestType.MEMORIZATION, "")
         }
 
         Log.d(TAG, "Those tests were received: $testList")
@@ -160,5 +162,15 @@ class DatabaseServiceImpl @Inject constructor(
         Log.d(TAG, "Those cards were received: $dailyCardsList")
 
         return dailyCardsList
+    }
+
+    override suspend fun getListOfPolishWords(): List<String> {
+        return firebaseDatabase
+            .child("polish-words")
+            .get()
+            .await()
+            .children.map { word ->
+                word.value as String
+            }
     }
 }
