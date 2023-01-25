@@ -22,6 +22,7 @@ import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import pl.salo.stoneglish.R
 import pl.salo.stoneglish.databinding.ActivityAuthBinding
+import pl.salo.stoneglish.presentation.EnglishTestFragment
 import pl.salo.stoneglish.presentation.auth.sign_in.SignInFragment
 import pl.salo.stoneglish.presentation.auth.sign_up.SignUpStepFourFragment
 import pl.salo.stoneglish.presentation.auth.sign_up.SignUpStepOneFragment
@@ -90,6 +91,10 @@ class AuthActivity : AppCompatActivity(), AuthNavigator {
     override fun goToCoreActivity() {
         startActivity(Intent(this@AuthActivity, CoreActivity::class.java))
         finish()
+    }
+
+    override fun goToEnglishTest() {
+        addFragmentToStack(EnglishTestFragment())
     }
 
     override fun setProgressDialog(state: ProgressDialogState, text: String?) {

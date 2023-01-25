@@ -120,6 +120,8 @@
     <string name="horizontal_group_title_hint_input">Horizontal group title</string>
     <string name="vertical_view_chip_text">Vertical</string>
     <string name="horizontal_view_chip_text">Horizontal</string>
+    <string name="you_passed_the_test">You passed the test</string>
+    <string name="english_test_from_stoneglish">English test from Stoneglish</string>
     <string name="congratulations">Congratulations</string>
     <string name="ok">OK</string>
     <string name="select_the_correct_translation">Select the correct translation</string>
