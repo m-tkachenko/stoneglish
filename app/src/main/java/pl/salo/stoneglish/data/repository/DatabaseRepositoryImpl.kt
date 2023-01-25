@@ -33,4 +33,7 @@ class DatabaseRepositoryImpl @Inject constructor(
 
     override suspend fun writeNewTopic(topic: Topic) =
         databaseService.writeNewTopic(topic)
+
+    override suspend fun getListOfPolishWords() = databaseService.getListOfPolishWords()
+
 }

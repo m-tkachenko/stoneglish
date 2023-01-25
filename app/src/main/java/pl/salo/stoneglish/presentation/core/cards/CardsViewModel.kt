@@ -22,8 +22,8 @@ class CardsViewModel @Inject constructor(
     val modulesState: LiveData<Event<Resource<List<String>>>>
         get() = _modulesState
 
-    private val _cardsDownloadState = MutableLiveData<Event<Resource<List<Card>>>>()
-    val cardsDownloadState: LiveData<Event<Resource<List<Card>>>>
+    private val _cardsDownloadState = MutableLiveData<Resource<List<Card>>>()
+    val cardsDownloadState: LiveData<Resource<List<Card>>>
         get() = _cardsDownloadState
 
     private val _testsState = MutableLiveData<Event<Resource<List<TestForCards>>>>()
@@ -32,12 +32,12 @@ class CardsViewModel @Inject constructor(
 
     fun downloadCards(moduleName: String) {
         database.cardsList(moduleName).onEach { cards ->
-            _cardsDownloadState.postValue(Event(cards))
+            _cardsDownloadState.postValue(cards)
         }.launchIn(viewModelScope)
     }
 
-    fun downloadTests(moduleName: String) {
-        database.testsList(moduleName).onEach { tests ->
+    fun downloadTests() {
+        database.testsList().onEach { tests ->
             _testsState.postValue(Event(tests))
         }.launchIn(viewModelScope)
     }
