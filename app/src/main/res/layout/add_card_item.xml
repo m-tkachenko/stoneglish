@@ -9,7 +9,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="20dp"
-        android:background="@color/recycler_view_item_color"
+        android:background="@drawable/corner_for_layout"
         android:orientation="vertical"
         tools:ignore="UselessParent">
 

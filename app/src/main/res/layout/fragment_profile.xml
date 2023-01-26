@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/screen_background"
     android:orientation="vertical"
     tools:context=".presentation.core.profile.ProfileFragment">
 
@@ -56,6 +57,7 @@
         <Button
             android:id="@+id/profileSignOut"
             style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
+            android:backgroundTint="@android:color/white"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="10dp"
@@ -73,6 +75,7 @@
         <Button
             android:id="@+id/profileSupport"
             style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
+            android:backgroundTint="@android:color/white"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="10dp"
@@ -89,6 +92,7 @@
         <Button
             android:id="@+id/profileSettings"
             style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
+            android:backgroundTint="@android:color/white"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="10dp"

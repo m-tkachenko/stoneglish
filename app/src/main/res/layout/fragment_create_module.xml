@@ -22,7 +22,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
                 android:layout_marginTop="8dp"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:background="@color/white">
 
                 <ImageButton
                     android:id="@+id/backArrow"
@@ -64,7 +65,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:background="@color/screen_background">
     <EditText
         android:id="@+id/moduleName"
         android:layout_width="@dimen/view_width"
