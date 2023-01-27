@@ -69,4 +69,11 @@ class SignUpDataRepository {
         }
 
     }
+
+    fun clearCategories() {
+        signUpData.interestedTopics = mutableListOf()
+        categories.forEach {
+            it.isFavorite = false
+        }
+    }
 }

@@ -24,6 +24,8 @@ interface CoreNavigator {
 
     fun showAddCardDialog(dialog: AddNewCardDialog)
     fun showAddedTopicDialog()
+    fun goToChangeFieldScreen()
+    fun goToFavoriteTopics()
 
     fun signOut()
 

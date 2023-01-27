@@ -15,6 +15,7 @@ class GetCurrentUserUseCase @Inject constructor(
     operator fun invoke(
     ): Flow<Resource<User>> = flow {
         try {
+            emit(Resource.Loading())
             val id = authRepository.getUserId()
                 ?: throw Exception(
                     /**constant**/
