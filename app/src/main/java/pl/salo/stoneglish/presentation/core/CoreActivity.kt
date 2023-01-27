@@ -25,10 +25,7 @@ import pl.salo.stoneglish.domain.model.card.TestType
 import pl.salo.stoneglish.presentation.auth.AuthActivity
 import pl.salo.stoneglish.presentation.auth.AuthViewModel
 import pl.salo.stoneglish.presentation.core.admin.AddTopicFragment
-import pl.salo.stoneglish.presentation.core.cards.fragments.CardsFragment
-import pl.salo.stoneglish.presentation.core.cards.fragments.CardsMemoTestFragment
-import pl.salo.stoneglish.presentation.core.cards.fragments.CreateModuleFragment
-import pl.salo.stoneglish.presentation.core.cards.fragments.ModulesFragment
+import pl.salo.stoneglish.presentation.core.cards.fragments.*
 import pl.salo.stoneglish.presentation.core.dictionary.DictionaryFragment
 import pl.salo.stoneglish.presentation.core.home.HomeFragment
 import pl.salo.stoneglish.presentation.core.home.TopicFragment
@@ -154,7 +151,7 @@ class CoreActivity : AppCompatActivity(), CoreNavigator, TextToSpeech.OnInitList
     }
 
     override fun goToTest(type: TestType) {
-        val fragment = if(type == TestType.MEMORIZATION) CardsMemoTestFragment() else return
+        val fragment = if(type == TestType.MEMORIZATION) CardsMemoTestFragment() else TestCardsFragment()
         addFragmentToStack(fragment)
     }
 

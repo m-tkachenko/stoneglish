@@ -6,5 +6,6 @@ data class TestForCards(
 )
 
 enum class TestType(val type: String){
-    MEMORIZATION("Memorization")
+    MEMORIZATION("Memorization"),
+    CARDS("Cards")
 }

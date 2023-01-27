@@ -5,4 +5,5 @@
     <dimen name="text_main">18sp</dimen>
     <dimen name="sub_text">16sp</dimen>
     <dimen name="text_header">21sp</dimen>
+    <dimen name="text_large">26sp</dimen>
 </resources>

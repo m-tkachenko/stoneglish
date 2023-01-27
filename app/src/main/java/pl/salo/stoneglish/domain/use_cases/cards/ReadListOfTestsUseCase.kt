@@ -22,6 +22,10 @@ class ReadListOfTestsUseCase @Inject constructor(
                 TestForCards(
                     TestType.MEMORIZATION,
                     "Practice until you learn all the words"
+                ),
+                TestForCards(
+                    TestType.CARDS,
+                    "Repeat the terms and definitions"
                 )
             )
 
