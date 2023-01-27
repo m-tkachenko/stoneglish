@@ -41,7 +41,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="5dp"
                     android:layout_weight="1"
-                    android:textSize="@dimen/sub_text"
+                    android:textSize="@dimen/normal_text"
                     android:textColor="@color/text_color"
                     android:textStyle="bold"
                     tools:text="/god/"/>
@@ -78,7 +78,7 @@
                 android:layout_weight="1"
                 android:gravity="top"
                 android:textColor="@color/sub_text_color"
-                android:textSize="@dimen/sub_text"
+                android:textSize="@dimen/normal_text"
                 tools:text="bóg"/>
 
         </LinearLayout>
