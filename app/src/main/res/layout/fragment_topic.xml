@@ -91,15 +91,6 @@
                 android:textColorLink="@color/text_color"
                 android:textSize="@dimen/text_main" />
 
-            <Button
-                android:id="@+id/topicExerciseBtn"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:backgroundTint="@color/main_orange"
-                android:text="@string/start_test"
-                android:textAllCaps="false" />
-
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
