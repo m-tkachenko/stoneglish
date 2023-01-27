@@ -27,7 +27,8 @@ class SignUpStepFourFragment : BaseAuthFragment<FragmentSignUpStepFourBinding>(
     @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        if (profileViewModel.currentUser.value != null) {
+        val isFromProfile = profileViewModel.currentUser.value != null
+        if (isFromProfile) {
             binding.screenTitle.text = "Choose your favorite topics"
         }
 
@@ -36,10 +37,10 @@ class SignUpStepFourFragment : BaseAuthFragment<FragmentSignUpStepFourBinding>(
 
         with(binding) {
             signUpBackArrow.setOnClickListener {
-                authNavigator().goBack()
+                if (isFromProfile) coreNavigator().goBack() else authNavigator().goBack()
             }
             signUpSkipBtn.setOnClickListener {
-                if (profileViewModel.currentUser.value == null) {
+                if (!isFromProfile) {
                     viewModel.signUpUsingEmailAndPassword()
                 } else {
                     Log.d(TAG, "currentUser id: ${profileViewModel.currentUser.value?.data?.id}")
