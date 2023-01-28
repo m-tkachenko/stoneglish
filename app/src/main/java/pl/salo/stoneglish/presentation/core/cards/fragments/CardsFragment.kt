@@ -25,7 +25,7 @@ class CardsFragment : Fragment() {
     private val cardsViewModel: CardsViewModel by activityViewModels()
 
     lateinit var testAdapter: CardTestsAdapter
-
+    lateinit var translationsAdapter: CardsTranslationsAdapter
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -94,16 +94,19 @@ class CardsFragment : Fragment() {
                     Log.d(TAG, "CardsDownload : Success")
 
                     val notNullCards = cards.data!!
-
+                    translationsAdapter = CardsTranslationsAdapter(
+                        cards = notNullCards
+                    )
                     with(binding) {
-                        cardsRecyclerviewInCards.adapter = CardsTranslationsAdapter(
-                            cards = notNullCards
-                        )
+                        cardsRecyclerviewInCards.adapter = translationsAdapter
 
                         cardsView.setUpCardsAdapter(
                             fragment = this@CardsFragment,
                             cards = notNullCards
                         )
+                    }
+                    translationsAdapter.onItemClick = {
+                        coreNavigator().speakWithFlow(it)
                     }
 
                     cardsDownloaded = true

@@ -6,96 +6,82 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:id="@+id/card_item"
-    app:cardBackgroundColor="@color/white"
+    app:cardBackgroundColor="@color/light_orange"
     android:layout_marginVertical="5dp"
     android:layout_marginHorizontal="10dp"
     android:elevation="10dp"
     app:contentPadding="15dp"
     app:cardCornerRadius="10dp" >
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <LinearLayout
-            android:id="@+id/card_name_layout"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginStart="12dp">
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/card_name"
+                android:id="@+id/originWord"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/black"
-                android:textSize="25sp"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:text="regardless" />
+                android:layout_marginHorizontal="5dp"
+                android:gravity="bottom"
+                android:textSize="@dimen/text_main"
+                android:textColor="@color/text_color"
+                android:textStyle="bold"
+                tools:text="God"/>
 
             <TextView
-                android:id="@+id/card_name_transcription"
-                android:layout_width="wrap_content"
+                android:id="@+id/phoneticWord"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:textColor="@color/black"
-                android:textSize="20sp"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:text="|rɪˈɡɑːdləs|" />
+                android:layout_marginHorizontal="5dp"
+                android:layout_weight="1"
+                android:textSize="@dimen/normal_text"
+                android:textColor="@color/text_color"
+                android:textStyle="bold"
+                tools:text="/god/"/>
 
-            <TextView
-                android:id="@+id/card_name_word_type"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
-                android:textColor="@color/black"
-                android:textSize="15sp"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:text="{adverb}" />
-        </LinearLayout>
+            <FrameLayout
+                android:layout_width="34dp"
+                android:layout_height="34dp"
+                android:layout_marginStart="15dp">
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/card_name_layout"
-            android:layout_marginTop="8dp"
-            android:layout_marginStart="16dp">
+                <ImageButton
+                    android:id="@+id/audioActionButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="5dp"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="@string/cd"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/play_word" />
 
-            <TextView
-                android:id="@+id/first_translation_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/black"
-                android:textSize="20sp"
-                android:layout_marginBottom="2dp"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:text="1. mimo wszystko" />
-
-            <TextView
-                android:id="@+id/second_translation_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/black"
-                android:textSize="20sp"
-                android:layout_marginBottom="2dp"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:text="2. bez względu" />
-
-            <TextView
-                android:id="@+id/third_translation_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/black"
-                android:textSize="20sp"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:text="3. niezależnie" />
+                <ProgressBar
+                    android:id="@+id/audioActionProgressBar"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="gone" />
+            </FrameLayout>
 
         </LinearLayout>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/translatedWord"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginHorizontal="5dp"
+            android:layout_weight="1"
+            android:gravity="top"
+            android:textColor="@color/sub_text_color"
+            android:textSize="@dimen/normal_text"
+            tools:text="bóg"/>
+
+    </LinearLayout>
 
 </com.google.android.material.card.MaterialCardView>
+
