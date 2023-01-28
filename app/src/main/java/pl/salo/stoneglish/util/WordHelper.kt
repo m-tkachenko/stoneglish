@@ -6,9 +6,9 @@ import pl.salo.stoneglish.data.model.dictionary.Meaning
 class WordHelper
 
 fun List<Meaning>.getNoun():List<Definition>{
-    return this.first { it.partOfSpeech == "noun" }.definitions
+    return this.firstOrNull() { it.partOfSpeech == "noun" }?.definitions ?: emptyList()
 }
 
 fun List<Meaning>.getVerb():List<Definition>{
-    return this.first { it.partOfSpeech == "verb" }.definitions
+    return this.firstOrNull() { it.partOfSpeech == "verb" }?.definitions ?: emptyList()
 }

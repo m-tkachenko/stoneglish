@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/background_main"
     tools:context=".presentation.core.cards.fragments.ModulesFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -44,18 +45,44 @@
         android:visibility="gone"
         tools:visibility="visible">
 
-        <TextView
+        <ImageView
+            android:id="@+id/imageBlank"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:maxWidth="250dp"
-            android:text="@string/modules_list_is_empty"
-            android:textAlignment="center"
-            android:textColor="@color/black"
-            android:textSize="24sp"
+            android:src="@drawable/cards_blank"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.22000003"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:maxWidth="350dp"
+            android:text="@string/create_modules_to_learn_new_words"
+            android:textAlignment="center"
+            android:textSize="@dimen/text_main"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageBlank" />
+
+        <Button
+            android:id="@+id/createModuleBtn"
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="32dp"
+            android:text="@string/create_module"
+            android:backgroundTint="@color/alt_button"
+            android:textColor="@color/black"
+            android:textAllCaps="false"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -71,7 +98,6 @@
             android:layout_height="56dp"
             android:layout_marginTop="8dp"
             android:layout_marginHorizontal="10dp"
-            android:background="@color/white"
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -84,7 +110,7 @@
                 android:layout_gravity="center"
                 android:gravity="center_vertical"
                 android:text="@string/modules_top_navigation_bar"
-                android:textColor="@color/grey"
+                android:textColor="@color/black"
                 android:textSize="21sp"
                 android:textStyle="bold" />
 

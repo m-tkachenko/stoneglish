@@ -133,4 +133,9 @@
     <string name="english_level">English level</string>
     <string name="update_your_english_level">Update your English level</string>
     <string name="about_us">About us</string>
+    <string name="just_type_the_word_in_the_field_above">Just type the word in the field above</string>
+    <string name="example">Example</string>
+    <string name="przyk_ad">Przykład</string>
+    <string name="create_modules_to_learn_new_words">Create modules to learn new words</string>
+    <string name="my_module">My module</string>
 </resources>

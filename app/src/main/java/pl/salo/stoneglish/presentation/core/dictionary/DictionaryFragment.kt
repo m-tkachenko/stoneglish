@@ -80,6 +80,7 @@ class DictionaryFragment : Fragment() {
             when (resource) {
                 is Resource.Success -> {
                     binding.dictionaryProgressBar.visibility = View.GONE
+                    binding.blankContainer.visibility = View.GONE
                     binding.dictionaryContentContainer.visibility = View.VISIBLE
 
                     binding.word.text = resource.data?.word?.replaceFirstChar {
@@ -94,6 +95,8 @@ class DictionaryFragment : Fragment() {
                     binding.dictionaryContentContainer.visibility = View.GONE
                     binding.dictionaryProgressBar.visibility = View.GONE
 
+                    binding.blankContainer.visibility = View.VISIBLE
+
                     binding.dictionaryTextBlank.apply {
                         visibility = View.VISIBLE
                         text = Constants.SOMETHING_WENT_WRONG
@@ -101,7 +104,6 @@ class DictionaryFragment : Fragment() {
                 }
                 is Resource.Loading -> {
                     binding.dictionaryProgressBar.visibility = View.VISIBLE
-                    binding.dictionaryTextBlank.visibility = View.GONE
                 }
             }
         }

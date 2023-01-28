@@ -3,6 +3,8 @@
     <color name="purple_200">#FFBB86FC</color>
     <color name="main_green">#168C85</color>
     <color name="main_orange">#EB9486</color>
+    <color name="alt_orange">#E69D6F</color>
+    <color name="light_orange">#FCEEE0</color>
     <color name="main_red">#DD1F00</color>
     <color name="purple_700">#168C85</color>
     <color name="teal_200">#FF03DAC5</color>
@@ -23,11 +25,12 @@
 
     <!--buttons-->
     <color name="main_button">#168C85</color>
+    <color name="alt_button">#D4EED8</color>
     <color name="google_button">#E1E1E1</color>
     <color name="facebook_button">#0A1890</color>
     <color name="forgot_password">#374BFF</color>
 
-    <color name="screen_background">#f0f0f0</color>
+    <color name="screen_background">#f6f6f6</color>
     <color name="item_background">#fcfcfc</color>
     <color name="stroke_color">#8D8D8D</color>
     <color name="light_stroke_color">#B3B3B3</color>
