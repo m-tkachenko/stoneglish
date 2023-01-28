@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    xmlns:tools="http://schemas.android.com/tools">
+    android:layout_height="wrap_content">
 
-    <androidx.cardview.widget.CardView
+    <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="5dp"
-        android:backgroundTint="@color/recycler_view_item_color"
+        android:backgroundTint="@color/light_orange"
+        android:elevation="0dp"
         app:cardCornerRadius="10dp"
         app:contentPadding="5dp">
 
@@ -30,10 +31,10 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="5dp"
                     android:gravity="bottom"
-                    android:textSize="@dimen/text_main"
                     android:textColor="@color/text_color"
+                    android:textSize="@dimen/normal_text"
                     android:textStyle="bold"
-                    tools:text="God"/>
+                    tools:text="God" />
 
                 <TextView
                     android:id="@+id/phoneticWord"
@@ -41,10 +42,10 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="5dp"
                     android:layout_weight="1"
-                    android:textSize="@dimen/normal_text"
                     android:textColor="@color/text_color"
+                    android:textSize="@dimen/normal_text"
                     android:textStyle="bold"
-                    tools:text="/god/"/>
+                    tools:text="/god/" />
 
                 <FrameLayout
                     android:layout_width="34dp"
@@ -78,10 +79,10 @@
                 android:layout_weight="1"
                 android:gravity="top"
                 android:textColor="@color/sub_text_color"
-                android:textSize="@dimen/normal_text"
-                tools:text="bóg"/>
+                android:textSize="@dimen/small_text"
+                tools:text="bóg" />
 
         </LinearLayout>
-    </androidx.cardview.widget.CardView>
+    </com.google.android.material.card.MaterialCardView>
 
 </LinearLayout>
