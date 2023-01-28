@@ -8,11 +8,17 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import pl.salo.stoneglish.common.Resource
+import pl.salo.stoneglish.data.model.home.Keyword
 import pl.salo.stoneglish.databinding.FragmentCardsBinding
+import pl.salo.stoneglish.domain.model.card.Card
+import pl.salo.stoneglish.presentation.core.TextToSpeechResult
 import pl.salo.stoneglish.presentation.core.cards.CardsViewModel
 import pl.salo.stoneglish.presentation.core.cards.adapters.CardTestsAdapter
-import pl.salo.stoneglish.presentation.core.cards.adapters.CardsTranslationsAdapter
+import pl.salo.stoneglish.presentation.core.home.adapters.KeywordsAdapter
 import pl.salo.stoneglish.util.Utils.isAbsoluteTrue
 import pl.salo.stoneglish.util.Utils.ninja
 import pl.salo.stoneglish.util.coreNavigator
@@ -25,7 +31,11 @@ class CardsFragment : Fragment() {
     private val cardsViewModel: CardsViewModel by activityViewModels()
 
     lateinit var testAdapter: CardTestsAdapter
-    lateinit var translationsAdapter: CardsTranslationsAdapter
+    private val keywordsAdapter = KeywordsAdapter()
+
+    private var isKeywordsSpeakingBlocked = false
+    private var isLSSpeakingBlocked = false
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -94,19 +104,41 @@ class CardsFragment : Fragment() {
                     Log.d(TAG, "CardsDownload : Success")
 
                     val notNullCards = cards.data!!
-                    translationsAdapter = CardsTranslationsAdapter(
-                        cards = notNullCards
-                    )
+                    keywordsAdapter.items = notNullCards.toKeywords()
+
                     with(binding) {
-                        cardsRecyclerviewInCards.adapter = translationsAdapter
+                        cardsRecyclerviewInCards.adapter = keywordsAdapter
 
                         cardsView.setUpCardsAdapter(
                             fragment = this@CardsFragment,
                             cards = notNullCards
                         )
                     }
-                    translationsAdapter.onItemClick = {
-                        coreNavigator().speakWithFlow(it)
+                    keywordsAdapter.onItemClick = { keyword ->
+                        if (!isLSSpeakingBlocked) {
+                            val items = keywordsAdapter.items.toMutableList()
+                            isKeywordsSpeakingBlocked = true
+                            coreNavigator().speakWithFlow(keyword.word).onEach { res ->
+                                when (res) {
+                                    is TextToSpeechResult.Loading -> {
+                                        items.forEach { it.isSpeaking = false }
+                                        val index = items.indexOf(keyword)
+                                        keyword.isSpeaking = true
+                                        items[index] = keyword
+
+                                        keywordsAdapter.items = items
+                                        keywordsAdapter.notifyDataSetChanged()
+                                    }
+                                    else -> {
+
+                                        items.forEach { it.isSpeaking = false }
+                                        keywordsAdapter.items = items
+                                        keywordsAdapter.notifyDataSetChanged()
+                                        isKeywordsSpeakingBlocked = false
+                                    }
+                                }
+                            }.launchIn(MainScope())
+                        }
                     }
 
                     cardsDownloaded = true
@@ -147,5 +179,11 @@ class CardsFragment : Fragment() {
             cardsLoadingLayout.ninja(!downloaded.isAbsoluteTrue())
             cardsDownloadedLayout.ninja(downloaded.isAbsoluteTrue())
         }
+    }
+}
+
+fun List<Card>.toKeywords(): List<Keyword> {
+    return this.map {
+        Keyword(word = it.word, translate = it.firstTranslation)
     }
 }
