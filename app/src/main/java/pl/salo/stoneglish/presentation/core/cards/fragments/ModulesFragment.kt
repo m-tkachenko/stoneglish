@@ -52,6 +52,9 @@ class ModulesFragment : Fragment() {
         binding.addModule.setOnClickListener {
           coreNavigator().goToCreateModule()
         }
+        binding.createModuleBtn.setOnClickListener {
+            coreNavigator().goToCreateModule()
+        }
     }
 
     private fun modulesStateObserver() {
