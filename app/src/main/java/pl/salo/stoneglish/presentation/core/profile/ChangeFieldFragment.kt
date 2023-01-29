@@ -32,6 +32,10 @@ class ChangeFieldFragment : Fragment() {
             viewModel.changeField(newFieldText)
         }
 
+        binding.backArrow.setOnClickListener {
+            coreNavigator().goBack()
+        }
+
         viewModel.fieldToChange.observe(viewLifecycleOwner) {
             val text = when (it) {
                 Field.NAME -> {
