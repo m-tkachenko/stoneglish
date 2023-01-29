@@ -151,50 +151,27 @@
             android:id="@+id/blankFirst"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="80dp"
             android:src="@drawable/search_blank_first"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="ContentDescription" />
-
-        <ImageView
-            android:id="@+id/blankSecond"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
-            android:src="@drawable/search_blank_second"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.7"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/blankFirst"
+            app:layout_constraintVertical_bias="0.41000003"
             tools:ignore="ContentDescription" />
 
         <TextView
             android:id="@+id/dictionaryTextBlank"
-            android:layout_width="250dp"
+            android:layout_width="320dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:gravity="center"
             android:text="@string/there_you_can_find_a_word_which_you_want"
             android:textSize="@dimen/text_main"
             android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@+id/blankFirst"
             app:layout_constraintEnd_toEndOf="@+id/blankFirst"
             app:layout_constraintStart_toStartOf="@+id/blankFirst"
-            app:layout_constraintTop_toTopOf="@+id/blankFirst"
-            app:layout_constraintVertical_bias="0.19999999" />
+            app:layout_constraintTop_toBottomOf="@+id/blankFirst" />
 
-        <TextView
-            android:id="@+id/textView2"
-            android:layout_width="250dp"
-            android:layout_height="wrap_content"
-            android:text="@string/just_type_the_word_in_the_field_above"
-            android:textSize="@dimen/text_main"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@+id/blankSecond"
-            app:layout_constraintEnd_toEndOf="@+id/blankSecond"
-            app:layout_constraintStart_toStartOf="@+id/blankSecond"
-            app:layout_constraintTop_toTopOf="@+id/blankSecond"
-            app:layout_constraintVertical_bias="0.16000003" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ProgressBar
