@@ -1,27 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="150dp"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_marginHorizontal="5dp"
-    android:elevation="0dp"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:elevation="0dp">
 
     <androidx.cardview.widget.CardView
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_margin="5dp"
-        app:cardCornerRadius="20dp"
-        app:contentPadding="15dp"
-        android:backgroundTint="@color/recycler_view_item_color">
+        android:backgroundTint="@color/recycler_view_item_color"
+        app:cardCornerRadius="20dp">
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:background="@drawable/lis_and_speak_background"
             android:gravity="center"
             android:orientation="vertical">
 
             <LinearLayout
+                android:layout_marginHorizontal="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
@@ -31,10 +32,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:textSize="@dimen/text_main"
-                    android:textStyle="bold"
                     android:textColor="@color/text_color"
-                    tools:text="Text in English"/>
+                    android:textSize="@dimen/normal_text"
+                    android:textStyle="bold"
+                    tools:text="Text in English" />
 
                 <FrameLayout
                     android:layout_width="34dp"
@@ -63,10 +64,11 @@
                 android:id="@+id/translatedText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/normal_text"
-                android:textColor="@color/sub_text_color"
+                android:layout_marginHorizontal="10dp"
                 android:layout_marginTop="5dp"
-                tools:text="Translated word"/>
+                android:textColor="@color/sub_text_color"
+                android:textSize="@dimen/small_text"
+                tools:text="Translated word" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
