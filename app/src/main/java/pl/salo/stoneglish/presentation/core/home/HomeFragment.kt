@@ -2,12 +2,16 @@ package pl.salo.stoneglish.presentation.core.home
 
 import android.animation.Animator
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewAnimationUtils
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.widget.addTextChangedListener
+import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import dagger.hilt.android.AndroidEntryPoint
@@ -193,15 +197,15 @@ class HomeFragment : Fragment() {
     }
 
     private fun setUpFavouriteTopics(list: List<TopicType>) {
-        for (choosedTopic in list) {
+        for (chosenTopic in list) {
             val favouriteTopic = ChoiceChipBinding.inflate(layoutInflater).root
 
-            favouriteTopic.text = choosedTopic.name
+            favouriteTopic.text = chosenTopic.name
             favouriteTopic.textSize = 14F
 
             favouriteTopic.setOnCheckedChangeListener { _, isChecked ->
                 if (isChecked)
-                    updateHomeTopicsByType(choosedTopic)
+                    updateHomeTopicsByType(chosenTopic)
                 else
                     updateHomeTopicsToPrevious()
             }
@@ -216,6 +220,12 @@ class HomeFragment : Fragment() {
             searchInput.showKeyboard(requireContext())
 
             searchOpenedView visible true
+
+            searchInput.doAfterTextChanged {
+                val foundedTopics = homeViewModel.getTopicsByTitle(it.toString())
+
+                updateHomeTopicsForSearch(foundedTopics)
+            }
 
             val circularReveal = ViewAnimationUtils.createCircularReveal(
                 searchOpenedView,
@@ -249,6 +259,7 @@ class HomeFragment : Fragment() {
                 }
             })
 
+            updateHomeTopicsToPrevious()
             hideKeyboard()
 
             circularConceal.duration = 300
@@ -262,12 +273,21 @@ class HomeFragment : Fragment() {
     }
 
     private fun updateHomeTopicsToPrevious() {
+        binding.topicsHorizontalRecycler.ninja(true)
+        binding.topicHorizontalTitle.ninja(true)
+
         updateVerticalTopicsAllType()
         updateHorizontalGroupToInterested()
     }
     private fun updateHomeTopicsByType(chosenType: TopicType) {
         updateVerticalTopicsByType(chosenType)
         updateHorizontalGroupByType(chosenType)
+    }
+    private fun updateHomeTopicsForSearch(foundedTopics: List<Topic>) {
+        binding.topicsHorizontalRecycler.ninja(false)
+        binding.topicHorizontalTitle.ninja(false)
+
+        updateVerticalTopics(foundedTopics)
     }
 
     private fun updateVerticalTopicsAllType() {
@@ -324,5 +344,7 @@ class HomeFragment : Fragment() {
         horizontalTopicsAdapter.notifyDataSetChanged()
     }
 
-    val TAG = "HomeFragment"
+    companion object {
+        const val TAG = "HomeFragment"
+    }
 }

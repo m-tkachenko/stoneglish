@@ -171,4 +171,19 @@ class HomeViewModel @Inject constructor(
             )
     }
     fun getInterestedHorizontalGroup() = interestedHorizontalGroup
+
+    fun getTopicsByTitle(titleToFind: String): List<Topic> {
+        val allTopicsList = mutableListOf<Topic>()
+
+        allTopicsList.addAll(topicsAllTypes)
+        horizontalGroupByType.forEach {
+            it.horizontalGroups.forEach { group ->
+                allTopicsList.addAll(group.topics)
+            }
+        }
+
+        return allTopicsList.filter {
+            it.title == titleToFind
+        }
+    }
 }
