@@ -16,9 +16,9 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import pl.salo.stoneglish.R
 import pl.salo.stoneglish.common.Resource
 import pl.salo.stoneglish.data.model.home.Topic
-import pl.salo.stoneglish.data.model.home.TopicType
 import pl.salo.stoneglish.databinding.FragmentTopicBinding
 import pl.salo.stoneglish.presentation.core.TextToSpeechResult
 import pl.salo.stoneglish.presentation.core.admin.AddTopicViewModel
@@ -27,7 +27,6 @@ import pl.salo.stoneglish.presentation.core.home.adapters.ListeningAndSpeakingAd
 import pl.salo.stoneglish.presentation.core.home.adapters.SimilarTopicsAdapter
 import pl.salo.stoneglish.util.Utils.ninja
 import pl.salo.stoneglish.util.coreNavigator
-import kotlin.properties.Delegates
 
 @AndroidEntryPoint
 class TopicFragment : Fragment() {
@@ -44,10 +43,6 @@ class TopicFragment : Fragment() {
     private var isKeywordsSpeakingBlocked = false
     private var isLSSpeakingBlocked = false
 
-    private lateinit var interestedTopic: String
-    private lateinit var topicTitle: String
-    private var isVertical = true
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -59,27 +54,27 @@ class TopicFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        interestedTopic = arguments?.getString("TopicType") ?: "Error"
-        topicTitle = arguments?.getString("TopicTitle") ?: "Error"
-        isVertical = arguments?.getBoolean("IsTopicVertical") ?: true
-
         initAdapters()
         observeAddTopicState()
 
-        if (homeViewModel.isNotPreview) {
-            topicViewModel.getTopicByTitle(TopicType.valueOf(interestedTopic).type, topicTitle)
-            observeTopicState()
-        }
-        else {
-            binding.topicIsLoading.ninja(false)
-            binding.topicIsDownloaded.ninja(true)
+        binding.topicIsLoading.ninja(false)
+        binding.topicIsDownloaded.ninja(true)
 
-            setUpTopicScreen(homeViewModel.getTopic()!!)
+        setUpTopicScreen(homeViewModel.topicToShow)
+
+        similarTopicsAdapter.onItemClick = { similarTopic ->
+            homeViewModel.setTopic(
+                topicToShow = homeViewModel.listTopicsToShow.find { thisTopic ->
+                    thisTopic.title == similarTopic.title
+                } ?: Topic()
+            )
+
+            coreNavigator().goToTopicFragment()
         }
 
         binding.addTopicToDBLayout.ninja(!homeViewModel.isNotPreview)
         binding.addTopicToDB.setOnClickListener {
-            addTopicViewModel.addNewTopic(homeViewModel.getTopic()!!)
+            addTopicViewModel.addNewTopic(homeViewModel.topicToShow)
         }
     }
 
@@ -118,11 +113,7 @@ class TopicFragment : Fragment() {
                         binding.topicIsDownloaded.ninja(true)
 
                         similarTopicsAdapter.onItemClick = {
-                            coreNavigator().goToTopicFragment(
-                                TopicType.valueOf(interestedTopic),
-                                it.title,
-                                isVertical
-                            )
+
                         }
                     }
                     is Resource.Error -> {
@@ -131,7 +122,7 @@ class TopicFragment : Fragment() {
                     is Resource.Loading -> {
                         Log.d(TAG, "DownloadTopic : Loading")
 
-                        binding.topicTitle.text = "Loading..."
+                        binding.topicTitle.setText(R.string.loading_string)
                         binding.topicIsLoading.ninja(true)
                         binding.topicIsDownloaded.ninja(false)
                     }

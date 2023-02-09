@@ -35,8 +35,10 @@ class DatabaseRepositoryImpl @Inject constructor(
 
     override suspend fun writeNewTopic(topic: Topic) =
         databaseService.writeNewTopic(topic)
-    override suspend fun readVerticalTopics(topicType: TopicType) =
-        databaseService.readVerticalTopics(topicType)
+    override suspend fun readVerticalTopics() =
+        databaseService.readVerticalTopics()
     override suspend fun readVerticalTopicByTitle(topicType: String, title: String): Topic? =
         databaseService.readVerticalTopicByTitle(topicType, title)
+    override suspend fun readHorizontalGroups() =
+        databaseService.readHorizontalGroups()
 }

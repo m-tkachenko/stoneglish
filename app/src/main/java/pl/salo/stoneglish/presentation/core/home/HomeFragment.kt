@@ -10,13 +10,14 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
-import pl.salo.stoneglish.R
 import pl.salo.stoneglish.common.Resource
+import pl.salo.stoneglish.data.model.home.Topic
 import pl.salo.stoneglish.data.model.home.TopicType
 import pl.salo.stoneglish.databinding.ChoiceChipBinding
 import pl.salo.stoneglish.databinding.FragmentHomeBinding
+import pl.salo.stoneglish.presentation.core.home.adapters.HomeHorizontalTopicsAdapter
+import pl.salo.stoneglish.presentation.core.home.adapters.HomeVerticalTopicsAdapter
 import pl.salo.stoneglish.presentation.core.home.dialog.AddNewCardDialog
 import pl.salo.stoneglish.util.Utils.ninja
 import pl.salo.stoneglish.util.Utils.visible
@@ -30,9 +31,10 @@ class HomeFragment : Fragment() {
 
     private val homeViewModel: HomeViewModel by activityViewModels()
 
-    private lateinit var topicsAdapter: HomeVerticalTopicsAdapter
+    private lateinit var verticalTopicsAdapter: HomeVerticalTopicsAdapter
+    private lateinit var horizontalTopicsAdapter: HomeHorizontalTopicsAdapter
 
-    private var interestedTopics = listOf(TopicType.Art, TopicType.Art, TopicType.Art, TopicType.Art)
+    private var interestedTopics = listOf<TopicType>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -55,8 +57,11 @@ class HomeFragment : Fragment() {
         homeViewModel.downloadDailyCards()
         dailyCardsObserver()
 
-        homeViewModel.readVerticalTopics(topicType = interestedTopics[3])
+        homeViewModel.readVerticalTopics()
         verticalTopicsObserver()
+
+        homeViewModel.readHorizontalGroups()
+        horizontalGroupsObserver()
 
         with(binding) {
             openSearchButton.setOnClickListener { openSearch() }
@@ -114,28 +119,73 @@ class HomeFragment : Fragment() {
                     is Resource.Success -> {
                         Log.d(TAG, "VerticalTopicsDownload : Success : Data = ${verticalTopics.data}")
 
-                        topicsAdapter.topicsList = verticalTopics.data ?: listOf()
-                        topicsAdapter.onTopicClick = { title ->
-                            coreNavigator().goToTopicFragment(
-                                type = interestedTopics[3],
-                                title = title,
-                                isVertical = true
+                        val verticalTopicsNotNull = verticalTopics.data!!
+
+                        verticalTopicsAdapter.verticalTopicsList = verticalTopicsNotNull
+                        verticalTopicsAdapter.onVerticalTopicClick = { position ->
+                            homeViewModel.setTopic(
+                                topicToShow = verticalTopicsNotNull[position]
                             )
+                            homeViewModel.setTopicList(
+                                topicsList = verticalTopicsNotNull
+                            )
+
+                            coreNavigator().goToTopicFragment()
                         }
 
-                        binding.topicVerticalLoading.ninja(false)
-                        binding.verticalTopicsGridRecycler.ninja(true)
-
-                        binding.verticalTopicsGridRecycler.adapter = topicsAdapter
+                        binding.verticalTopicsGridRecycler.adapter = verticalTopicsAdapter
                     }
                     is Resource.Error -> {
                         Log.d(TAG, "VerticalTopicsDownload : Failure : Error = ${verticalTopics.message}")
                     }
                     is Resource.Loading -> {
                         Log.d(TAG, "VerticalTopicsDownload : Loading")
+                    }
+                }
+            }
+        }
+    }
+
+    private fun horizontalGroupsObserver() {
+        homeViewModel.horizontalGroups.observe(viewLifecycleOwner) { horizontalGroupsResult ->
+            horizontalGroupsResult.getContentIfNotHandled()?.let { horizontalGroups ->
+                when(horizontalGroups) {
+                    is Resource.Success -> {
+                        Log.d(TAG, "HorizontalGroupsDownload : Success : Data = ${horizontalGroups.data}")
+
+                        val horizontalGroup = homeViewModel.getRandomHorizontalGroup(
+                            interestedTopicTypes = interestedTopics,
+                            horizontalGroups = horizontalGroups.data!!
+                        )
+
+                        horizontalTopicsAdapter.horizontalTopics = horizontalGroup.topics
+                        horizontalTopicsAdapter.onHorizontalTopicClick = { position ->
+                            homeViewModel.setTopic(
+                                topicToShow = horizontalGroup.topics[position]
+                            )
+                            homeViewModel.setTopicList(
+                                topicsList = horizontalGroup.topics
+                            )
+
+                            coreNavigator().goToTopicFragment()
+                        }
+
+                        binding.topicHorizontalTitle.text = horizontalGroup.horizontalGroupTitle
+                        binding.topicsHorizontalRecycler.adapter = horizontalTopicsAdapter
+
+                        binding.topicVerticalLoading.ninja(false)
+                        binding.verticalTopicsGridRecycler.ninja(true)
+                        binding.topicsHorizontalRecycler.ninja(true)
+                    }
+                    is Resource.Error -> {
+                        Log.d(TAG, "HorizontalGroupsDownload : Failure : Error = ${horizontalGroups.message}")
+                    }
+                    is Resource.Loading -> {
+                        Log.d(TAG, "HorizontalGroupsDownload : Loading")
 
                         binding.topicVerticalLoading.ninja(true)
                         binding.verticalTopicsGridRecycler.ninja(false)
+                        binding.topicsHorizontalRecycler.ninja(false)
                     }
                 }
             }
@@ -165,7 +215,7 @@ class HomeFragment : Fragment() {
         for (choosedTopic in list) {
             val favouriteTopic = ChoiceChipBinding.inflate(layoutInflater).root
 
-            favouriteTopic.text = choosedTopic.type
+            favouriteTopic.text = choosedTopic.name
             favouriteTopic.textSize = 14F
 
             binding.favouriteTopics.addView(favouriteTopic)
@@ -219,7 +269,8 @@ class HomeFragment : Fragment() {
     }
 
     private fun initAdapters() {
-        topicsAdapter = HomeVerticalTopicsAdapter(requireContext())
+        verticalTopicsAdapter = HomeVerticalTopicsAdapter(requireContext())
+        horizontalTopicsAdapter = HomeHorizontalTopicsAdapter(requireContext())
     }
 
     val TAG = "HomeFragment"

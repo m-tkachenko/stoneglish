@@ -3,7 +3,7 @@ package pl.salo.stoneglish.util
 import androidx.annotation.DrawableRes
 import pl.salo.stoneglish.R
 
-enum class Topic(@DrawableRes val icon: Int) {
+enum class TopicIcons(@DrawableRes val icon: Int) {
     Art(R.drawable.ic_art),
     Books(R.drawable.ic_books),
     Celebrities(R.drawable.ic_celebrities),

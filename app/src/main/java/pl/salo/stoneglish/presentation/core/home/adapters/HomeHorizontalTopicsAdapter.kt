@@ -1,4 +1,4 @@
-package pl.salo.stoneglish.presentation.core.home
+package pl.salo.stoneglish.presentation.core.home.adapters
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -9,13 +9,13 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import pl.salo.stoneglish.data.model.home.Topic
 import pl.salo.stoneglish.databinding.CardTopicItemBinding
 
-class HomeVerticalTopicsAdapter(
-    private val context: Context
-) : RecyclerView.Adapter<HomeVerticalTopicsAdapter.HomeTopicsHolder>() {
-    var topicsList: List<Topic> = listOf()
-    var onTopicClick: ((String) -> Unit)? = null
+class HomeHorizontalTopicsAdapter(
+    val context: Context
+): RecyclerView.Adapter<HomeHorizontalTopicsAdapter.HomeHorizontalTopicsHolder>() {
+    var horizontalTopics: List<Topic> = listOf()
+    var onHorizontalTopicClick: ((Int) -> Unit)? = null
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeTopicsHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeHorizontalTopicsHolder {
         val binding = CardTopicItemBinding
             .inflate(
                 LayoutInflater.from(parent.context),
@@ -23,12 +23,12 @@ class HomeVerticalTopicsAdapter(
                 false
             )
 
-        return HomeTopicsHolder(binding)
+        return HomeHorizontalTopicsHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: HomeTopicsHolder, position: Int) {
+    override fun onBindViewHolder(holder: HomeHorizontalTopicsHolder, position: Int) {
         with(holder.binding) {
-            with(topicsList[position]) {
+            with(horizontalTopics[position]) {
                 topicCardTitle.text = this.title
                 topicCardDescription.text = this.text
 
@@ -38,13 +38,13 @@ class HomeVerticalTopicsAdapter(
                     .into(topicImage)
 
                 topicCardLayout.setOnClickListener {
-                    onTopicClick?.invoke(this.title)
+                    onHorizontalTopicClick?.invoke(position)
                 }
             }
         }
     }
 
-    override fun getItemCount() = topicsList.size
+    override fun getItemCount() = horizontalTopics.size
 
-    inner class HomeTopicsHolder(val binding: CardTopicItemBinding) : RecyclerView.ViewHolder(binding.root)
+    inner class HomeHorizontalTopicsHolder(val binding: CardTopicItemBinding) : RecyclerView.ViewHolder(binding.root)
 }

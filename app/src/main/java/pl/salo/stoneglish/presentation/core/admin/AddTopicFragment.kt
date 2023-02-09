@@ -44,7 +44,7 @@ class AddTopicFragment : Fragment() {
         with(binding) {
             showCreatedTopic.setOnClickListener {
                 if (!allEditTextNotBlank() && !allListsNotEmpty()) {
-                    homeViewModel.setTopicToPreview(addTopicViewModel.exampleTopic)
+                    homeViewModel.setTopic(addTopicViewModel.exampleTopic)
                     coreNavigator().goToTopicFragment()
                 }
                 else

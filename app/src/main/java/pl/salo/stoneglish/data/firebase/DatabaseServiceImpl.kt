@@ -4,8 +4,7 @@ import android.util.Log
 import com.google.firebase.database.DatabaseReference
 import kotlinx.coroutines.tasks.await
 import pl.salo.stoneglish.data.model.User
-import pl.salo.stoneglish.data.model.home.Topic
-import pl.salo.stoneglish.data.model.home.TopicType
+import pl.salo.stoneglish.data.model.home.*
 import pl.salo.stoneglish.domain.model.card.Card
 import pl.salo.stoneglish.domain.model.card.TestForCards
 import pl.salo.stoneglish.domain.services.DatabaseService
@@ -54,23 +53,79 @@ class DatabaseServiceImpl @Inject constructor(
         Log.d(TAG, "writeUserCards")
     }
 
-    override suspend fun readVerticalTopics(topicType: TopicType): List<Topic> {
+    override suspend fun readVerticalTopics(): List<TopicByType> {
+        val topicByType = mutableListOf<TopicByType>()
         val resultTopicsSnapshot = firebaseDatabase
             .child("data")
             .child("dashboard")
             .child("vertical")
 
-            .child(topicType.type)
             .get()
             .await()
 
-        val verticalTopics: List<Topic> = resultTopicsSnapshot.children.map { snap ->
-            snap.getValue(Topic::class.java)!!
+        resultTopicsSnapshot.children.forEach { typeSnap ->
+            val listByType = TopicByType(
+                topicListType = TopicType.valueOf(typeSnap.key ?: "Donbas"),
+                topicList = typeSnap.children.map { listSnap ->
+                    listSnap.getValue(Topic::class.java)!!
+                }
+            )
+
+            topicByType.add(listByType)
         }
 
-        Log.d(TAG, "Those vertical topics were received: $verticalTopics")
+        Log.d(TAG, "Those vertical topics were received: $topicByType")
 
-        return verticalTopics
+        return topicByType
+    }
+
+    override suspend fun readHorizontalGroups(): List<HorizontalGroupByType> {
+        val horizontalGroupByType = mutableListOf<HorizontalGroupByType>()
+
+        val resultTypeSnapshot = firebaseDatabase
+            .child("data")
+            .child("dashboard")
+            .child("horizontal")
+
+            .get()
+            .await()
+
+        resultTypeSnapshot.children.forEach { typeSnap ->
+            val typedHorizontalGroup = mutableListOf<HorizontalGroup>()
+
+            typeSnap.children.forEach { groupSnap ->
+                val group = HorizontalGroup(
+                    horizontalGroupTitle = groupSnap.key ?: "Error",
+                    topics = groupSnap.children.map { snap ->
+                        snap.getValue(Topic::class.java)!!
+                    }
+                )
+
+                typedHorizontalGroup.add(group)
+            }
+
+            horizontalGroupByType.add(
+                HorizontalGroupByType(
+                    horizontalGroupType = TopicType.valueOf(typeSnap.key ?: "Donbas"),
+                    horizontalGroups = typedHorizontalGroup
+                )
+            )
+        }
+
+        Log.d(TAG, "Those horizontal topics were received: $horizontalGroupByType")
+
+        return horizontalGroupByType
+    }
+
+    override suspend fun readTopicByTitle(title: String): Topic {
+//        val resultTopicSnapshot = firebaseDatabase
+//            .child("data")
+//            .child("dashboard")
+//
+//            .get()
+//            .await()
+
+        return Topic()
     }
 
     override suspend fun readVerticalTopicByTitle(topicType: String, title: String): Topic? {
@@ -104,7 +159,7 @@ class DatabaseServiceImpl @Inject constructor(
             .child("dashboard")
             .child("horizontal")
 
-            .child(topic.type[0].type)
+            .child(topic.type[0].name)
             .child(topic.horizontalGroupTitle ?: "Error")
             .child(topic.title)
 
@@ -120,7 +175,7 @@ class DatabaseServiceImpl @Inject constructor(
             .child("dashboard")
             .child("vertical")
 
-            .child(topic.type[0].type)
+            .child(topic.type[0].name)
             .child(topic.title)
 
             .setValue(topic)

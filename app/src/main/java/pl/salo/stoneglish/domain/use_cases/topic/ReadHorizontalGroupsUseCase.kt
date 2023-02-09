@@ -4,25 +4,21 @@ import com.bumptech.glide.load.HttpException
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import pl.salo.stoneglish.common.Resource
-import pl.salo.stoneglish.data.model.home.Topic
+import pl.salo.stoneglish.data.model.home.HorizontalGroup
+import pl.salo.stoneglish.data.model.home.HorizontalGroupByType
 import pl.salo.stoneglish.domain.repository.DatabaseRepository
 import javax.inject.Inject
 
-class ReadVerticalTopicsUseCase @Inject constructor(
+class ReadHorizontalGroupsUseCase @Inject constructor(
     private val databaseRepository: DatabaseRepository
 ) {
-    operator fun invoke(): Flow<Resource<List<Topic>>> = flow {
+    operator fun invoke(): Flow<Resource<List<HorizontalGroupByType>>> = flow {
         try {
             emit(Resource.Loading())
 
-            val topicsListAllType = mutableListOf<Topic>()
-            val topicsByType = databaseRepository.readVerticalTopics()
+            val horizontalGroupListByType = databaseRepository.readHorizontalGroups()
 
-            topicsByType.forEach { topicListByType ->
-                topicsListAllType.addAll(topicListByType.topicList)
-            }
-
-            emit(Resource.Success(data = topicsListAllType))
+            emit(Resource.Success(data = horizontalGroupListByType))
         } catch (e: HttpException) {
             emit(Resource.Error(
                 message = e.localizedMessage

@@ -5,7 +5,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import pl.salo.stoneglish.databinding.CardsTestItemBinding
 import pl.salo.stoneglish.domain.model.card.TestForCards
-import pl.salo.stoneglish.util.Utils.getTopicIcon
 
 class CardTestsAdapter(private val tests: List<TestForCards>)
     : RecyclerView.Adapter<CardTestsAdapter.TestsViewHolder>() {
@@ -26,7 +25,7 @@ class CardTestsAdapter(private val tests: List<TestForCards>)
                 testName.text = name
                 testDescription.text = description
 
-                testImageView.setImageResource(name.getTopicIcon())
+//                testImageView.setImageResource(name.getTopicIcon())
 
                 testItem.setOnClickListener {
 

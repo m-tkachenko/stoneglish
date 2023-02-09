@@ -4,7 +4,6 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import pl.salo.stoneglish.databinding.CardsModuleItemBinding
-import pl.salo.stoneglish.util.Utils.getTopicIcon
 
 class CardModulesAdapter(
     private val modules: List<String>,
@@ -26,7 +25,7 @@ class CardModulesAdapter(
         with(holder) {
             with(modules[position]) {
                 binding.moduleName.text = this
-                binding.moduleImageView.setImageResource(this.getTopicIcon())
+//                binding.moduleImageView.setImageResource(this.getTopicIcon())
 
                 binding.moduleItem.setOnClickListener {
                     onModuleItemClicked(this)

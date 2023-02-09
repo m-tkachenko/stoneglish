@@ -338,6 +338,7 @@
 
                     android:overScrollMode="never"
                     android:nestedScrollingEnabled="false"
+                    android:visibility="gone"
                     android:orientation="horizontal"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
             </LinearLayout>
