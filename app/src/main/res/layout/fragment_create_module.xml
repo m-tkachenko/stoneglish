@@ -36,12 +36,13 @@
                     android:src="@drawable/ic_arrow_back" />
 
                 <TextView
-                    android:layout_weight="1"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:layout_weight="1"
                     android:gravity="center_vertical"
                     android:text="@string/create_module"
+                    android:textColor="@color/black"
                     android:textSize="21sp"
                     android:textStyle="bold" />
 
@@ -63,47 +64,65 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        android:orientation="vertical">
+        android:background="@color/background_main"
+        android:orientation="vertical"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/field_back"
+    android:layout_gravity="center_horizontal"
+    android:orientation="vertical">
+    <TextView
+        android:layout_width="@dimen/view_width"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="5dp"
+        android:text="@string/module_name"
+        android:textColor="@color/black"
+        android:textSize="@dimen/small_text"
+        android:textStyle="bold" />
+
     <EditText
         android:id="@+id/moduleName"
         android:layout_width="@dimen/view_width"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="20dp"
         android:layout_marginBottom="10dp"
         android:backgroundTint="@color/main_green"
-        android:hint="@string/module_name"
+        android:hint="@string/my_module"
         android:importantForAutofill="no"
         android:inputType="textEmailAddress" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/wordsRecycler"
-        android:layout_width="@dimen/view_width"
-        android:layout_height="0dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_weight="1"
-        android:layout_marginBottom="40dp"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        />
+</LinearLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/wordsRecycler"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="40dp"
+            android:layout_weight="1"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
     </LinearLayout>
+
     <Button
         android:id="@+id/addWordBtn"
         android:layout_width="@dimen/view_width"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal|bottom"
         android:layout_marginBottom="12dp"
-        android:backgroundTint="@color/main_orange"
+        android:backgroundTint="@color/alt_orange"
         android:text="@string/add_word"
         android:textAllCaps="false" />
 
     <ProgressBar
         android:id="@+id/progressBar"
         android:layout_width="wrap_content"
-        android:layout_gravity="center"
         android:layout_height="wrap_content"
-        android:visibility="gone"/>
+        android:layout_gravity="center"
+        android:visibility="gone" />
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

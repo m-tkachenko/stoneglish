@@ -4,6 +4,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import pl.salo.stoneglish.common.Resource
 import pl.salo.stoneglish.domain.model.card.TestForCards
+import pl.salo.stoneglish.domain.model.card.TestType
 import pl.salo.stoneglish.domain.repository.AuthRepository
 import pl.salo.stoneglish.domain.repository.DatabaseRepository
 import retrofit2.HttpException
@@ -13,27 +14,34 @@ class ReadListOfTestsUseCase @Inject constructor(
     private val databaseRepository: DatabaseRepository,
     private val authRepository: AuthRepository
 ) {
-    operator fun invoke(moduleName: String): Flow<Resource<List<TestForCards>>> = flow {
+    operator fun invoke(): Flow<Resource<List<TestForCards>>> = flow {
         try {
             emit(Resource.Loading())
-            val id = authRepository.getUserId()
 
-            val listOfTests = databaseRepository.readTestsList(moduleName, id!!)
+            val listOfTests = listOf(
+                TestForCards(
+                    TestType.MEMORIZATION,
+                    "Practice until you learn all the words"
+                ),
+                TestForCards(
+                    TestType.CARDS,
+                    "Repeat the terms and definitions"
+                )
+            )
 
-            if (listOfTests.contains(TestForCards()) || id.isEmpty())
-                emit(Resource.Error(message = "We don't have any tests for you :("))
-            else
-                emit(Resource.Success(data = listOfTests))
+            emit(Resource.Success(data = listOfTests))
         } catch (e: HttpException) {
             emit(
                 Resource.Error(
-                message = e.localizedMessage
-            ))
+                    message = e.localizedMessage
+                )
+            )
         } catch (e: Exception) {
             emit(
                 Resource.Error(
-                message = e.localizedMessage
-            ))
+                    message = e.localizedMessage
+                )
+            )
         }
     }
 }

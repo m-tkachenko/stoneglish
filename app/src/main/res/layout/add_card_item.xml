@@ -1,37 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="10dp"
+    android:background="@color/white"
+    android:gravity="center">
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="@dimen/view_width"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="20dp"
-        android:background="@color/recycler_view_item_color"
         android:orientation="vertical"
         tools:ignore="UselessParent">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="20dp"
+            android:text="@string/term"
+            android:textColor="@color/black"
+            android:textSize="@dimen/small_text"
+            android:textStyle="bold" />
 
         <EditText
             android:id="@+id/originWord"
             android:layout_width="@dimen/view_width"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="20dp"
-            android:backgroundTint="@color/main_green"
-            android:hint="@string/term"
+            android:hint="@string/example"
             android:importantForAutofill="no"
             android:inputType="textEmailAddress" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="20dp"
+            android:text="@string/definition"
+            android:textSize="@dimen/small_text"
+            android:textStyle="bold" />
 
         <AutoCompleteTextView
             android:id="@+id/translatedWord"
             android:layout_width="@dimen/view_width"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="20dp"
-            android:backgroundTint="@color/main_green"
-            android:hint="@string/definition"
+            android:hint="@string/przyk_ad"
             android:importantForAutofill="no"
             android:inputType="textEmailAddress" />
     </LinearLayout>

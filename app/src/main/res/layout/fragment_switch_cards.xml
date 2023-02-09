@@ -11,15 +11,16 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/card_item"
-        app:cardBackgroundColor="@color/white">
+        app:cardBackgroundColor="@color/alt_green">
 
         <TextView
             android:id="@+id/cardSwitcherNumber"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="16dp"
+            android:layout_margin="20dp"
             android:textColor="@color/black"
-            android:textSize="12sp"
+            android:textStyle="bold"
+            android:textSize="@dimen/small_text"
             tools:text="1/5"/>
 
         <TextView

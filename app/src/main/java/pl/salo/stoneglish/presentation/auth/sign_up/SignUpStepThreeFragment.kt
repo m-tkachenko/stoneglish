@@ -21,7 +21,7 @@ class SignUpStepThreeFragment : BaseAuthFragment<FragmentSignUpStepThreeBinding>
             signUpBeginnerBtn.setOnClickListener { writeUserLanguageLevel(Constants.ENGLISH_LEVEL_BEGINNER) }
             signUpIntermediateBtn.setOnClickListener { writeUserLanguageLevel(Constants.ENGLISH_LEVEL_INTERMEDIATE) }
             signUpAdvancedBtn.setOnClickListener { writeUserLanguageLevel(Constants.ENGLISH_LEVEL_ADVANCED) }
-            signUpTakeTestBtn.setOnClickListener { /*go take test*/ }
+            signUpTakeTestBtn.setOnClickListener { authNavigator().goToEnglishTest() }
         }
     }
 

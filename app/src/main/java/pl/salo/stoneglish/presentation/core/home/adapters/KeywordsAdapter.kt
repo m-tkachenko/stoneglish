@@ -11,7 +11,7 @@ import pl.salo.stoneglish.R
 import pl.salo.stoneglish.data.model.home.Keyword
 import pl.salo.stoneglish.databinding.KeywordsItemBinding
 
-class KeywordsAdapter : RecyclerView.Adapter<KeywordsAdapter.ViewHolder>() {
+class  KeywordsAdapter : RecyclerView.Adapter<KeywordsAdapter.ViewHolder>() {
     var onItemClick: ((Keyword) -> Unit)? = null
 
     inner class ViewHolder(val binding: KeywordsItemBinding) :

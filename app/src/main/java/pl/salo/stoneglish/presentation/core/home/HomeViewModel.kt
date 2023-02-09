@@ -25,10 +25,9 @@ class HomeViewModel @Inject constructor(
     private val databaseUseCases: DatabaseUseCases,
     private val topicDatabase: TopicUseCases
 ) : ViewModel() {
-
     // State for daily cards
-    private val _modulesState = MutableLiveData<Event<Resource<List<String>>>>()
-    val modulesState: LiveData<Event<Resource<List<String>>>>
+    private val _modulesState = MutableLiveData<Event<Resource<List<Pair<Int, String>>>>>()
+    val modulesState: LiveData<Event<Resource<List<Pair<Int, String>>>>>
         get() = _modulesState
 
     private val _addCardState = MutableLiveData<Event<Resource<Boolean>>>()

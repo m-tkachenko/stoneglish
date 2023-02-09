@@ -17,9 +17,11 @@ interface DatabaseService {
     suspend fun writeUserCards(cards: List<Card>, module: String, userId: String)
 
     suspend fun listOfCards(moduleName: String, userId: String): List<Card>
-    suspend fun listOfModules(userId: String): List<String>
+    suspend fun listOfModules(userId: String): List<Pair<Int, String>>
     suspend fun listOfTests(moduleName: String, userId: String): List<TestForCards>
 
     suspend fun getListOfDailyCards(): List<Card>
-
+    suspend fun getListOfPolishWords(): List<String>
+    suspend fun writeUserCategories(userId: String, categories: List<String>)
+    suspend fun changeUserField(userId: String, field: String, newValue: String)
 }

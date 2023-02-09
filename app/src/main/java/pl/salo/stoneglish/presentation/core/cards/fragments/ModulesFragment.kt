@@ -52,6 +52,9 @@ class ModulesFragment : Fragment() {
         binding.addModule.setOnClickListener {
           coreNavigator().goToCreateModule()
         }
+        binding.createModuleBtn.setOnClickListener {
+            coreNavigator().goToCreateModule()
+        }
     }
 
     private fun modulesStateObserver() {
@@ -89,9 +92,6 @@ class ModulesFragment : Fragment() {
 
             modulesLoadingLayout.ninja(
                 visibility = !modulesDownloaded && !noModulesThere
-            )
-            modulesDownloadedLayout.ninja(
-                visibility = modulesDownloaded && !noModulesThere
             )
         }
     }

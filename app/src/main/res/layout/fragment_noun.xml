@@ -9,15 +9,17 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/definitions"
-        android:textSize="16sp"
         android:layout_marginHorizontal="15dp"
         android:layout_marginTop="15dp"
-        android:layout_marginBottom="5dp"/>
+        android:layout_marginBottom="5dp"
+        android:text="@string/definitions"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:textStyle="bold" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/nounRecyclerView"
         android:layout_width="match_parent"
-        android:layout_marginHorizontal="15dp"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:layout_marginHorizontal="15dp" />
 </LinearLayout>

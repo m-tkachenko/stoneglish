@@ -10,9 +10,9 @@
     <string name="i_already_have_an_account">I already have an account</string>
 
     <!--  Texts for welcome viewPager  -->
-    <string name="text_0">Stoneglish will make your English learning easy and interesting</string>
-    <string name="text_1">Stoneglish is the best application for study English</string>
-    <string name="text_2">Stoneglish will make your English learning easy and interesting :)))</string>
+    <string name="text_0">Stoneglish will make your learning English easy and interesting</string>
+    <string name="text_1">Stoneglish makes the impossible possible</string>
+    <string name="text_2">Learn English from all over the world with Stoneglish</string>
 
     <string name="cd">CD</string>
     <string name="loading_string">Loading…</string>
@@ -125,4 +125,22 @@
     <string name="similar_topic_img_input_hint">Similar topic img</string>
 
 
+    <string name="you_passed_the_test">You passed the test</string>
+    <string name="english_test_from_stoneglish">English test from Stoneglish</string>
+    <string name="congratulations">Congratulations</string>
+    <string name="ok">OK</string>
+    <string name="select_the_correct_translation">Select the correct translation</string>
+    <string name="change">change</string>
+    <string name="u_change">Change</string>
+    <string name="account_info">Account info</string>
+    <string name="topics">Topics</string>
+    <string name="favorite_topics">Favorite topics</string>
+    <string name="english_level">English level</string>
+    <string name="update_your_english_level">Update your English level</string>
+    <string name="about_us">About us</string>
+    <string name="just_type_the_word_in_the_field_above">Just type the word in the field above</string>
+    <string name="example">Example</string>
+    <string name="przyk_ad">Przykład</string>
+    <string name="create_modules_to_learn_new_words">Create modules to learn new words</string>
+    <string name="my_module">My module</string>
 </resources>

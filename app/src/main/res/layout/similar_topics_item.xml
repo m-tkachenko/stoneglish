@@ -36,8 +36,10 @@
         android:id="@+id/topicTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
         android:layout_marginTop="5dp"
         android:textSize="@dimen/text_main"
+        android:textStyle="bold"
         android:textColor="@color/text_color"
         tools:text="Topic Title"/>
 

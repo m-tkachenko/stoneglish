@@ -21,11 +21,18 @@ class DatabaseRepositoryImpl @Inject constructor(
     override suspend fun readListOfDailyCards(): List<Card> =
         databaseService.getListOfDailyCards()
 
-    override suspend fun readModulesList(userId: String): List<String> =
+    override suspend fun readModulesList(userId: String): List<Pair<Int, String>> =
         databaseService.listOfModules(userId)
 
     override suspend fun readTestsList(moduleName: String, userId: String): List<TestForCards> =
         databaseService.listOfTests(moduleName, userId)
+
+    override suspend fun writeUserCategories(userId: String, categories: List<String>) {
+        databaseService.writeUserCategories(userId, categories)
+    }
+    override suspend fun changeUserField(userId: String, field: String, newValue: String) {
+        databaseService.changeUserField(userId, field, newValue)
+    }
 
     override suspend fun writeUserCard(card: Card, module: String, userId: String) =
         databaseService.writeUserCard(card, module, userId)
@@ -39,4 +46,7 @@ class DatabaseRepositoryImpl @Inject constructor(
         databaseService.readVerticalTopics()
     override suspend fun readHorizontalGroups() =
         databaseService.readHorizontalGroups()
+
+    override suspend fun getListOfPolishWords() = databaseService.getListOfPolishWords()
+
 }
