@@ -2,15 +2,12 @@ package pl.salo.stoneglish.presentation.core.home
 
 import android.animation.Animator
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewAnimationUtils
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.widget.addTextChangedListener
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -35,6 +32,7 @@ class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
 
     private val homeViewModel: HomeViewModel by activityViewModels()
+    private val topicViewModel: TopicViewModel by activityViewModels()
 
     private lateinit var verticalTopicsAdapter: HomeVerticalTopicsAdapter
     private lateinit var horizontalTopicsAdapter: HomeHorizontalTopicsAdapter
@@ -303,10 +301,10 @@ class HomeFragment : Fragment() {
     private fun updateVerticalTopics(topics: List<Topic>) {
         verticalTopicsAdapter.verticalTopicsList = topics
         verticalTopicsAdapter.onVerticalTopicClick = { position ->
-            homeViewModel.setTopic(
+            topicViewModel.setTopic(
                 topicToShow = topics[position]
             )
-            homeViewModel.setTopicList(
+            topicViewModel.setTopicList(
                 topicsList = topics
             )
 
@@ -329,10 +327,10 @@ class HomeFragment : Fragment() {
     private fun updateHorizontalGroup(horizontalGroup: HorizontalGroup) {
         horizontalTopicsAdapter.horizontalTopics = horizontalGroup.topics
         horizontalTopicsAdapter.onHorizontalTopicClick = { position ->
-            homeViewModel.setTopic(
+            topicViewModel.setTopic(
                 topicToShow = horizontalGroup.topics[position]
             )
-            homeViewModel.setTopicList(
+            topicViewModel.setTopicList(
                 topicsList = horizontalGroup.topics
             )
 

@@ -8,7 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
@@ -16,12 +15,10 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import pl.salo.stoneglish.R
 import pl.salo.stoneglish.common.Resource
 import pl.salo.stoneglish.data.model.home.Topic
 import pl.salo.stoneglish.databinding.FragmentTopicBinding
 import pl.salo.stoneglish.presentation.core.TextToSpeechResult
-import pl.salo.stoneglish.presentation.core.admin.AddTopicViewModel
 import pl.salo.stoneglish.presentation.core.home.adapters.KeywordsAdapter
 import pl.salo.stoneglish.presentation.core.home.adapters.ListeningAndSpeakingAdapter
 import pl.salo.stoneglish.presentation.core.home.adapters.SimilarTopicsAdapter
@@ -32,9 +29,7 @@ import pl.salo.stoneglish.util.coreNavigator
 class TopicFragment : Fragment() {
     private lateinit var binding: FragmentTopicBinding
 
-    private val homeViewModel: HomeViewModel by activityViewModels()
-    private val addTopicViewModel: AddTopicViewModel by activityViewModels()
-    private val topicViewModel: TopicViewModel by viewModels()
+    private val topicViewModel: TopicViewModel by activityViewModels()
 
     private val keywordsAdapter = KeywordsAdapter()
     private val listeningAndSpeakingAdapter = ListeningAndSpeakingAdapter()
@@ -60,11 +55,11 @@ class TopicFragment : Fragment() {
         binding.topicIsLoading.ninja(false)
         binding.topicIsDownloaded.ninja(true)
 
-        setUpTopicScreen(homeViewModel.topicToShow)
+        setUpTopicScreen(topicViewModel.topicForShow)
 
         similarTopicsAdapter.onItemClick = { similarTopic ->
-            homeViewModel.setTopic(
-                topicToShow = homeViewModel.listTopicsToShow.find { thisTopic ->
+            topicViewModel.setTopic(
+                topicToShow = topicViewModel.topicsListFowShow.find { thisTopic ->
                     thisTopic.title == similarTopic.title
                 } ?: Topic()
             )
@@ -72,14 +67,14 @@ class TopicFragment : Fragment() {
             coreNavigator().goToTopicFragment()
         }
 
-        binding.addTopicToDBLayout.ninja(!homeViewModel.isNotPreview)
+        binding.addTopicToDBLayout.ninja(!topicViewModel.isNotPreview)
         binding.addTopicToDB.setOnClickListener {
-            addTopicViewModel.addNewTopic(homeViewModel.topicToShow)
+            topicViewModel.addNewTopic(topicViewModel.topicForShow)
         }
     }
 
     private fun observeAddTopicState() {
-        addTopicViewModel.newTopicUploadState.observe(viewLifecycleOwner) { uploadResult ->
+        topicViewModel.newTopicUploadState.observe(viewLifecycleOwner) { uploadResult ->
             uploadResult.getContentIfNotHandled()?.let { result ->
                 when(result) {
                     is Resource.Success -> {
@@ -195,5 +190,7 @@ class TopicFragment : Fragment() {
         }
     }
 
-    private val TAG = "TopicFragment"
+    companion object {
+        const val TAG = "TopicFragment"
+    }
 }

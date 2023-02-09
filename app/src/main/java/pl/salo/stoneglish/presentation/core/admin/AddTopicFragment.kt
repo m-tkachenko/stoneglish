@@ -11,7 +11,7 @@ import com.google.android.material.chip.Chip
 import dagger.hilt.android.AndroidEntryPoint
 import pl.salo.stoneglish.data.model.home.*
 import pl.salo.stoneglish.databinding.FragmentAddTopicBinding
-import pl.salo.stoneglish.presentation.core.home.HomeViewModel
+import pl.salo.stoneglish.presentation.core.home.TopicViewModel
 import pl.salo.stoneglish.util.Utils.ninja
 import pl.salo.stoneglish.util.coreNavigator
 
@@ -19,7 +19,7 @@ import pl.salo.stoneglish.util.coreNavigator
 class AddTopicFragment : Fragment() {
     private lateinit var binding: FragmentAddTopicBinding
 
-    private val homeViewModel: HomeViewModel by activityViewModels()
+    private val topicViewModel: TopicViewModel by activityViewModels()
     private val addTopicViewModel: AddTopicViewModel by viewModels()
 
     private val listeningSpeakingList = mutableListOf<ListeningSpeaking>()
@@ -44,7 +44,7 @@ class AddTopicFragment : Fragment() {
         with(binding) {
             showCreatedTopic.setOnClickListener {
                 if (!allEditTextNotBlank() && !allListsNotEmpty()) {
-                    homeViewModel.setTopic(addTopicViewModel.exampleTopic)
+                    topicViewModel.setTopic(getTopicModel())
                     coreNavigator().goToTopicFragment()
                 }
                 else
@@ -161,7 +161,7 @@ class AddTopicFragment : Fragment() {
 
     override fun onDetach() {
         super.onDetach()
-        homeViewModel.isNotPreview = true
+        topicViewModel.isNotPreview = true
     }
 
     private fun setUpTypeChipGroup() {

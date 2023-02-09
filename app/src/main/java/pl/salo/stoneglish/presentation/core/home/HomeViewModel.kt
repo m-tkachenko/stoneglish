@@ -45,13 +45,6 @@ class HomeViewModel @Inject constructor(
         get() = _currentUser
 
     // State for topics
-    private val _selectedTopic = MutableLiveData<Topic>()
-    val topicToShow
-        get() = _selectedTopic.value ?: Topic()
-
-    private val _downloadedTopicsList = MutableLiveData<List<Topic>>()
-    val listTopicsToShow
-        get() = _downloadedTopicsList.value ?: listOf()
 
     private val _verticalTopics = MutableLiveData<Event<Resource<List<TopicByType>>>>()
     val verticalTopics: LiveData<Event<Resource<List<TopicByType>>>>
@@ -65,7 +58,6 @@ class HomeViewModel @Inject constructor(
     private var horizontalGroupByType = listOf<HorizontalGroupByType>()
     private var interestedHorizontalGroup = HorizontalGroup()
 
-    var isNotPreview = true
     init {
         getCurrentUser()
     }
@@ -100,18 +92,6 @@ class HomeViewModel @Inject constructor(
     }
 
     // Functions for topics
-    fun setTopic(
-        topicToShow: Topic,
-        isPreviewTopic: Boolean = false
-    ) {
-        _selectedTopic.postValue(topicToShow)
-        isNotPreview = !isPreviewTopic
-    }
-
-    fun setTopicList(topicsList: List<Topic>) {
-        _downloadedTopicsList.postValue(topicsList)
-    }
-
     fun readVerticalTopics() {
         topicDatabase.readVerticalTopics().onEach { topic ->
             _verticalTopics.postValue(Event(topic))
