@@ -162,7 +162,8 @@
                 android:layout_height="match_parent"
 
                 android:paddingHorizontal="8dp"
-                app:singleLine="true"/>
+                app:singleLine="true"
+                app:singleSelection="true"/>
         </HorizontalScrollView>
 
         <androidx.core.widget.NestedScrollView

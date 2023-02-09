@@ -53,13 +53,17 @@ class HomeViewModel @Inject constructor(
     val listTopicsToShow
         get() = _downloadedTopicsList.value ?: listOf()
 
-    private val _verticalTopics = MutableLiveData<Event<Resource<List<Topic>>>>()
-    val verticalTopics: LiveData<Event<Resource<List<Topic>>>>
+    private val _verticalTopics = MutableLiveData<Event<Resource<List<TopicByType>>>>()
+    val verticalTopics: LiveData<Event<Resource<List<TopicByType>>>>
         get() = _verticalTopics
+    private var topicsByType = listOf<TopicByType>()
+    private var topicsAllTypes = listOf<Topic>()
 
     private val _horizontalGroups = MutableLiveData<Event<Resource<List<HorizontalGroupByType>>>>()
     val horizontalGroups: LiveData<Event<Resource<List<HorizontalGroupByType>>>>
         get() = _horizontalGroups
+    private var horizontalGroupByType = listOf<HorizontalGroupByType>()
+    private var interestedHorizontalGroup = HorizontalGroup()
 
     var isNotPreview = true
     init {
@@ -112,23 +116,59 @@ class HomeViewModel @Inject constructor(
             _verticalTopics.postValue(Event(topic))
         }.launchIn(viewModelScope)
     }
+    fun getVerticalTopicsAllTypes(listOfTypedTopics: List<TopicByType>): List<Topic> {
+        val topicsListAllType = mutableListOf<Topic>()
+
+        listOfTypedTopics.forEach { topicListByType ->
+            topicsListAllType.addAll(topicListByType.topicList)
+        }
+
+        topicsAllTypes = topicsListAllType
+        topicsByType = listOfTypedTopics
+
+        return topicsListAllType
+    }
+    fun getTopicsByChosenType(chosenType: TopicType): List<Topic> {
+        val topics = topicsByType
+            .find {
+                it.topicListType == chosenType
+            }
+            ?.topicList
+
+        return topics ?: listOf()
+    }
+    fun getTopicsAllTypes() = topicsAllTypes
 
     fun readHorizontalGroups() {
         topicDatabase.readHorizontalGroups().onEach { group ->
             _horizontalGroups.postValue(Event(group))
         }.launchIn(viewModelScope)
     }
-
-    fun getRandomHorizontalGroup(
+    fun getInterestedHorizontalGroup(
         interestedTopicTypes: List<TopicType>,
         horizontalGroups: List<HorizontalGroupByType>
     ): HorizontalGroup {
         val groups = horizontalGroups.find {
             it.horizontalGroupType == interestedTopicTypes.random()
         }?.horizontalGroups
-
-        return groups?.random() ?: HorizontalGroup(
+        val interestedGroup = groups?.random() ?: HorizontalGroup(
             horizontalGroupTitle = "No topics"
         )
+
+        horizontalGroupByType = horizontalGroups
+        interestedHorizontalGroup = interestedGroup
+
+        return interestedGroup
     }
+    fun getHorizontalGroupByType(chosenType: TopicType): HorizontalGroup {
+        return horizontalGroupByType
+            .find {
+                it.horizontalGroupType == chosenType
+            }
+            ?.horizontalGroups?.random()
+            ?: HorizontalGroup(
+            horizontalGroupTitle = "No topics"
+            )
+    }
+    fun getInterestedHorizontalGroup() = interestedHorizontalGroup
 }

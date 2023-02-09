@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import dagger.hilt.android.AndroidEntryPoint
 import pl.salo.stoneglish.common.Resource
+import pl.salo.stoneglish.data.model.home.HorizontalGroup
 import pl.salo.stoneglish.data.model.home.Topic
 import pl.salo.stoneglish.data.model.home.TopicType
 import pl.salo.stoneglish.databinding.ChoiceChipBinding
@@ -119,21 +120,12 @@ class HomeFragment : Fragment() {
                     is Resource.Success -> {
                         Log.d(TAG, "VerticalTopicsDownload : Success : Data = ${verticalTopics.data}")
 
-                        val verticalTopicsNotNull = verticalTopics.data!!
-
-                        verticalTopicsAdapter.verticalTopicsList = verticalTopicsNotNull
-                        verticalTopicsAdapter.onVerticalTopicClick = { position ->
-                            homeViewModel.setTopic(
-                                topicToShow = verticalTopicsNotNull[position]
-                            )
-                            homeViewModel.setTopicList(
-                                topicsList = verticalTopicsNotNull
-                            )
-
-                            coreNavigator().goToTopicFragment()
-                        }
-
                         binding.verticalTopicsGridRecycler.adapter = verticalTopicsAdapter
+                        updateVerticalTopics(
+                            topics = homeViewModel.getVerticalTopicsAllTypes(
+                                verticalTopics.data!!
+                            )
+                        )
                     }
                     is Resource.Error -> {
                         Log.d(TAG, "VerticalTopicsDownload : Failure : Error = ${verticalTopics.message}")
@@ -153,25 +145,14 @@ class HomeFragment : Fragment() {
                     is Resource.Success -> {
                         Log.d(TAG, "HorizontalGroupsDownload : Success : Data = ${horizontalGroups.data}")
 
-                        val horizontalGroup = homeViewModel.getRandomHorizontalGroup(
-                            interestedTopicTypes = interestedTopics,
-                            horizontalGroups = horizontalGroups.data!!
-                        )
-
-                        horizontalTopicsAdapter.horizontalTopics = horizontalGroup.topics
-                        horizontalTopicsAdapter.onHorizontalTopicClick = { position ->
-                            homeViewModel.setTopic(
-                                topicToShow = horizontalGroup.topics[position]
-                            )
-                            homeViewModel.setTopicList(
-                                topicsList = horizontalGroup.topics
-                            )
-
-                            coreNavigator().goToTopicFragment()
-                        }
-
-                        binding.topicHorizontalTitle.text = horizontalGroup.horizontalGroupTitle
                         binding.topicsHorizontalRecycler.adapter = horizontalTopicsAdapter
+                        updateHorizontalGroup(
+                            horizontalGroup = homeViewModel
+                                .getInterestedHorizontalGroup(
+                                    interestedTopicTypes = interestedTopics,
+                                    horizontalGroups = horizontalGroups.data!!
+                                )
+                        )
 
                         binding.topicVerticalLoading.ninja(false)
                         binding.verticalTopicsGridRecycler.ninja(true)
@@ -217,6 +198,13 @@ class HomeFragment : Fragment() {
 
             favouriteTopic.text = choosedTopic.name
             favouriteTopic.textSize = 14F
+
+            favouriteTopic.setOnCheckedChangeListener { _, isChecked ->
+                if (isChecked)
+                    updateHomeTopicsByType(choosedTopic)
+                else
+                    updateHomeTopicsToPrevious()
+            }
 
             binding.favouriteTopics.addView(favouriteTopic)
         }
@@ -271,6 +259,69 @@ class HomeFragment : Fragment() {
     private fun initAdapters() {
         verticalTopicsAdapter = HomeVerticalTopicsAdapter(requireContext())
         horizontalTopicsAdapter = HomeHorizontalTopicsAdapter(requireContext())
+    }
+
+    private fun updateHomeTopicsToPrevious() {
+        updateVerticalTopicsAllType()
+        updateHorizontalGroupToInterested()
+    }
+    private fun updateHomeTopicsByType(chosenType: TopicType) {
+        updateVerticalTopicsByType(chosenType)
+        updateHorizontalGroupByType(chosenType)
+    }
+
+    private fun updateVerticalTopicsAllType() {
+        updateVerticalTopics(
+            homeViewModel.getTopicsAllTypes()
+        )
+    }
+    private fun updateVerticalTopicsByType(chosenType: TopicType) {
+        updateVerticalTopics(
+            homeViewModel.getTopicsByChosenType(chosenType)
+        )
+    }
+    private fun updateVerticalTopics(topics: List<Topic>) {
+        verticalTopicsAdapter.verticalTopicsList = topics
+        verticalTopicsAdapter.onVerticalTopicClick = { position ->
+            homeViewModel.setTopic(
+                topicToShow = topics[position]
+            )
+            homeViewModel.setTopicList(
+                topicsList = topics
+            )
+
+            coreNavigator().goToTopicFragment()
+        }
+
+        verticalTopicsAdapter.notifyDataSetChanged()
+    }
+
+    private fun updateHorizontalGroupToInterested() {
+        updateHorizontalGroup(
+            homeViewModel.getInterestedHorizontalGroup()
+        )
+    }
+    private fun updateHorizontalGroupByType(chosenType: TopicType) {
+        updateHorizontalGroup(
+            homeViewModel.getHorizontalGroupByType(chosenType)
+        )
+    }
+    private fun updateHorizontalGroup(horizontalGroup: HorizontalGroup) {
+        horizontalTopicsAdapter.horizontalTopics = horizontalGroup.topics
+        horizontalTopicsAdapter.onHorizontalTopicClick = { position ->
+            homeViewModel.setTopic(
+                topicToShow = horizontalGroup.topics[position]
+            )
+            homeViewModel.setTopicList(
+                topicsList = horizontalGroup.topics
+            )
+
+            coreNavigator().goToTopicFragment()
+        }
+
+        binding.topicHorizontalTitle.text = horizontalGroup.horizontalGroupTitle
+
+        horizontalTopicsAdapter.notifyDataSetChanged()
     }
 
     val TAG = "HomeFragment"
