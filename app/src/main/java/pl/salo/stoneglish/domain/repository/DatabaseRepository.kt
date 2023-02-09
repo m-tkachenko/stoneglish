@@ -15,7 +15,6 @@ interface DatabaseRepository {
     suspend fun writeNewTopic(topic: Topic)
     suspend fun readVerticalTopics(): List<TopicByType>
     suspend fun readHorizontalGroups(): List<HorizontalGroupByType>
-    suspend fun readVerticalTopicByTitle(topicType: String, title: String): Topic?
 
     suspend fun readCardsList(moduleName: String, userId: String): List<Card>
     suspend fun readModulesList(userId: String): List<String>

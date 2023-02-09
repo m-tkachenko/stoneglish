@@ -100,37 +100,6 @@ class TopicFragment : Fragment() {
         }
     }
 
-    private fun observeTopicState() {
-        topicViewModel.topic.observe(viewLifecycleOwner) { topicResult ->
-            topicResult.getContentIfNotHandled()?.let { topic ->
-                when(topic) {
-                    is Resource.Success -> {
-                        Log.d(TAG, "DownloadTopic : Success")
-
-                        setUpTopicScreen(topic.data!!)
-
-                        binding.topicIsLoading.ninja(false)
-                        binding.topicIsDownloaded.ninja(true)
-
-                        similarTopicsAdapter.onItemClick = {
-
-                        }
-                    }
-                    is Resource.Error -> {
-                        Log.d(TAG, "DownloadTopic : Failure : Error = ${topic.message}")
-                    }
-                    is Resource.Loading -> {
-                        Log.d(TAG, "DownloadTopic : Loading")
-
-                        binding.topicTitle.setText(R.string.loading_string)
-                        binding.topicIsLoading.ninja(true)
-                        binding.topicIsDownloaded.ninja(false)
-                    }
-                }
-            }
-        }
-    }
-
     private fun setUpTopicScreen(topic: Topic) {
         keywordsAdapter.items = topic.keywords
         similarTopicsAdapter.items = topic.similarTopics ?: emptyList()

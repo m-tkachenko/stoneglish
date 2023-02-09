@@ -24,14 +24,11 @@ import pl.salo.stoneglish.domain.use_cases.*
 import pl.salo.stoneglish.domain.use_cases.auth.*
 import pl.salo.stoneglish.domain.use_cases.cards.*
 import pl.salo.stoneglish.domain.use_cases.database.GetCurrentUserUseCase
-import pl.salo.stoneglish.domain.use_cases.topic.WriteNewTopicUseCase
 import pl.salo.stoneglish.domain.use_cases.database.WriteUserDataUseCase
 import pl.salo.stoneglish.domain.use_cases.dictionary.DictionaryGetWordDataUseCase
 import pl.salo.stoneglish.domain.use_cases.dictionary.PlayAudioByUrl
 import pl.salo.stoneglish.domain.use_cases.home.ReadListOfDailyCardsUseCase
-import pl.salo.stoneglish.domain.use_cases.topic.ReadHorizontalGroupsUseCase
-import pl.salo.stoneglish.domain.use_cases.topic.ReadVerticalTopicByTitleUseCase
-import pl.salo.stoneglish.domain.use_cases.topic.ReadVerticalTopicsUseCase
+import pl.salo.stoneglish.domain.use_cases.topic.*
 import pl.salo.stoneglish.util.Constants
 import pl.salo.stoneglish.util.DataMapper
 import retrofit2.Retrofit
@@ -149,8 +146,12 @@ object AppModule {
     ) = TopicUseCases(
         writeNewTopic = WriteNewTopicUseCase(databaseRepository),
         readVerticalTopics = ReadVerticalTopicsUseCase(databaseRepository),
-        readVerticalTopicByTitle = ReadVerticalTopicByTitleUseCase(databaseRepository),
-        readHorizontalGroups = ReadHorizontalGroupsUseCase(databaseRepository)
+        readHorizontalGroups = ReadHorizontalGroupsUseCase(databaseRepository),
+        getGroupByType = GetGroupByTypeUseCase(),
+        getGroupByInterested = GetGroupByInterestedUseCase(),
+        getTopicsByType = GetTopicsByTypeUseCase(),
+        getTopicsAllType = GetTopicsAllTypesUseCase(),
+        getTopicByTitle = GetTopicByTitleUseCase()
     )
 
     //Dictionary

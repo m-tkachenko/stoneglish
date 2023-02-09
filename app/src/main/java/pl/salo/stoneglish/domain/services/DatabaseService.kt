@@ -12,8 +12,6 @@ interface DatabaseService {
     suspend fun writeNewTopic(topic: Topic)
     suspend fun readVerticalTopics(): List<TopicByType>
     suspend fun readHorizontalGroups(): List<HorizontalGroupByType>
-    suspend fun readVerticalTopicByTitle(topicType: String, title: String): Topic?
-    suspend fun readTopicByTitle(title: String): Topic
 
     suspend fun writeUserCard(card: Card, module: String, userId: String)
     suspend fun writeUserCards(cards: List<Card>, module: String, userId: String)

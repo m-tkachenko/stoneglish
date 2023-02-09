@@ -99,6 +99,7 @@ class HomeViewModel @Inject constructor(
         }.launchIn(viewModelScope)
     }
 
+    // Functions for topics
     fun setTopic(
         topicToShow: Topic,
         isPreviewTopic: Boolean = false
@@ -117,11 +118,8 @@ class HomeViewModel @Inject constructor(
         }.launchIn(viewModelScope)
     }
     fun getVerticalTopicsAllTypes(listOfTypedTopics: List<TopicByType>): List<Topic> {
-        val topicsListAllType = mutableListOf<Topic>()
-
-        listOfTypedTopics.forEach { topicListByType ->
-            topicsListAllType.addAll(topicListByType.topicList)
-        }
+        val topicsListAllType = topicDatabase
+            .getTopicsAllType(listOfTypedTopics)
 
         topicsAllTypes = topicsListAllType
         topicsByType = listOfTypedTopics
@@ -129,13 +127,10 @@ class HomeViewModel @Inject constructor(
         return topicsListAllType
     }
     fun getTopicsByChosenType(chosenType: TopicType): List<Topic> {
-        val topics = topicsByType
-            .find {
-                it.topicListType == chosenType
-            }
-            ?.topicList
-
-        return topics ?: listOf()
+        return topicDatabase.getTopicsByType(
+            topicsByType,
+            chosenType
+        )
     }
     fun getTopicsAllTypes() = topicsAllTypes
 
@@ -148,12 +143,10 @@ class HomeViewModel @Inject constructor(
         interestedTopicTypes: List<TopicType>,
         horizontalGroups: List<HorizontalGroupByType>
     ): HorizontalGroup {
-        val groups = horizontalGroups.find {
-            it.horizontalGroupType == interestedTopicTypes.random()
-        }?.horizontalGroups
-        val interestedGroup = groups?.random() ?: HorizontalGroup(
-            horizontalGroupTitle = "No topics"
-        )
+        val interestedGroup = topicDatabase
+            .getGroupByInterested(
+                interestedTopicTypes, horizontalGroups
+            )
 
         horizontalGroupByType = horizontalGroups
         interestedHorizontalGroup = interestedGroup
@@ -161,29 +154,18 @@ class HomeViewModel @Inject constructor(
         return interestedGroup
     }
     fun getHorizontalGroupByType(chosenType: TopicType): HorizontalGroup {
-        return horizontalGroupByType
-            .find {
-                it.horizontalGroupType == chosenType
-            }
-            ?.horizontalGroups?.random()
-            ?: HorizontalGroup(
-            horizontalGroupTitle = "No topics"
-            )
+        return topicDatabase.getGroupByType(
+            chosenType,
+            horizontalGroupByType
+        )
     }
     fun getInterestedHorizontalGroup() = interestedHorizontalGroup
 
     fun getTopicsByTitle(titleToFind: String): List<Topic> {
-        val allTopicsList = mutableListOf<Topic>()
-
-        allTopicsList.addAll(topicsAllTypes)
-        horizontalGroupByType.forEach {
-            it.horizontalGroups.forEach { group ->
-                allTopicsList.addAll(group.topics)
-            }
-        }
-
-        return allTopicsList.filter {
-            it.title == titleToFind
-        }
+        return topicDatabase.getTopicByTitle(
+            titleToFind,
+            topicsAllTypes,
+            horizontalGroupByType
+        )
     }
 }

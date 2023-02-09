@@ -24,13 +24,4 @@ class TopicViewModel @Inject constructor(
     private val _topic = MutableLiveData<Event<Resource<Topic>>>()
     val topic: LiveData<Event<Resource<Topic>>>
         get() = _topic
-
-    fun getTopicByTitle(type: String, title: String) {
-        topicDatabase.readVerticalTopicByTitle(
-            topicType = type,
-            title = title
-        ).onEach { topic ->
-            _topic.postValue(Event(topic))
-        }.launchIn(viewModelScope)
-    }
 }

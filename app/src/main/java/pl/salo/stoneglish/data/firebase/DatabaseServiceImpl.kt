@@ -117,35 +117,6 @@ class DatabaseServiceImpl @Inject constructor(
         return horizontalGroupByType
     }
 
-    override suspend fun readTopicByTitle(title: String): Topic {
-//        val resultTopicSnapshot = firebaseDatabase
-//            .child("data")
-//            .child("dashboard")
-//
-//            .get()
-//            .await()
-
-        return Topic()
-    }
-
-    override suspend fun readVerticalTopicByTitle(topicType: String, title: String): Topic? {
-        val resultTopicSnapshot = firebaseDatabase
-            .child("data")
-            .child("dashboard")
-            .child("vertical")
-
-            .child(topicType)
-            .child(title)
-            .get()
-            .await()
-
-        val verticalTopic: Topic? = resultTopicSnapshot.getValue(Topic::class.java)
-
-        Log.d(TAG, "This vertical topic with title $title was received: $verticalTopic")
-
-        return verticalTopic
-    }
-
     override suspend fun writeNewTopic(topic: Topic) {
         if (topic.horizontalGroupTitle.isNullOrEmpty())
             verticalTopicWrite(topic)
