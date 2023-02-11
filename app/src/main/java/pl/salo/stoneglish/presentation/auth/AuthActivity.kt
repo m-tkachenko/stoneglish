@@ -23,6 +23,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import pl.salo.stoneglish.R
 import pl.salo.stoneglish.databinding.ActivityAuthBinding
 import pl.salo.stoneglish.presentation.EnglishTestFragment
+import pl.salo.stoneglish.presentation.auth.sign_in.ForgotPasswordFragment
 import pl.salo.stoneglish.presentation.auth.sign_in.SignInFragment
 import pl.salo.stoneglish.presentation.auth.sign_up.SignUpStepFourFragment
 import pl.salo.stoneglish.presentation.auth.sign_up.SignUpStepOneFragment
@@ -156,6 +157,10 @@ class AuthActivity : AppCompatActivity(), AuthNavigator {
             .addOnFailureListener(this) { e ->
                 Log.e(TAG, "GoogleSignIn : Failure : Error = $e")
             }
+    }
+
+    override fun goToForgotPassword() {
+        addFragmentToStack(ForgotPasswordFragment())
     }
 
     private fun addFragmentToStack(fragment: Fragment) {

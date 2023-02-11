@@ -76,7 +76,8 @@ object AppModule {
             authRepository
         ),
         signUpDataGetCategoriesUseCase = SignUpDataGetCategoriesUseCase(signUpDataRepository),
-        signUpDataSetCategoryState = SignUpDataSetCategoryState(signUpDataRepository)
+        signUpDataSetCategoryState = SignUpDataSetCategoryState(signUpDataRepository),
+        forgotPasswordUseCase = ForgotPasswordUseCase(authRepository)
     )
 
     @Provides

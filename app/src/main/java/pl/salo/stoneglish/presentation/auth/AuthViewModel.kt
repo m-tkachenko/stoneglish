@@ -8,7 +8,8 @@ import androidx.lifecycle.viewModelScope
 import com.google.android.gms.auth.api.identity.BeginSignInRequest
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import pl.salo.stoneglish.R
 import pl.salo.stoneglish.common.Resource
 import pl.salo.stoneglish.data.repository.SignUpDataRepository
@@ -37,6 +38,10 @@ class AuthViewModel @Inject constructor(
     private val _onSignOut = MutableLiveData<Resource<Unit>>()
     val onSignOut: LiveData<Resource<Unit>>
         get() = _onSignOut
+
+    private val _emailIsSent = MutableLiveData<Resource<Boolean>>()
+    val emailIsSent: LiveData<Resource<Boolean>>
+        get() = _emailIsSent
 
     // signIn and signUp functions
     fun signUpUsingEmailAndPassword() {
@@ -141,5 +146,10 @@ class AuthViewModel @Inject constructor(
         signUpDataRepository.clearCategories()
     }
 
+    fun forgotPassword(email: String) {
+        auth.forgotPasswordUseCase(email).onEach {
+            _emailIsSent.postValue(it)
+        }.launchIn(viewModelScope)
+    }
 
 }
