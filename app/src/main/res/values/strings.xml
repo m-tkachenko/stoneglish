@@ -128,6 +128,12 @@
     <string name="change">change</string>
     <string name="u_change">Change</string>
     <string name="account_info">Account info</string>
+    <string name="info">Information</string>
+    <string name="version">Version</string>
+    <string name="version_info">Version 1.0</string>
+    <string name="about_info">We are a young, ambitious and committed team. We met during our studies in Poznan. Our team consists of 4 people: Mykhailo Tkachenko - team leader, Vadym Muntianov - deputy team leader, Karyna Prylutska, Maksymilian Leśniczak.Our team are specialists in their field, creative graphic designers, communicative analysts and professionals who have a desire to develop.</string>
+    <string name="contact">Contact</string>
+    <string name="contact_info">If you have any questions, please write to this e-mail stoneglish@gmail.com</string>
     <string name="topics">Topics</string>
     <string name="favorite_topics">Favorite topics</string>
     <string name="english_level">English level</string>

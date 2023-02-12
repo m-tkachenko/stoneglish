@@ -17,6 +17,7 @@ interface CoreNavigator {
     fun goToCard(module: String)
     fun goToModules()
     fun goToCreateModule()
+    fun goToInformation()
 
     fun speakWithFlow(text: String): Flow<TextToSpeechResult>
     fun setClickableWords(content:String, textView: TextView)
