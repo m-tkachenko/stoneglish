@@ -18,8 +18,12 @@ class WriteUserCardsUseCase @Inject constructor(
             emit(Resource.Loading())
             val id = authRepository.getUserId()
 
+            if (moduleName.isBlank()){
+                throw Exception("Module name can't be empty")
+            }
+
             if (id.isNullOrBlank())
-                emit(Resource.Error(message = "Can't find user"))
+                throw Exception("Can't find user")
             else {
 
                 val items = cards.toMutableList()
@@ -28,6 +32,22 @@ class WriteUserCardsUseCase @Inject constructor(
                     if(it.word.isBlank()){
                         items.remove(it)
                     }
+                    val isDigitWord = it.word.any { char ->
+                        char.isDigit()
+                    }
+                    if(isDigitWord){
+                        throw Exception("Word: ${it.word} is incorrect")
+                    }
+                    val isDigitTranslate = it.firstTranslation.any { char ->
+                        char.isDigit()
+                    }
+                    if(isDigitTranslate){
+                        throw Exception("Word: ${it.firstTranslation} is incorrect")
+                    }
+                }
+
+                if (items.size < 2) {
+                    throw Exception("Add at least 2 cards")
                 }
 
                 databaseRepository.writeUserCards(
