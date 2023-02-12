@@ -37,6 +37,7 @@ import pl.salo.stoneglish.presentation.core.home.TopicFragment
 import pl.salo.stoneglish.presentation.core.profile.ChangeFieldFragment
 import pl.salo.stoneglish.presentation.core.home.dialog.AddNewCardDialog
 import pl.salo.stoneglish.presentation.core.profile.ProfileFragment
+import pl.salo.stoneglish.presentation.core.profile.information.InformationFragment
 import pl.salo.stoneglish.util.CoreNavigator
 import java.util.*
 
@@ -154,6 +155,10 @@ class CoreActivity : AppCompatActivity(), CoreNavigator, TextToSpeech.OnInitList
 
     override fun goToCreateModule() {
         addFragmentToStack(CreateModuleFragment())
+    }
+
+    override fun goToInformation() {
+        addFragmentToStack(InformationFragment())
     }
 
     override fun goToTest(type: TestType) {

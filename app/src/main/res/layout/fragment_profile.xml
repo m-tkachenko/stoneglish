@@ -198,6 +198,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="15dp"
+                        android:layout_marginBottom="5dp"
                         android:text="@string/english_level"
                         android:textColor="@color/black"
                         android:textSize="@dimen/small_text"
@@ -207,15 +208,24 @@
                         android:id="@+id/englishLevel"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
                         android:textColor="@color/alt_orange"
                         android:textSize="@dimen/normal_text" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:background="@color/white"
+                    android:paddingHorizontal="10dp">
 
                     <Button
                         android:id="@+id/profileFavoriteTopics"
                         style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="15dp"
                         android:gravity="start|center_vertical"
                         android:text="@string/favorite_topics"
                         android:textAllCaps="false"
@@ -225,7 +235,6 @@
                         app:iconTint="@color/black" />
 
                 </LinearLayout>
-
 
                 <LinearLayout
                     android:layout_width="match_parent"

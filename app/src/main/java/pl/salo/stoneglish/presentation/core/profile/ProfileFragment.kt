@@ -35,6 +35,10 @@ class ProfileFragment : Fragment() {
 
         observeCurrentUser()
 
+        binding.profileInformation.setOnClickListener {
+            coreNavigator().goToInformation()
+        }
+
         binding.profileFavoriteTopics.setOnClickListener {
             coreNavigator().goToFavoriteTopics()
         }
