@@ -55,7 +55,7 @@ class CreateModuleViewModel @Inject constructor(
                 }
                 is Resource.Error -> {
                     _loading.postValue(false)
-                    _toast.postValue("Something went wrong :(")
+                    _toast.postValue(it.message.toString())
                 }
                 is Resource.Success -> {
                     _loading.postValue(false)
