@@ -34,7 +34,7 @@ class EnglishTestFragment : Fragment() {
 
         viewModel.start()
         binding.backArrow.setOnClickListener {
-            coreNavigator().goBack()
+            authNavigator().goBack()
         }
         viewModel.questionCount.observe(viewLifecycleOwner) {
             binding.testCount.text = "${it.first}/${it.second}"

@@ -5,7 +5,7 @@ import pl.salo.stoneglish.domain.model.auth.SignUpData
 
 class DataMapper {
     fun signUpDataToUser(signUpData: SignUpData): User {
-        val topics = signUpData.interestedTopics.map { it.title.lowercase() } as MutableList
+        val topics = signUpData.interestedTopics.map { it.title } as MutableList
         if (topics.isEmpty()) topics.add("all")
         return User(
             id = signUpData.id ?: "",
