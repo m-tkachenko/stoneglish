@@ -1,33 +1,9 @@
 package pl.salo.stoneglish.presentation.core.admin
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
-import pl.salo.stoneglish.common.Resource
 import pl.salo.stoneglish.data.model.home.*
-import pl.salo.stoneglish.domain.use_cases.DatabaseUseCases
-import pl.salo.stoneglish.util.Event
-import javax.inject.Inject
 
-@HiltViewModel
-class AddTopicViewModel @Inject constructor(
-    private val database: DatabaseUseCases
-) : ViewModel() {
-    private val _newTopicUploadState = MutableLiveData<Event<Resource<Boolean>>>()
-    val newTopicUploadState: LiveData<Event<Resource<Boolean>>>
-        get() = _newTopicUploadState
-
-    fun addNewTopic(topic: Topic) {
-        database.writeNewTopic(topic).onEach { status ->
-            _newTopicUploadState.postValue(Event(status))
-        }.launchIn(viewModelScope)
-    }
-
-
+class AddTopicViewModel : ViewModel() {
     val exampleTopic =
         Topic(
             title = "Uhuu",

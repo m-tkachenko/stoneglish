@@ -16,9 +16,9 @@ import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import pl.salo.stoneglish.common.Resource
+import pl.salo.stoneglish.data.model.home.Topic
 import pl.salo.stoneglish.databinding.FragmentTopicBinding
 import pl.salo.stoneglish.presentation.core.TextToSpeechResult
-import pl.salo.stoneglish.presentation.core.admin.AddTopicViewModel
 import pl.salo.stoneglish.presentation.core.home.adapters.KeywordsAdapter
 import pl.salo.stoneglish.presentation.core.home.adapters.ListeningAndSpeakingAdapter
 import pl.salo.stoneglish.presentation.core.home.adapters.SimilarTopicsAdapter
@@ -29,8 +29,7 @@ import pl.salo.stoneglish.util.coreNavigator
 class TopicFragment : Fragment() {
     private lateinit var binding: FragmentTopicBinding
 
-    private val homeViewModel: HomeViewModel by activityViewModels()
-    private val addTopicViewModel: AddTopicViewModel by activityViewModels()
+    private val topicViewModel: TopicViewModel by activityViewModels()
 
     private val keywordsAdapter = KeywordsAdapter()
     private val listeningAndSpeakingAdapter = ListeningAndSpeakingAdapter()
@@ -53,41 +52,29 @@ class TopicFragment : Fragment() {
         initAdapters()
         observeAddTopicState()
 
-        if (homeViewModel.isNotPreview)
-            homeViewModel.selectTopic()
-        homeViewModel.getTopic()
+        binding.topicIsLoading.ninja(false)
+        binding.topicIsDownloaded.ninja(true)
 
-        binding.addTopicToDBLayout.ninja(!homeViewModel.isNotPreview)
+        setUpTopicScreen(topicViewModel.topicForShow)
+
+        similarTopicsAdapter.onItemClick = { similarTopic ->
+            topicViewModel.setTopic(
+                topicToShow = topicViewModel.topicsListFowShow.find { thisTopic ->
+                    thisTopic.title == similarTopic.title
+                } ?: Topic()
+            )
+
+            coreNavigator().goToTopicFragment()
+        }
+
+        binding.addTopicToDBLayout.ninja(!topicViewModel.isNotPreview)
         binding.addTopicToDB.setOnClickListener {
-            addTopicViewModel.addNewTopic(homeViewModel.getTopic()!!)
+            topicViewModel.addNewTopic(topicViewModel.topicForShow)
         }
-
-        homeViewModel.selectedTopic.observe(viewLifecycleOwner) {
-            coreNavigator().setClickableWords(it.text, binding.topicText)
-
-            keywordsAdapter.items = it.keywords
-            similarTopicsAdapter.items = it.similarTopics ?: emptyList()
-            listeningAndSpeakingAdapter.items = it.listeningAndSpeaking
-
-            binding.topicText.text = it.text
-            coreNavigator().setClickableWords(it.text, binding.topicText)
-
-            binding.topicTitle.text = it.title
-            binding.topicEngLevel.text = it.eng_level.first().name
-            binding.signInBackArrow.setOnClickListener {
-                coreNavigator().goBack()
-            }
-
-            Glide.with(requireContext())
-                .load(it.imgUrl)
-                .transform(RoundedCorners(30))
-                .into(binding.topicImg)
-        }
-
     }
 
     private fun observeAddTopicState() {
-        addTopicViewModel.newTopicUploadState.observe(viewLifecycleOwner) { uploadResult ->
+        topicViewModel.newTopicUploadState.observe(viewLifecycleOwner) { uploadResult ->
             uploadResult.getContentIfNotHandled()?.let { result ->
                 when(result) {
                     is Resource.Success -> {
@@ -108,6 +95,27 @@ class TopicFragment : Fragment() {
         }
     }
 
+    private fun setUpTopicScreen(topic: Topic) {
+        keywordsAdapter.items = topic.keywords
+        similarTopicsAdapter.items = topic.similarTopics ?: emptyList()
+        listeningAndSpeakingAdapter.items = topic.listeningAndSpeaking
+
+        binding.topicText.text = topic.text
+
+        coreNavigator().setClickableWords(topic.text, binding.topicText)
+
+        binding.topicTitle.text = topic.title
+        binding.topicEngLevel.text = topic.eng_level.first().name
+
+        binding.signInBackArrow.setOnClickListener {
+            coreNavigator().goBack()
+        }
+
+        Glide.with(requireContext())
+            .load(topic.imgUrl)
+            .transform(RoundedCorners(30))
+            .into(binding.topicImg)
+    }
 
     @SuppressLint("NotifyDataSetChanged")
     private fun initAdapters() {
@@ -182,5 +190,7 @@ class TopicFragment : Fragment() {
         }
     }
 
-    private val TAG = "TopicFragment"
+    companion object {
+        const val TAG = "TopicFragment"
+    }
 }

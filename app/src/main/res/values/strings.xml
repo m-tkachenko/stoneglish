@@ -15,6 +15,7 @@
     <string name="text_2">Learn English from all over the world with Stoneglish</string>
 
     <string name="cd">CD</string>
+    <string name="loading_string">Loading…</string>
     <string name="forgot_your_password">Forgot your password?</string>
     <string name="continue_with_facebook">Continue with Facebook</string>
     <string name="continue_with_google">Continue with Google</string>
@@ -73,7 +74,7 @@
     <string name="card_dialog_modules_loading_text">Downloading your modules…</string>
     <string name="card_dialog_add_card_loading_text">Uploading new card…</string>
     <string name="card_dialog_success_text">Card successfully uploaded</string>
-    <string name="words_of_the_day_loading_text">Downloading words of the day..</string>
+    <string name="words_of_the_day_loading_text">Downloading words of the day…</string>
 
     <!--  Topic screen  -->
     <string name="topic_title">Topic Title</string>
@@ -87,6 +88,7 @@
     <string name="add_word">Add word</string>
     <string name="term">Term</string>
     <string name="definition">Definition</string>
+    <string name="downloading_topic_string">Downloading topic…</string>
 
     <!--  Texts for Add Topic functionality  -->
     <string name="add_topic_title_screen">Add Topic</string>
@@ -120,6 +122,9 @@
     <string name="horizontal_group_title_hint_input">Horizontal group title</string>
     <string name="vertical_view_chip_text">Vertical</string>
     <string name="horizontal_view_chip_text">Horizontal</string>
+    <string name="similar_topic_img_input_hint">Similar topic img</string>
+
+
     <string name="you_passed_the_test">You passed the test</string>
     <string name="english_test_from_stoneglish">English test from Stoneglish</string>
     <string name="congratulations">Congratulations</string>

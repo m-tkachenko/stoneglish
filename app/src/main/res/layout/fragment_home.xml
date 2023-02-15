@@ -156,79 +156,14 @@
             android:scrollbars="none">
 
             <com.google.android.material.chip.ChipGroup
+                android:id="@+id/favouriteTopics"
+
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
 
                 android:paddingHorizontal="8dp"
-                app:singleLine="true">
-
-                <com.google.android.material.chip.Chip
-                    android:id="@+id/travelChip"
-                    style="@style/Widget.MaterialComponents.Chip.Choice"
-
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-
-                    app:chipIconVisible="true"
-                    app:chipStartPadding="10dp"
-                    app:chipIcon="@drawable/ic_simple_travel"
-                    app:chipIconSize="20dp"
-
-                    android:text="@string/filter_travelling_text"/>
-
-                <com.google.android.material.chip.Chip
-                    style="@style/Widget.MaterialComponents.Chip.Choice"
-
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-
-                    app:chipIconVisible="true"
-                    app:chipStartPadding="10dp"
-                    app:chipIcon="@drawable/ic_simple_sport"
-                    app:chipIconSize="20dp"
-
-                    android:text="@string/filter_sport_text"/>
-
-                <com.google.android.material.chip.Chip
-                    style="@style/Widget.MaterialComponents.Chip.Choice"
-
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-
-                    app:chipIconVisible="true"
-                    app:chipStartPadding="10dp"
-                    app:chipIcon="@drawable/ic_simple_education"
-                    app:chipIconSize="20dp"
-
-                    android:text="@string/filter_education_text"/>
-
-                <com.google.android.material.chip.Chip
-                    style="@style/Widget.MaterialComponents.Chip.Choice"
-
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-
-                    app:chipIconVisible="true"
-                    app:chipStartPadding="10dp"
-                    app:chipIcon="@drawable/ic_simple_health"
-                    app:chipIconSize="20dp"
-
-                    android:text="@string/filter_health_text"/>
-
-                <com.google.android.material.chip.Chip
-                    style="@style/Widget.MaterialComponents.Chip.Choice"
-
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-
-                    app:chipIconVisible="true"
-                    app:chipStartPadding="10dp"
-                    app:chipIcon="@drawable/ic_simple_books"
-                    app:chipIconSize="20dp"
-
-                    android:text="@string/filter_books_text"/>
-
-            </com.google.android.material.chip.ChipGroup>
+                app:singleLine="true"
+                app:singleSelection="true"/>
         </HorizontalScrollView>
 
         <androidx.core.widget.NestedScrollView
@@ -307,7 +242,7 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/topicTextOnHomeScreen"
+                        android:id="@+id/topicVerticalTitleOnHomeScreen"
 
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -329,8 +264,46 @@
 
                 </LinearLayout>
 
+                <LinearLayout
+                    android:id="@+id/topicVerticalLoading"
+
+                    android:layout_width="match_parent"
+                    android:layout_height="130dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="16dp"
+
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:visibility="visible">
+
+                    <ProgressBar
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:maxWidth="300dp"
+
+                        android:text="Downloading interesting topics for you..."
+                        android:textColor="@color/black"
+                        android:textSize="20sp"
+                        android:textAlignment="center"
+
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/modulesProgressBar" />
+
+                </LinearLayout>
+
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/topicsRecycler"
+                    android:id="@+id/verticalTopicsGridRecycler"
 
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -340,96 +313,36 @@
 
                     android:overScrollMode="never"
                     android:nestedScrollingEnabled="false"
+                    android:visibility="gone"
                     app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
                     app:spanCount="2"/>
 
                 <TextView
-                    android:id="@+id/startDividerLearnText"
+                    android:id="@+id/topicHorizontalTitle"
 
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="8dp"
 
-                    android:text="@string/start_to_learn_text"
+                    tools:text="Example text"
                     android:textSize="28sp"
                     android:textColor="@color/black"/>
 
-                <com.google.android.material.card.MaterialCardView
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/topicsHorizontalRecycler"
+
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginVertical="8dp"
                     android:layout_marginHorizontal="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="16dp"
 
-                    app:cardCornerRadius="20dp">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/startLearnCardTitle"
-
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-
-                            android:paddingTop="10dp"
-                            android:paddingHorizontal="12dp"
-                            android:maxLines="2"
-                            android:maxWidth="350dp"
-
-                            android:text="@string/just_text"
-                            android:textColor="@color/black"
-                            android:textSize="16sp" />
-
-                        <com.google.android.material.card.MaterialCardView
-                            android:layout_width="match_parent"
-                            android:layout_height="150dp"
-
-                            android:layout_marginHorizontal="8dp"
-                            android:layout_marginTop="8dp"
-                            android:layout_marginBottom="8dp"
-                            app:cardCornerRadius="20dp">
-
-                            <ImageView
-                                android:id="@+id/startLearnImage"
-
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-
-                                android:adjustViewBounds="true"
-                                android:contentDescription="@string/cd"
-                                android:elevation="20dp"
-
-                                android:scaleType="fitXY"
-                                android:src="@color/main_green" />
-
-                        </com.google.android.material.card.MaterialCardView>
-
-                        <com.google.android.material.button.MaterialButton
-                            android:id="@+id/startLearnButton"
-
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginHorizontal="8dp"
-                            android:layout_marginBottom="4dp"
-
-                            app:cornerRadius="10dp"
-                            android:backgroundTint="@color/main_orange"
-
-                            android:text="@string/start_journey_text"
-                            android:textSize="16sp"
-                            android:textStyle="bold"
-                            android:textAllCaps="false"/>
-
-
-                    </LinearLayout>
-
-                </com.google.android.material.card.MaterialCardView>
-
+                    android:overScrollMode="never"
+                    android:nestedScrollingEnabled="false"
+                    android:visibility="gone"
+                    android:orientation="horizontal"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

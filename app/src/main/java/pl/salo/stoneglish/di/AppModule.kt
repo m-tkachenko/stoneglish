@@ -26,11 +26,11 @@ import pl.salo.stoneglish.domain.use_cases.cards.*
 import pl.salo.stoneglish.domain.use_cases.database.GetCurrentUserUseCase
 import pl.salo.stoneglish.domain.use_cases.database.UpdateUserCategoriesUseCase
 import pl.salo.stoneglish.domain.use_cases.database.UpdateUserFieldUseCase
-import pl.salo.stoneglish.domain.use_cases.database.WriteNewTopicUseCase
 import pl.salo.stoneglish.domain.use_cases.database.WriteUserDataUseCase
 import pl.salo.stoneglish.domain.use_cases.dictionary.DictionaryGetWordDataUseCase
 import pl.salo.stoneglish.domain.use_cases.dictionary.PlayAudioByUrl
 import pl.salo.stoneglish.domain.use_cases.home.ReadListOfDailyCardsUseCase
+import pl.salo.stoneglish.domain.use_cases.topic.*
 import pl.salo.stoneglish.util.Constants
 import pl.salo.stoneglish.util.DataMapper
 import retrofit2.Retrofit
@@ -140,9 +140,22 @@ object AppModule {
     ) = DatabaseUseCases(
         getCurrentUserUseCase = GetCurrentUserUseCase(databaseRepository, authRepository),
         writeUserDataUseCase = WriteUserDataUseCase(databaseRepository, mapper),
-        writeNewTopic = WriteNewTopicUseCase(databaseRepository),
         updateUserCategories = UpdateUserCategoriesUseCase(databaseRepository),
-        updateUserFieldUseCase = UpdateUserFieldUseCase(databaseRepository)
+        updateUserFieldUseCase = UpdateUserFieldUseCase(databaseRepository),
+    )
+
+    @Provides
+    fun providesTopicUseCases(
+        databaseRepository: DatabaseRepository
+    ) = TopicUseCases(
+        writeNewTopic = WriteNewTopicUseCase(databaseRepository),
+        readVerticalTopics = ReadVerticalTopicsUseCase(databaseRepository),
+        readHorizontalGroups = ReadHorizontalGroupsUseCase(databaseRepository),
+        getGroupByType = GetGroupByTypeUseCase(),
+        getGroupByInterested = GetGroupByInterestedUseCase(),
+        getTopicsByType = GetTopicsByTypeUseCase(),
+        getTopicsAllType = GetTopicsAllTypesUseCase(),
+        getTopicByTitle = GetTopicByTitleUseCase()
     )
 
     //Dictionary

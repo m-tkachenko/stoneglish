@@ -6,11 +6,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import com.google.android.material.chip.Chip
 import dagger.hilt.android.AndroidEntryPoint
 import pl.salo.stoneglish.data.model.home.*
 import pl.salo.stoneglish.databinding.FragmentAddTopicBinding
-import pl.salo.stoneglish.presentation.core.home.HomeViewModel
+import pl.salo.stoneglish.presentation.core.home.TopicViewModel
 import pl.salo.stoneglish.util.Utils.ninja
 import pl.salo.stoneglish.util.coreNavigator
 
@@ -18,7 +19,8 @@ import pl.salo.stoneglish.util.coreNavigator
 class AddTopicFragment : Fragment() {
     private lateinit var binding: FragmentAddTopicBinding
 
-    private val homeViewModel: HomeViewModel by activityViewModels()
+    private val topicViewModel: TopicViewModel by activityViewModels()
+    private val addTopicViewModel: AddTopicViewModel by viewModels()
 
     private val listeningSpeakingList = mutableListOf<ListeningSpeaking>()
     private val keywordsList = mutableListOf<Keyword>()
@@ -41,8 +43,8 @@ class AddTopicFragment : Fragment() {
 
         with(binding) {
             showCreatedTopic.setOnClickListener {
-                if (allEditTextNotBlank() && allListsNotEmpty()) {
-                    homeViewModel.setTopicToPreview(getTopicModel())
+                if (!allEditTextNotBlank() && !allListsNotEmpty()) {
+                    topicViewModel.setTopic(getTopicModel())
                     coreNavigator().goToTopicFragment()
                 }
                 else
@@ -65,17 +67,18 @@ class AddTopicFragment : Fragment() {
             }
 
             addSimilarTopics.setOnClickListener {
-                if (similarTopicInput.text.isNotBlank())
+                if (similarTopicInput.text.isNotBlank() && similarTopicImgInput.text.isNotBlank())
                     similarTopicList.add(
                         SimilarTopic(
-                            imgUrl = "",
+                            imgUrl = similarTopicImgInput.text.toString(),
                             title = similarTopicInput.text.toString()
                         )
                     )
                 else
-                    coreNavigator().makeToast("Add similar topic name")
+                    coreNavigator().makeToast("Add similar topic info")
 
                 similarTopicInput.setText("")
+                similarTopicImgInput.setText("")
             }
 
             horizontalViewTypeChip.setOnCheckedChangeListener { _, checked ->
@@ -158,7 +161,7 @@ class AddTopicFragment : Fragment() {
 
     override fun onDetach() {
         super.onDetach()
-        homeViewModel.isNotPreview = true
+        topicViewModel.isNotPreview = true
     }
 
     private fun setUpTypeChipGroup() {

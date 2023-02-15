@@ -20,6 +20,8 @@ import kotlinx.coroutines.flow.callbackFlow
 import pl.salo.stoneglish.R
 import pl.salo.stoneglish.common.Resource
 import pl.salo.stoneglish.data.model.home.Keyword
+import pl.salo.stoneglish.data.model.home.TopicType
+import pl.salo.stoneglish.data.model.home.Topic
 import pl.salo.stoneglish.databinding.ActivityCoreBinding
 import pl.salo.stoneglish.domain.model.card.TestType
 import pl.salo.stoneglish.presentation.auth.AuthActivity
@@ -176,7 +178,6 @@ class CoreActivity : AppCompatActivity(), CoreNavigator, TextToSpeech.OnInitList
     override fun goToTopicFragment() {
         addFragmentToStack(TopicFragment())
     }
-
     override fun goToAddTopicFragment() {
         addFragmentToStack(AddTopicFragment())
     }

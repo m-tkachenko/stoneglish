@@ -70,6 +70,10 @@ class SimilarTopicsAdapter : RecyclerView.Adapter<SimilarTopicsAdapter.ViewHolde
                 .load(item.imgUrl)
                 .centerCrop()
                 .into(topicImage)
+
+            similarTopicCard.setOnClickListener {
+                onItemClick?.invoke(item)
+            }
         }
     }
 
