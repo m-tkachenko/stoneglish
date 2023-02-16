@@ -10,10 +10,7 @@ import pl.salo.stoneglish.domain.repository.DatabaseRepository
 import retrofit2.HttpException
 import javax.inject.Inject
 
-class ReadListOfTestsUseCase @Inject constructor(
-    private val databaseRepository: DatabaseRepository,
-    private val authRepository: AuthRepository
-) {
+class ReadListOfTestsUseCase {
     operator fun invoke(): Flow<Resource<List<TestForCards>>> = flow {
         try {
             emit(Resource.Loading())
