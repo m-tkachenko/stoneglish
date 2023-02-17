@@ -29,9 +29,6 @@ class SignUpStepOneFragment : BaseAuthFragment<FragmentSignUpStepOneBinding>(
                 viewModel.saveEmailAndPasswordToCache(email, password)
             }
 
-            signUpWithGoogle.setOnClickListener {
-                authNavigator().beginGoogleSignIn()
-            }
         }
     }
 }

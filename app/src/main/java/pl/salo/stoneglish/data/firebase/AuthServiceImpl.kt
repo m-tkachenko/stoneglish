@@ -44,21 +44,6 @@ class AuthServiceImpl @Inject constructor(
             .await()
             .user
 
-    override suspend fun googleSignIn(
-        account: GoogleSignInAccount
-    ): FirebaseUser? =
-        auth
-            .signInWithCredential(
-                GoogleAuthProvider.getCredential(account.idToken, null)
-            )
-            .addOnCompleteListener { googleSignInResult ->
-                if (googleSignInResult.isSuccessful)
-                    Log.d(TAG, "GoogleSignIn : Success")
-                else
-                    Log.e(TAG, "GoogleSignIn : Failure : Error = ${googleSignInResult.exception?.message}")
-            }
-            .await()
-            .user
 
     override suspend fun signOut(): Boolean {
         auth.signOut()

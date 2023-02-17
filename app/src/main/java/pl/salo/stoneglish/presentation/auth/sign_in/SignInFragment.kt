@@ -34,10 +34,6 @@ class SignInFragment : BaseAuthFragment<FragmentSignInBinding>(
             signInForgetPassword.setOnClickListener {
                 authNavigator().goToForgotPassword()
             }
-
-            signInWithGoogle.setOnClickListener {
-                authNavigator().beginGoogleSignIn()
-            }
         }
     }
 }

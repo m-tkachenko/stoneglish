@@ -70,27 +70,6 @@ class AuthViewModel @Inject constructor(
         }.launchIn(viewModelScope)
     }
 
-    fun signInUsingGoogle(account: GoogleSignInAccount) {
-        auth.googleSignIn(account).onEach { result ->
-            _authState.postValue(Event(result))
-        }.launchIn(viewModelScope)
-    }
-
-    // Some functions for signIn with Google
-    fun createGoogleSignInRequest(): BeginSignInRequest {
-        return BeginSignInRequest.builder()
-            .setGoogleIdTokenRequestOptions(
-                BeginSignInRequest.GoogleIdTokenRequestOptions.builder()
-                    .setSupported(true)
-                    .setServerClientId(R.string.default_web_client_id.toString())
-                    .setFilterByAuthorizedAccounts(true)
-                    .setFilterByAuthorizedAccounts(false)
-                    .build()
-            )
-            .setAutoSelectEnabled(true)
-            .build()
-    }
-
     /**
      *  SignUp data functions
      */

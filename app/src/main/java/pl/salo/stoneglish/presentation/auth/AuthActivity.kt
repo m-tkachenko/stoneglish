@@ -45,31 +45,10 @@ class AuthActivity : AppCompatActivity(), AuthNavigator {
     @Inject
     lateinit var progressDialog: AlertDialog
 
-    private lateinit var googleSignInClient: SignInClient
-
-    private var activityResultLauncher =
-        registerForActivityResult(
-            ActivityResultContracts.StartIntentSenderForResult()
-        ) { activityResult ->
-            if (activityResult.resultCode == Activity.RESULT_OK) {
-                try {
-                    val account = GoogleSignIn
-                        .getSignedInAccountFromIntent(activityResult.data)
-                        .getResult(ApiException::class.java)
-
-                    authViewModel.signInUsingGoogle(account)
-                } catch (e: ApiException) {
-                    Log.e(TAG, "GoogleSignIn : Failure : Error = $e")
-                }
-            }
-        }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAuthBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        googleSignInClient = Identity.getSignInClient(this)
 
         supportFragmentManager.beginTransaction()
             .replace(R.id.authFragmentContainer, WelcomeFragment())
@@ -120,43 +99,6 @@ class AuthActivity : AppCompatActivity(), AuthNavigator {
         Snackbar
             .make(binding.root, text, Snackbar.LENGTH_LONG)
             .show()
-    }
-
-    override fun activityLauncherResult(): ActivityResultLauncher<IntentSenderRequest> {
-        return registerForActivityResult(
-            ActivityResultContracts.StartIntentSenderForResult()
-        ) { activityResult ->
-            if (activityResult.resultCode == Activity.RESULT_OK) {
-                try {
-                    val account = GoogleSignIn
-                        .getSignedInAccountFromIntent(activityResult.data)
-                        .getResult(ApiException::class.java)
-
-                    authViewModel.signInUsingGoogle(account)
-                } catch (e: ApiException) {
-                    Log.e(TAG, "GoogleSignIn : Failure : Error = $e")
-                }
-            }
-        }
-    }
-
-    override fun beginGoogleSignIn() {
-        googleSignInClient
-            .beginSignIn(authViewModel.createGoogleSignInRequest())
-            .addOnSuccessListener(this) { signInResult ->
-                try {
-                    activityResultLauncher.launch(
-                        IntentSenderRequest
-                            .Builder(signInResult.pendingIntent.intentSender)
-                            .build()
-                    )
-                } catch (e: IntentSender.SendIntentException) {
-                    Log.e(TAG, "GoogleSignIn: Couldn't start One Tap UI : ${e.localizedMessage}")
-                }
-            }
-            .addOnFailureListener(this) { e ->
-                Log.e(TAG, "GoogleSignIn : Failure : Error = $e")
-            }
     }
 
     override fun goToForgotPassword() {
