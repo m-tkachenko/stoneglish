@@ -29,6 +29,7 @@ import pl.salo.stoneglish.domain.use_cases.database.UpdateUserFieldUseCase
 import pl.salo.stoneglish.domain.use_cases.database.WriteUserDataUseCase
 import pl.salo.stoneglish.domain.use_cases.dictionary.DictionaryGetWordDataUseCase
 import pl.salo.stoneglish.domain.use_cases.dictionary.PlayAudioByUrl
+import pl.salo.stoneglish.domain.use_cases.home.CheckAdminUserUseCase
 import pl.salo.stoneglish.domain.use_cases.home.ReadListOfDailyCardsUseCase
 import pl.salo.stoneglish.domain.use_cases.topic.*
 import pl.salo.stoneglish.util.Constants
@@ -95,7 +96,8 @@ object AppModule {
     fun providesHomeUseCases(
         databaseRepository: DatabaseRepository
     ) = HomeUseCases(
-        dailyCards = ReadListOfDailyCardsUseCase(databaseRepository)
+        dailyCards = ReadListOfDailyCardsUseCase(databaseRepository),
+        isAdmin = CheckAdminUserUseCase()
     )
 
     @Singleton

@@ -23,6 +23,7 @@ import pl.salo.stoneglish.presentation.core.home.adapters.KeywordsAdapter
 import pl.salo.stoneglish.presentation.core.home.adapters.ListeningAndSpeakingAdapter
 import pl.salo.stoneglish.presentation.core.home.adapters.SimilarTopicsAdapter
 import pl.salo.stoneglish.util.Utils.ninja
+import pl.salo.stoneglish.util.Utils.notSame
 import pl.salo.stoneglish.util.coreNavigator
 
 @AndroidEntryPoint
@@ -58,13 +59,16 @@ class TopicFragment : Fragment() {
         setUpTopicScreen(topicViewModel.topicForShow)
 
         similarTopicsAdapter.onItemClick = { similarTopic ->
-            topicViewModel.setTopic(
-                topicToShow = topicViewModel.topicsListFowShow.find { thisTopic ->
-                    thisTopic.title == similarTopic.title
-                } ?: Topic()
-            )
+            val prepareTopic = topicViewModel.topicsListFowShow.find { thisTopic ->
+                thisTopic.title == similarTopic.title
+            } ?: Topic()
 
-            coreNavigator().goToTopicFragment()
+            if (prepareTopic notSame Topic()) {
+                topicViewModel.setTopic(
+                    topicToShow = prepareTopic
+                )
+                coreNavigator().goToTopicFragment()
+            }
         }
 
         binding.addTopicToDBLayout.ninja(!topicViewModel.isNotPreview)

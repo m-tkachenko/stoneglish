@@ -43,8 +43,11 @@ class AddTopicFragment : Fragment() {
 
         with(binding) {
             showCreatedTopic.setOnClickListener {
-                if (!allEditTextNotBlank() && !allListsNotEmpty()) {
-                    topicViewModel.setTopic(getTopicModel())
+                if (allEditTextNotBlank() && allListsNotEmpty()) {
+                    topicViewModel.setTopic(
+                        topicToShow = getTopicModel(),
+                        isPreviewTopic = true
+                    )
                     coreNavigator().goToTopicFragment()
                 }
                 else
