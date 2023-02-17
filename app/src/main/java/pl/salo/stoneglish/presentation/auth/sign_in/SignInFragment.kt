@@ -31,6 +31,10 @@ class SignInFragment : BaseAuthFragment<FragmentSignInBinding>(
                 viewModel.signInUsingEmailAndPassword(email, password)
             }
 
+            signInForgetPassword.setOnClickListener {
+                authNavigator().goToForgotPassword()
+            }
+
             signInWithGoogle.setOnClickListener {
                 authNavigator().beginGoogleSignIn()
             }

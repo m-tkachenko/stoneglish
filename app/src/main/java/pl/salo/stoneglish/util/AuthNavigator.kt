@@ -21,6 +21,7 @@ interface AuthNavigator {
 
     fun activityLauncherResult(): ActivityResultLauncher<IntentSenderRequest>
     fun beginGoogleSignIn()
+    fun goToForgotPassword()
 }
 
 enum class ProgressDialogState {

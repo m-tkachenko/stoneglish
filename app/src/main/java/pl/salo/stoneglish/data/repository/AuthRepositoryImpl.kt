@@ -20,6 +20,7 @@ class AuthRepositoryImpl @Inject constructor(
 
     override suspend fun isEmailExist(email: String) = authService.isEmailExist(email)
     override suspend fun getUserId() = authService.getUserId()
+    override suspend fun forgotPassword(email: String) = authService.forgotPassword(email)
 
 
     override fun isUserAlreadyAuthenticated() = authService.isUserAlreadyAuthenticated()
