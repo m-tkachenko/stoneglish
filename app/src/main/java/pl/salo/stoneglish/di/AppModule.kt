@@ -87,7 +87,7 @@ object AppModule {
     ) = CardsUseCases(
         cardsList = ReadListOfCardsUseCase(databaseRepository, authRepository),
         modulesList = ReadListOfModulesUseCase(databaseRepository, authRepository),
-        testsList = ReadListOfTestsUseCase(databaseRepository, authRepository),
+        testsList = ReadListOfTestsUseCase(),
         addNewCard = WriteUserCardUseCase(databaseRepository, authRepository),
         writeCardsUseCase = WriteUserCardsUseCase(databaseRepository, authRepository)
     )
