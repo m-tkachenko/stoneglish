@@ -149,4 +149,7 @@
     <string name="przyk_ad">Przykład</string>
     <string name="create_modules_to_learn_new_words">Create modules to learn new words</string>
     <string name="my_module">My module</string>
+    <string name="enter_your_email_address_and_we_ll_send_you_a_link_to_change_your_password">Enter your email address and we\'ll send you a link to change your password</string>
+    <string name="reset_password">Reset password</string>
+    <string name="check_out_your_email_and_reset_yor_password">Check out your email and reset yor password</string>
 </resources>

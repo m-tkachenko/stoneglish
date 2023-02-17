@@ -75,7 +75,8 @@ object AppModule {
             authRepository
         ),
         signUpDataGetCategoriesUseCase = SignUpDataGetCategoriesUseCase(signUpDataRepository),
-        signUpDataSetCategoryState = SignUpDataSetCategoryState(signUpDataRepository)
+        signUpDataSetCategoryState = SignUpDataSetCategoryState(signUpDataRepository),
+        forgotPasswordUseCase = ForgotPasswordUseCase(authRepository)
     )
 
     @Provides
@@ -85,7 +86,7 @@ object AppModule {
     ) = CardsUseCases(
         cardsList = ReadListOfCardsUseCase(databaseRepository, authRepository),
         modulesList = ReadListOfModulesUseCase(databaseRepository, authRepository),
-        testsList = ReadListOfTestsUseCase(databaseRepository, authRepository),
+        testsList = ReadListOfTestsUseCase(),
         addNewCard = WriteUserCardUseCase(databaseRepository, authRepository),
         writeCardsUseCase = WriteUserCardsUseCase(databaseRepository, authRepository)
     )

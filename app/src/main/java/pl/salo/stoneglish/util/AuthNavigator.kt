@@ -19,6 +19,7 @@ interface AuthNavigator {
     fun makeToast(text: String)
     fun makeSnack(text: String)
 
+    fun goToForgotPassword()
 }
 
 enum class ProgressDialogState {

@@ -2,10 +2,13 @@ package pl.salo.stoneglish.data.firebase
 
 import android.util.Log
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
-import com.google.firebase.auth.*
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.GoogleAuthProvider
 import kotlinx.coroutines.tasks.await
 import pl.salo.stoneglish.domain.services.AuthService
 import javax.inject.Inject
+
 
 class AuthServiceImpl @Inject constructor(
     private val auth: FirebaseAuth
@@ -53,6 +56,15 @@ class AuthServiceImpl @Inject constructor(
     }
 
     override suspend fun getUserId() = auth.currentUser?.uid
+
+    override suspend fun forgotPassword(email: String) {
+        auth.sendPasswordResetEmail(email)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    Log.d(TAG, "Email sent.")
+                }
+            }.await()
+    }
 
 
     override fun isUserAlreadyAuthenticated(): Boolean = auth.currentUser != null

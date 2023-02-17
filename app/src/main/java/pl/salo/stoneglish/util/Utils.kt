@@ -23,4 +23,6 @@ object Utils {
         else
             this.visibility = View.INVISIBLE
     }
+
+    infix fun Any?.same(toCompare: Any?) = this == toCompare
 }
