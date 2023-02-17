@@ -213,7 +213,7 @@ class DatabaseServiceImpl @Inject constructor(
 
     override suspend fun getListOfDailyCards(): List<Card> {
         val resultDailyCardsSnapshot = firebaseDatabase
-            .child("users")
+            .child("data")
             .child("dailyWord")
             .get()
             .await()

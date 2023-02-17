@@ -57,10 +57,6 @@ class HomeViewModel @Inject constructor(
     private var horizontalGroupByType = listOf<HorizontalGroupByType>()
     private var interestedHorizontalGroup = HorizontalGroup()
 
-    init {
-        getCurrentUser()
-    }
-
     // Functions for daily card
     fun downloadDailyCards() {
         homeDatabase.dailyCards().onEach { dailyCards ->
@@ -83,12 +79,14 @@ class HomeViewModel @Inject constructor(
         }.launchIn(viewModelScope)
     }
 
-    // Functions for favourite topics chips
+    // Functions for favourite topics chips and user stuff
     fun getCurrentUser() {
         databaseUseCases.getCurrentUserUseCase().onEach { user ->
             _currentUser.postValue(user)
         }.launchIn(viewModelScope)
     }
+    fun isNowAdmin(userEmail: String?) =
+        homeDatabase.isAdmin(userEmail)
 
     // Functions for topics
     fun readVerticalTopics() {

@@ -9,5 +9,7 @@ class Constants {
         const val DICTIONARY_URL = "https://api.dictionaryapi.dev/api/v2/entries/en/"
 
         const val SOMETHING_WENT_WRONG = "Something went wrong :("
+
+        const val ADMIN_EMAIL = "admin@gmail.com"
     }
 }

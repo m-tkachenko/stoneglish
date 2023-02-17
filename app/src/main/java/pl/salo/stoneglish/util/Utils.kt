@@ -25,4 +25,5 @@ object Utils {
     }
 
     infix fun Any?.same(toCompare: Any?) = this == toCompare
+    infix fun Any?.notSame(toCompare: Any?) = this != toCompare
 }

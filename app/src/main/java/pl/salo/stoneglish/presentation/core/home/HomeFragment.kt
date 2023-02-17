@@ -55,6 +55,7 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         initAdapters()
 
+        homeViewModel.getCurrentUser()
         observeCurrentUser()
 
         homeViewModel.downloadDailyCards()
@@ -180,10 +181,14 @@ class HomeFragment : Fragment() {
             when (user) {
                 is Resource.Loading -> {}
                 is Resource.Success -> {
+                    interestedTopics = listOf()
                     interestedTopics = user.data?.interestedTopics?.map { interested ->
                         TopicType.valueOf(interested)
                     } ?: listOf()
 
+                    binding.addTopicImg.ninja(
+                        visibility = homeViewModel.isNowAdmin(user.data?.email)
+                    )
                     setUpFavouriteTopics(interestedTopics)
                 }
                 is Resource.Error -> {
@@ -195,6 +200,9 @@ class HomeFragment : Fragment() {
     }
 
     private fun setUpFavouriteTopics(list: List<TopicType>) {
+        if (binding.favouriteTopics.childCount != 0)
+            binding.favouriteTopics.removeAllViews()
+
         for (chosenTopic in list) {
             val favouriteTopic = ChoiceChipBinding.inflate(layoutInflater).root
 
