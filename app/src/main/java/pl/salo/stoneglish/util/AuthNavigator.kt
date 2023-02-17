@@ -19,8 +19,6 @@ interface AuthNavigator {
     fun makeToast(text: String)
     fun makeSnack(text: String)
 
-    fun activityLauncherResult(): ActivityResultLauncher<IntentSenderRequest>
-    fun beginGoogleSignIn()
 }
 
 enum class ProgressDialogState {

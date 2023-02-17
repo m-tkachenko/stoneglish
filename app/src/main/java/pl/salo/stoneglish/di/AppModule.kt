@@ -65,7 +65,6 @@ object AppModule {
     ) = AuthUseCases(
         emailSignIn = UserEmailSignInUseCase(authRepository),
         emailSignUp = UserEmailSignUpUseCase(authRepository),
-        googleSignIn = UserGoogleSignInUseCase(authRepository),
         signOut = UserSignOutUseCase(authRepository),
         isUserAuthenticated = UserAlreadyAuthenticatedUseCase(authRepository),
         signUpGetData = SignUpGetDataUseCase(signUpDataRepository),
